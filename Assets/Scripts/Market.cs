@@ -10,14 +10,11 @@ public class Market : MonoBehaviour {
     private Personel SelectedCandidat;
 
 
-    public void SelectCandidat()
+    public void SelectCandidat(int i)
     {
-        for (int i =0; i < Option.Length; i++)
+        if (Option[i].isOn)
         {
-            if (Option[i].isOn)
-            {
-                SelectedCandidat = AvailableCandidat[i];
-            }
+            SelectedCandidat = AvailableCandidat[i];
         }
     }
 

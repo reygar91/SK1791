@@ -249,10 +249,12 @@
     <Compile Include="Assets\Scripts\CustPanelScript.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\GoldManager.cs" />
+    <Compile Include="Assets\Scripts\isDragable.cs" />
     <Compile Include="Assets\Scripts\isSelectable.cs" />
     <Compile Include="Assets\Scripts\Market.cs" />
     <Compile Include="Assets\Scripts\Personel.cs" />
     <Compile Include="Assets\Scripts\PersPanelScript.cs" />
+    <Compile Include="Assets\Scripts\Room.cs" />
     <Compile Include="Assets\Scripts\Strategy\Idle.cs" />
     <Compile Include="Assets\Scripts\Strategy\IPersJob.cs" />
     <Compile Include="Assets\Scripts\Strategy\Waiter.cs" />

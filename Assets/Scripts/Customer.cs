@@ -6,8 +6,8 @@ using UnityEngine;
 public class Customer : Character {
 
     private int patience;
-    public GameController Controller;
-    private Vector3 Target;
+    private GameController Controller;
+    private GameObject TargetObject;
     private int StatusID;
     private GameObject[] WaypointRecord;
 
@@ -16,7 +16,8 @@ public class Customer : Character {
 
     private void Awake()
     {
-        AnimatorComponent = GetComponent<Animator>();
+        AnimatorComponent = GetComponentInChildren<Animator>();
+        Controller = FindObjectOfType<GameController>();
     }
 
     private void OnEnable()
@@ -30,7 +31,7 @@ public class Customer : Character {
 
     private void Update()
     {
-        float delta = MoveTo(Target);      
+        float delta = MoveTo(TargetObject);      
         if (delta != 0 && AnimatorComponent.GetInteger("AnimationID") != 1)
         {
             AnimatorComponent.SetInteger("AnimationID", 1); 
@@ -49,22 +50,22 @@ public class Customer : Character {
             switch (StatusID)
             {
                 case 0: //just spawned
-                    Target = SetTargetVector(Controller.WayPoint[1].gameObject);
+                    TargetObject = Controller.WayPoint[1].gameObject;
                     StatusID = 1;                    
                     break;
                 case 1: //On the way to Bar Entrance
-                    if (hasReachedTarget(Target))
+                    if (hasReachedTarget(TargetObject))
                     {
                         AnimatorComponent.SetInteger("AnimationID", 0);
-                        Target = SetTargetVector(FindASeat());
+                        TargetObject = FindASeat();
                         AddWaypoint(Controller.WayPoint[1]);
                     }                        
                     break;
                 case 2: //At the Entrance, but no free seats available
-                    Target = SetTargetVector(FindASeat());
+                    TargetObject = FindASeat();
                     break;
                 case 3: //Succesfully finded a seat, on the way to it
-                    if (hasReachedTarget(Target))
+                    if (hasReachedTarget(TargetObject))
                     {
                         AnimatorComponent.SetInteger("AnimationID", 0);//change to sitting animation
                         Waiter.CustomersAtBar.Add(this);
@@ -99,7 +100,7 @@ public class Customer : Character {
         else
         {
             StatusID = 2;
-            return this.gameObject;
+            return null;
         }
     }
 
@@ -111,8 +112,8 @@ public class Customer : Character {
 
     private void LeaveTheBar()
     {
-        Target = SetTargetVector(WaypointRecord[WaypointRecord.Length - 1]);
-        if (hasReachedTarget(Target))
+        TargetObject = WaypointRecord[WaypointRecord.Length - 1];
+        if (hasReachedTarget(TargetObject))
         {
             if (WaypointRecord.Length == 1)
             {
@@ -120,7 +121,7 @@ public class Customer : Character {
             } else
             {
                 Array.Resize(ref WaypointRecord, WaypointRecord.Length - 1);
-                Target = SetTargetVector(WaypointRecord[WaypointRecord.Length - 1]);
+                TargetObject = WaypointRecord[WaypointRecord.Length - 1];
             }
         }
     }

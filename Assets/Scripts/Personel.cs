@@ -5,7 +5,6 @@ using UnityEngine;
 public class Personel : Character {
 
     //public GameController Controller;
-    private Vector3 Target;
     private GameObject TargetObject;
     private GameObject[] WaypointRecord;
     public IPersJob Job;
@@ -13,25 +12,24 @@ public class Personel : Character {
 
     private void Awake()
     {
-        AnimatorComponent = GetComponent<Animator>();
+        AnimatorComponent = GetComponentInChildren<Animator>();
     }
 
     // Use this for initialization
     void Start () {
-        TargetObject = this.gameObject;
         Job = new Idle();
-        StartCoroutine("DoTheJob");
+        //StartCoroutine("DoTheJob");
     }
 	
 	// Update is called once per frame
 	void Update () {
-        float delta = MoveTo(Target);
+        float delta = MoveTo(TargetObject);
         if (delta != 0 && AnimatorComponent.GetInteger("AnimationID") != 1)
         {
             AnimatorComponent.SetInteger("AnimationID", 1);
         }
     }
-
+    
     public void SelectJob(string JobName)
     {
         switch (JobName)
@@ -47,21 +45,16 @@ public class Personel : Character {
         while (true)
         {
             bool isReachedTarget;
-            if (TargetObject == this.gameObject)
+            if (TargetObject == gameObject)
             {
                 isReachedTarget = false;
             }
             else
             {
-                isReachedTarget = hasReachedTarget(SetTargetVector(TargetObject));
+                isReachedTarget = hasReachedTarget(TargetObject);
                 if (isReachedTarget) { AnimatorComponent.SetInteger("AnimationID", 0); }
             }
             TargetObject = Job.JobInstructions(isReachedTarget);
-            if (TargetObject == null)
-            {
-                TargetObject = this.gameObject;
-            }
-            Target = SetTargetVector(TargetObject);            
             yield return new WaitForSeconds(1);
         }
     }

@@ -12,7 +12,8 @@ public class GameController : MonoBehaviour {
      * 0 - SpawnPoint
      * 1 - BarEntrance
      */
-    public Customer[] CustomerList;
+    public GameObject CustomerOriginal, CustomerContainer; //IMPORTANT CustOrig must be not active, or in coroutine it lead to endless Instantiations
+    //private Customer[] CustomerList;
     public GameObject[] Panels;
     /* Panels:
      * 0 - CustPanel
@@ -32,7 +33,7 @@ public class GameController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        StartCoroutine("ActivateCustomer");        
+        StartCoroutine("SpawnCustomer");        
     }
 
     // Update is called once per frame
@@ -43,8 +44,10 @@ public class GameController : MonoBehaviour {
         }               
     }
 
-    private IEnumerator ActivateCustomer()
+    private IEnumerator SpawnCustomer()
     {
+        GameObject[] CustomerList = new GameObject[1];
+        CustomerList[0] = Instantiate(CustomerOriginal, CustomerContainer.transform);
         while (true)
         {
             for (int i=0; i < CustomerList.Length; i++)
@@ -52,15 +55,16 @@ public class GameController : MonoBehaviour {
                 if (CustomerList[i].gameObject.activeSelf == false)
                 {
                     CustomerList[i].gameObject.SetActive(true);
-                    yield return new WaitForSeconds(2);
+                    yield return new WaitForSeconds(5);
                 }
                 else if (i == (CustomerList.Length - 1))
                 {
-                    yield return new WaitForSeconds(5);
+                    Array.Resize(ref CustomerList, i + 2);
+                    CustomerList[i + 1] = Instantiate(CustomerOriginal, CustomerContainer.transform);
+                    //yield return new WaitForSeconds(5);
                 }
-            }            
+            }
         }
-    }  
+    }    
 
-    
 }

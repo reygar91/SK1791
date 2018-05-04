@@ -7,21 +7,25 @@ public class Character : MonoBehaviour {
     private float oldDelta, delta;
     
 
-    public Vector3 SetTargetVector(GameObject iTarget)
+    private Vector3 SetTargetVector(GameObject TargetObject)
     {
         float x, y, z;
-        x = iTarget.transform.position.x;
+        x = TargetObject.transform.position.x;
         y = transform.position.y;
-        z = iTarget.transform.position.z;
-        Vector3 Target = new Vector3(x, y, z);
-        return Target;
+        z = TargetObject.transform.position.z;
+        Vector3 TargetVector = new Vector3(x, y, z);
+        return TargetVector;
     }
 
-    public float MoveTo(Vector3 iTarget)
+    public float MoveTo(GameObject TargetObject)
     {
-        float step = Time.deltaTime;
         float oldPositionX = transform.position.x;
-        transform.position = Vector3.MoveTowards(transform.position, iTarget, 3*step);
+        if (TargetObject != null)
+        {
+            Vector3 TargetVector = SetTargetVector(TargetObject);
+            float step = Time.deltaTime;            
+            transform.position = Vector3.MoveTowards(transform.position, TargetVector, 3 * step);
+        }        
         if (delta != 0) { oldDelta = delta; }        
         delta = oldPositionX - transform.position.x;
         if (Mathf.Sign(oldDelta) != Mathf.Sign(delta))
@@ -38,8 +42,13 @@ public class Character : MonoBehaviour {
         return delta;
     }
 
-    public bool hasReachedTarget(Vector3 iTarget)
+    public bool hasReachedTarget(GameObject TargetObject)
     {
-        return (transform.position == iTarget);
+        if (TargetObject != null)
+        {
+            Vector3 TargetVector = SetTargetVector(TargetObject);
+            return (transform.position == TargetVector);
+        }
+        else return false; //maybe should return true?         
     }
 }
