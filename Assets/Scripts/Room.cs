@@ -6,7 +6,7 @@ public class Room : MonoBehaviour {
 
     public int RoomSize;
     //public InteriorPreview Preview;
-    private GameController Controller;
+    //private GameController Controller;
     public GameObject[] Interior;
     /*
      * 0 - Bar;
@@ -14,7 +14,7 @@ public class Room : MonoBehaviour {
 
     private void Awake()
     {
-        Controller = FindObjectOfType<GameController>();
+        //Controller = FindObjectOfType<GameController>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -29,6 +29,6 @@ public class Room : MonoBehaviour {
     {
         GameObject newInterior = Instantiate(Interior[i],transform);
         newInterior.SetActive(true);
-        Controller.UpdateSeats(newInterior);
+        //Controller.UpdateSeats(newInterior);
     }
 }
