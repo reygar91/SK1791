@@ -241,12 +241,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Character.cs" />
-    <Compile Include="Assets\Scripts\CreatePersonel.cs" />
     <Compile Include="Assets\Scripts\Customer.cs" />
     <Compile Include="Assets\Scripts\CustPanelScript.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\GoldManager.cs" />
-    <Compile Include="Assets\Scripts\HirePersonel.cs" />
+    <Compile Include="Assets\Scripts\Market.cs" />
+    <Compile Include="Assets\Scripts\MyRaycaster.cs" />
     <Compile Include="Assets\Scripts\Observer\IObserver.cs" />
     <Compile Include="Assets\Scripts\Observer\IObserverSubject.cs" />
     <Compile Include="Assets\Scripts\Personel.cs" />

@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class DisableWithEsc : MonoBehaviour {
 
-    public static bool isActivePanels;    
+    private static GameObject Panel;    
 
     private void OnEnable()
     {
-        isActivePanels = true;
+        Panel = this.gameObject;
     }
 
     // Update is called once per frame
@@ -18,13 +18,9 @@ public class DisableWithEsc : MonoBehaviour {
             this.gameObject.SetActive(false);
         }
     }
-    private void OnDisable()
-    {
-        isActivePanels = false;
-    }
-
+    
     public static bool ActivePanel()
     {
-        return isActivePanels;
+        return Panel.activeSelf;
     }
 }

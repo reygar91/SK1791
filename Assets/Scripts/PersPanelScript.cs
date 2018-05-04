@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class PersPanelScript : MonoBehaviour {
 
-    public GameController Controller;
+    //public GameController Controller;
+    public MyRaycaster Raycaster2D;
     private GameObject previousSelectedObject, selectedObject;
     private Text TextComponent;
     private Personel pers;
@@ -20,7 +21,7 @@ public class PersPanelScript : MonoBehaviour {
     }
     private void OnEnable()
     {
-        selectedObject = Controller.getSelectedObject();
+        selectedObject = Raycaster2D.getSelectedObject();
         Initialize();
     }
 
@@ -36,7 +37,7 @@ public class PersPanelScript : MonoBehaviour {
         if (Input.GetMouseButtonDown(0))
         {
             previousSelectedObject = selectedObject;
-            selectedObject = Controller.getSelectedObject();
+            selectedObject = Raycaster2D.getSelectedObject();
             if (selectedObject.tag == "Personel")
             {
                 if (selectedObject != previousSelectedObject)

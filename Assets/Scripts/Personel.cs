@@ -9,6 +9,12 @@ public class Personel : Character {
     private GameObject TargetObject;
     private GameObject[] WaypointRecord;
     public IPersJob Job;
+    private Animator AnimatorComponent;
+
+    private void Awake()
+    {
+        AnimatorComponent = GetComponent<Animator>();
+    }
 
     // Use this for initialization
     void Start () {
@@ -20,7 +26,11 @@ public class Personel : Character {
 	
 	// Update is called once per frame
 	void Update () {
-        MoveTo(Target);
+        float delta = MoveTo(Target);
+        if (delta != 0 && AnimatorComponent.GetInteger("AnimationID") != 1)
+        {
+            AnimatorComponent.SetInteger("AnimationID", 1);
+        }
     }
 
     public void SelectJob(string JobName)
@@ -45,6 +55,7 @@ public class Personel : Character {
             else
             {
                 isReachedTarget = hasReachedTarget(SetTargetVector(TargetObject));
+                if (isReachedTarget) { AnimatorComponent.SetInteger("AnimationID", 0); }
             }
             TargetObject = Job.JobInstructions(isReachedTarget);
             if (TargetObject == null)

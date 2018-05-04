@@ -5,11 +5,12 @@ using UnityEngine.UI;
 
 public class CustPanelScript : MonoBehaviour {
 
-    public GameController Controller;
+    //public GameController Controller;
+    public MyRaycaster Raycaster2D;
     private GameObject previousSelectedObject, selectedObject;
-    Text text;
-    Customer cust;
-    int patience;
+    private Text text;
+    private Customer cust;
+    private int patience;
     public Vector3 offset; 
 
     // Use this for initialization
@@ -20,7 +21,7 @@ public class CustPanelScript : MonoBehaviour {
     }
     private void OnEnable()
     {
-        selectedObject = Controller.getSelectedObject();
+        selectedObject = Raycaster2D.getSelectedObject();
         cust = selectedObject.GetComponent<Customer>();
     }
 
@@ -29,7 +30,7 @@ public class CustPanelScript : MonoBehaviour {
 		if (Input.GetMouseButtonDown(0))
         {
             previousSelectedObject = selectedObject;
-            selectedObject = Controller.getSelectedObject();
+            selectedObject = Raycaster2D.getSelectedObject();
             if (selectedObject.tag == "Customer")
             {
                 //gameObject.SetActive(true);
