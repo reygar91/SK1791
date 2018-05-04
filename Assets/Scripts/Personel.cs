@@ -18,7 +18,6 @@ public class Personel : Character {
 
     // Use this for initialization
     void Start () {
-        Debug.Log("Personel Start");
         TargetObject = this.gameObject;
         Job = new Idle();
         StartCoroutine("DoTheJob");

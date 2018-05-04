@@ -8,14 +8,14 @@ public class DisableWithEsc : MonoBehaviour {
 
     private void OnEnable()
     {
-        Panel = this.gameObject;
+        Panel = gameObject;
     }
 
     // Update is called once per frame
     void Update () {
         if (Input.GetButtonDown("Cancel"))
         {               
-            this.gameObject.SetActive(false);
+            gameObject.SetActive(false);
         }
     }
     

@@ -5,9 +5,6 @@ using UnityEngine.UI;
 
 public class CustPanelScript : MonoBehaviour {
 
-    //public GameController Controller;
-    public MyRaycaster Raycaster2D;
-    private GameObject previousSelectedObject, selectedObject;
     private Text text;
     private Customer cust;
     private int patience;
@@ -21,35 +18,32 @@ public class CustPanelScript : MonoBehaviour {
     }
     private void OnEnable()
     {
-        selectedObject = Raycaster2D.getSelectedObject();
-        cust = selectedObject.GetComponent<Customer>();
+        CustInitialize();
+        StartCoroutine("DetailedInfo");
     }
 
     // Update is called once per frame
-    void Update () {
-		if (Input.GetMouseButtonDown(0))
-        {
-            previousSelectedObject = selectedObject;
-            selectedObject = Raycaster2D.getSelectedObject();
-            if (selectedObject.tag == "Customer")
-            {
-                //gameObject.SetActive(true);
-                if (selectedObject != previousSelectedObject)
-                {
-                    cust = selectedObject.GetComponent<Customer>();                    
-                }
-                else
-                {
-                    gameObject.SetActive(false);
-                }
-            }
-            else
-            {
-                gameObject.SetActive(false);
-            }
-        }
-        patience = cust.getPatience();
-        text.text = "Patience: " + patience.ToString();
+    void Update () {     
         transform.position = Camera.main.WorldToScreenPoint(cust.transform.position) + offset;
+    }
+
+    private void OnDisable()
+    {
+        StopCoroutine("DetailedInfo");
+    }
+
+    private IEnumerator DetailedInfo()
+    {
+        while (true)
+        {
+            patience = cust.getPatience();
+            text.text = "Patience: " + patience.ToString();
+            yield return new WaitForSeconds(0.25f);
+        }
+    }
+
+    public void CustInitialize()
+    {
+        cust = isSelectable.selectedObject.GetComponent<Customer>();
     }
 }

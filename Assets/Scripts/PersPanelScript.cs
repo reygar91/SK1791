@@ -6,8 +6,9 @@ using UnityEngine.UI;
 public class PersPanelScript : MonoBehaviour {
 
     //public GameController Controller;
-    public MyRaycaster Raycaster2D;
-    private GameObject previousSelectedObject, selectedObject;
+    //public MyRaycaster Raycaster2D;
+    //private GameObject previousSelectedObject;
+    //public GameObject selectedObject;
     private Text TextComponent;
     private Personel pers;
     private Dropdown DropdownComponent;
@@ -21,31 +22,14 @@ public class PersPanelScript : MonoBehaviour {
     }
     private void OnEnable()
     {
-        selectedObject = Raycaster2D.getSelectedObject();
+        //selectedObject = Raycaster2D.getSelectedObject();
         Initialize();
     }
 
-    private void Initialize()
+    public void Initialize()
     {
-        pers = selectedObject.GetComponent<Personel>();
-        TextComponent.text = selectedObject.name;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            previousSelectedObject = selectedObject;
-            selectedObject = Raycaster2D.getSelectedObject();
-            if (selectedObject.tag == "Personel")
-            {
-                if (selectedObject != previousSelectedObject)
-                {
-                    Initialize();
-                }                
-            }            
-        }        
+        pers = isSelectable.selectedObject.GetComponent<Personel>();
+        TextComponent.text = isSelectable.selectedObject.name;
     }
 
     public void JobSelector()
