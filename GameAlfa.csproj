@@ -243,6 +243,7 @@
     <Compile Include="Assets\Scripts\_NotInUse\MyRaycaster.cs" />
     <Compile Include="Assets\Scripts\_NotInUse\Observer\IObserver.cs" />
     <Compile Include="Assets\Scripts\_NotInUse\Observer\IObserverSubject.cs" />
+    <Compile Include="Assets\Scripts\Build.cs" />
     <Compile Include="Assets\Scripts\Character.cs" />
     <Compile Include="Assets\Scripts\Customer.cs" />
     <Compile Include="Assets\Scripts\CustPanelScript.cs" />
