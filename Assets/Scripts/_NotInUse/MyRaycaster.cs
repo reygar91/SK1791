@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class MyRaycaster : MonoBehaviour {
 
@@ -30,7 +29,7 @@ public class MyRaycaster : MonoBehaviour {
             //Debug.DrawLine(ray.origin, ray.direction);
             if (hit2D)
             {
-                if (!IsPointerOverUIObject())
+                if (!UI_helper.isPointerOverUI())
                 {
                     selectedObject = hit2D.transform.gameObject;
                     Debug.Log("Hit " + selectedObject.name);
@@ -49,16 +48,6 @@ public class MyRaycaster : MonoBehaviour {
                 Debug.Log("No hit");
             }
         }
-    }
-
-    //When Touching UI check
-    private bool IsPointerOverUIObject()
-    {
-        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
-        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-        List<RaycastResult> results = new List<RaycastResult>();
-        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
-        return results.Count > 0;
     }
 
     public GameObject getSelectedObject()

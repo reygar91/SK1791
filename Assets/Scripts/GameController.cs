@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class GameController : MonoBehaviour {
 
@@ -65,6 +64,12 @@ public class GameController : MonoBehaviour {
                 }
             }
         }
-    }    
+    }
+    
+    public void UpdateSeats(GameObject item)
+    {
+        int seat = item.transform.childCount; Debug.Log(seat);
+        //seat.position = new Vector3(0,0,0);
+    }
 
 }

@@ -249,6 +249,7 @@
     <Compile Include="Assets\Scripts\CustPanelScript.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\GoldManager.cs" />
+    <Compile Include="Assets\Scripts\InteriorPreview.cs" />
     <Compile Include="Assets\Scripts\isDragable.cs" />
     <Compile Include="Assets\Scripts\isSelectable.cs" />
     <Compile Include="Assets\Scripts\Market.cs" />
@@ -258,12 +259,13 @@
     <Compile Include="Assets\Scripts\Strategy\Idle.cs" />
     <Compile Include="Assets\Scripts\Strategy\IPersJob.cs" />
     <Compile Include="Assets\Scripts\Strategy\Waiter.cs" />
-    <Compile Include="Assets\Scripts\TimeFlow.cs" />
     <Compile Include="Assets\Scripts\UI\CameraMovement.cs" />
     <Compile Include="Assets\Scripts\UI\DisableWithEsc.cs" />
     <Compile Include="Assets\Scripts\UI\EscMenu.cs" />
     <Compile Include="Assets\Scripts\UI\ExitApp.cs" />
     <Compile Include="Assets\Scripts\UI\SceneMGMT.cs" />
+    <Compile Include="Assets\Scripts\UI\TimeFlow.cs" />
+    <Compile Include="Assets\Scripts\UI\UI_helper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugins\Game Jam Template\Fonts\OpenSans\License!.txt" />
