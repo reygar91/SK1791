@@ -18,12 +18,18 @@ public class GameController : MonoBehaviour {
      * 0 - CustPanel
      * 1 - PersonelPanel
      * */
-    public SeatManager[] SeatsReference;
+    //public SeatManager[] SeatsReference;
+    public List<GameObject> unOccupiedSeats;
     private GameObject selectedObject;
 
     private void Awake()
     {
-        SeatManager.Seats = SeatsReference;
+        unOccupiedSeats = new List<GameObject>();
+        GameObject[] Seats = GameObject.FindGameObjectsWithTag("Seat");
+        foreach (GameObject item in Seats)
+        {
+            unOccupiedSeats.Add(item);
+        }
     }
 
     // Use this for initialization

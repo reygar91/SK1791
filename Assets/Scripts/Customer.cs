@@ -7,28 +7,34 @@ public class Customer : Character {
 
     private int patience;
     public GameController Controller;
-    //public ICustBehavior CustBehavior;
     private Vector3 Target;
     private int StatusID;
     private GameObject[] WaypointRecord;
-    //public List<Customer> CustomersAtBar = new List<Customer>();
 
-    private SeatManager SeatOccupied;
+    private GameObject Seat;
+    private Animator AnimatorComponent;
+
+    private void Awake()
+    {
+        AnimatorComponent = GetComponent<Animator>();
+    }
 
     private void OnEnable()
     {
-        //CustBehavior = new EnterTheBar();
         WaypointRecord = new GameObject[1];
         WaypointRecord[0] = Controller.WayPoint[0].gameObject;
         StatusID = 0;
         patience = 15;
-        StartCoroutine("Relax");
-    }
-    
+        StartCoroutine("Relax");        
+    }    
 
     private void Update()
     {
-        MoveTo(Target);        
+        float delta = MoveTo(Target);      
+        if (delta != 0 && AnimatorComponent.GetInteger("AnimationID") != 1)
+        {
+            AnimatorComponent.SetInteger("AnimationID", 1); 
+        }      
     }
 
     private IEnumerator Relax()
@@ -47,30 +53,29 @@ public class Customer : Character {
                     StatusID = 1;                    
                     break;
                 case 1: //On the way to Bar Entrance
-                    if (TargetReached(Target))
+                    if (hasReachedTarget(Target))
                     {
-                        Target = SetTargetVector(FindASeat(SeatManager.Seats));
+                        AnimatorComponent.SetInteger("AnimationID", 0);
+                        Target = SetTargetVector(FindASeat());
                         AddWaypoint(Controller.WayPoint[1]);
                     }                        
                     break;
                 case 2: //At the Entrance, but no free seats available
-                    Target = SetTargetVector(FindASeat(SeatManager.Seats));
+                    Target = SetTargetVector(FindASeat());
                     break;
                 case 3: //Succesfully finded a seat, on the way to it
-                    if (TargetReached(Target))
+                    if (hasReachedTarget(Target))
                     {
+                        AnimatorComponent.SetInteger("AnimationID", 0);//change to sitting animation
                         Waiter.CustomersAtBar.Add(this);
                         StatusID = 4;                        
-                        //Debug.Log(this + "added; new Count is " + Waiter.CustomersAtBar.Count);
-                        //Debug.Log("DrinkingABeer");
                     }
                     break;
                 case 4: //On the seat, waiting for waiter                    
                     if (patience < 2) //temporary measure for making seat free again
                     {
-                        //Debug.Log(this + "removed; new Count is " + Waiter.CustomersAtBar.Count);
-                        Waiter.CustomersAtBar.Remove(this);
-                        SeatOccupied.Occupied = false;                     
+                        Waiter.CustomersAtBar.Remove(this); //removing from list of custs waited to be served
+                        Controller.unOccupiedSeats.Add(Seat); //adding seat back to list of unOccupied seats               
                     }
                     break;
                 case 100: //run out of patience
@@ -81,32 +86,20 @@ public class Customer : Character {
         }
     }
 
-    private GameObject FindASeat(SeatManager[] Seats)
+    private GameObject FindASeat()
     {
-        bool[] SeatsOccupancy = new bool[Seats.Length];
-        for (int i =0; i < Seats.Length; i++)
-        {            
-            SeatsOccupancy[i] = Seats[i].Occupied;
-        }
-        GameObject iTarget;        
-        Array.Sort(SeatsOccupancy, Seats);
-        int index = Array.LastIndexOf(SeatsOccupancy, false);
-        //Debug.Log("LastIndexOf false: " + index);
-        if (index == -1)
+        if (Controller.unOccupiedSeats.Count != 0)
         {
-            StatusID = 2;
-            //Debug.Log("No free Seats");
-            return this.gameObject;
+            int RandomSeat = UnityEngine.Random.Range(0, Controller.unOccupiedSeats.Count);
+            Seat = Controller.unOccupiedSeats[RandomSeat];
+            Controller.unOccupiedSeats.Remove(Seat);
+            StatusID = 3;
+            return Seat;
         }
         else
         {
-            int chosenIndex = UnityEngine.Random.Range(0, index);
-            //int chosenIndex = UnityEngine.Random.Range(index, Seats.Length);
-            iTarget = Seats[chosenIndex].gameObject;
-            SeatOccupied = Seats[chosenIndex];
-            Seats[chosenIndex].Occupied = true;            
-            StatusID = 3;
-            return iTarget;
+            StatusID = 2;
+            return this.gameObject;
         }
     }
 
@@ -119,7 +112,7 @@ public class Customer : Character {
     private void LeaveTheBar()
     {
         Target = SetTargetVector(WaypointRecord[WaypointRecord.Length - 1]);
-        if (TargetReached(Target))
+        if (hasReachedTarget(Target))
         {
             if (WaypointRecord.Length == 1)
             {
@@ -136,4 +129,5 @@ public class Customer : Character {
     {
         return patience;
     }
+
 }

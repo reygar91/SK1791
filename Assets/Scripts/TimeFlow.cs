@@ -5,21 +5,19 @@ using UnityEngine.UI;
 
 public class TimeFlow : MonoBehaviour {
 
-    public Text TimeText;
-    private string TimeString;
+    private Text TextComponent;
     private int timePassed = 1980; // day 1, 09:00
     private float timeSpeed = 1.0f;
+
+    private void Awake()
+    {
+        TextComponent = GetComponent<Text>();
+    }
 
     // Use this for initialization
     void Start () {
         StartCoroutine("PlayTime");
-    }
-	
-	// Update is called once per frame
-	void Update () {
-        TimeText.text = TimeString;
-        //MoneyText.text = "Silver: " + Money;
-    }
+    }	
 
     private IEnumerator PlayTime()
     {
@@ -42,7 +40,7 @@ public class TimeFlow : MonoBehaviour {
             }
             else iMinutes = minutes.ToString();
 
-            TimeString = "Day: " + days +" Time: " + iHours + ":" + iMinutes;
+            TextComponent.text = "Day: " + days +" Time: " + iHours + ":" + iMinutes;
             yield return new WaitForSeconds(1 / timeSpeed);
             timePassed++;
         }

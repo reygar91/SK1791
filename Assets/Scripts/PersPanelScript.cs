@@ -7,16 +7,16 @@ public class PersPanelScript : MonoBehaviour {
 
     public GameController Controller;
     private GameObject previousSelectedObject, selectedObject;
-    Text text;
-    Personel pers;
-    Dropdown list;
+    private Text TextComponent;
+    private Personel pers;
+    private Dropdown DropdownComponent;
 
     // Use this for initialization
 
     private void Awake()
     {
-        text = GetComponentInChildren<Text>();
-        list = GetComponentInChildren<Dropdown>();
+        TextComponent = GetComponentInChildren<Text>();
+        DropdownComponent = GetComponentInChildren<Dropdown>();
     }
     private void OnEnable()
     {
@@ -27,7 +27,7 @@ public class PersPanelScript : MonoBehaviour {
     private void Initialize()
     {
         pers = selectedObject.GetComponent<Personel>();
-        text.text = selectedObject.name;
+        TextComponent.text = selectedObject.name;
     }
 
     // Update is called once per frame
@@ -49,8 +49,8 @@ public class PersPanelScript : MonoBehaviour {
 
     public void JobSelector()
     {
-        Debug.Log(list.value);
-        switch (list.value)
+        //Debug.Log(list.value);
+        switch (DropdownComponent.value)
         {
             case 0:
                 pers.Job = new Idle();

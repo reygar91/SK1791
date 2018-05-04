@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Character : MonoBehaviour {
 
+    private float oldDelta, delta;
     
 
     public Vector3 SetTargetVector(GameObject iTarget)
@@ -16,13 +17,28 @@ public class Character : MonoBehaviour {
         return Target;
     }
 
-    public void MoveTo(Vector3 iTarget)
+    public float MoveTo(Vector3 iTarget)
     {
         float step = Time.deltaTime;
+        float oldPositionX = transform.position.x;
         transform.position = Vector3.MoveTowards(transform.position, iTarget, 3*step);
+        if (delta != 0) { oldDelta = delta; }        
+        delta = oldPositionX - transform.position.x;
+        if (Mathf.Sign(oldDelta) != Mathf.Sign(delta))
+        {
+            if (delta > 0)
+            {
+                transform.rotation = new Quaternion(0, -1, 0, 0);//facing from right to left
+            }
+            else if (delta < 0)
+            {
+                transform.rotation = new Quaternion(0, 0, 0, 1);//facing from left to right
+            }
+        }        
+        return delta;
     }
 
-    public bool TargetReached(Vector3 iTarget)
+    public bool hasReachedTarget(Vector3 iTarget)
     {
         return (transform.position == iTarget);
     }

@@ -6,7 +6,7 @@ using UnityEngine;
 public class Idle : IPersJob {
 
 
-    public GameObject JobInstructions(bool isReachedTarget)
+    public GameObject JobInstructions(bool hasReachedTarget)
     {
         //Debug.Log("Idle");
         return null;

@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IPersJob {
 
-    GameObject JobInstructions(bool isReachedTarget);
+    GameObject JobInstructions(bool hasReachedTarget);
 }

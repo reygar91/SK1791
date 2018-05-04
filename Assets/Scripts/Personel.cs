@@ -44,7 +44,7 @@ public class Personel : Character {
             }
             else
             {
-                isReachedTarget = TargetReached(SetTargetVector(TargetObject));
+                isReachedTarget = hasReachedTarget(SetTargetVector(TargetObject));
             }
             TargetObject = Job.JobInstructions(isReachedTarget);
             if (TargetObject == null)
