@@ -10,7 +10,7 @@ public class InteriorPreview : MonoBehaviour {
     {
         if (other.gameObject.tag == "Room")
         {
-            if (Input.GetMouseButtonDown(0) && !UI_helper.isPointerOverUI())
+            if (Input.GetMouseButtonDown(0) && !UI_helper.isPointerOverUI() && other.name != "Reception")
             {
                 Room RoomTmp = other.GetComponent<Room>();
                 RoomTmp.BuildInterior(InteriorIndex);

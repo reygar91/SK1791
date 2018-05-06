@@ -14,7 +14,8 @@ public class Build : MonoBehaviour {
      */    
     public GameObject RoomContainer, InteriorPrewiewGO;
     private GameObject RoomGO;
-    InteriorPreview IntPreview;
+    private InteriorPreview IntPreview;
+    private Room RoomScript;
 
     private void Awake()
     {
@@ -29,6 +30,7 @@ public class Build : MonoBehaviour {
             RoomGO.SetActive(false);
             RoomGO = RoomOriginals[i];
             RoomGO.SetActive(true);
+            RoomScript = RoomGO.GetComponent<Room>();
             RoomOption[i].isOn = false; // Disabling Toggle, so dont have to click twice when building similar constructions
         }
     }
@@ -38,9 +40,15 @@ public class Build : MonoBehaviour {
         Vector3 newPosition = UI_helper.MoveWithMouse(RoomGO, 3, new Vector3(0, -0.1f, 0.9f));
         if (Input.GetMouseButtonDown(0) && !UI_helper.isPointerOverUI())
         {
-            GameObject newRoom = Instantiate(RoomGO, RoomContainer.transform);
-            newRoom.transform.position = newPosition;
-            RoomGO.SetActive(false);
+            if (RoomScript.allowedToBuild == true)
+            {
+                GameObject newRoom = Instantiate(RoomGO, RoomContainer.transform);
+                newRoom.transform.position = newPosition;
+                RoomGO.SetActive(false);
+            } else
+            {
+                Debug.Log("Not allowed to build here");
+            }            
         }
     }
 

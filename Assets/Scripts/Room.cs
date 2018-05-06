@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Room : MonoBehaviour {
 
-    public int RoomSize;
+    //public int RoomSize;
     //public InteriorPreview Preview;
     //private GameController Controller;
     public GameObject[] Interior;
     /*
      * 0 - Bar;
     */
+    public bool allowedToBuild;
 
     private void Awake()
     {
@@ -19,9 +20,17 @@ public class Room : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Personel")
+        if (other.gameObject.tag == "Room")
         {
-            Debug.Log("Its Personel");
+            allowedToBuild = false;
+        }        
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Room")
+        {
+            allowedToBuild = true; //Debug.Log("Colliding with other Room");
         }
     }
 
@@ -29,6 +38,14 @@ public class Room : MonoBehaviour {
     {
         GameObject newInterior = Instantiate(Interior[i],transform);
         newInterior.SetActive(true);
+        switch (i)
+        {
+            case 0:
+                name = name + "_(Bar)";
+                break;
+            case 1:
+                break;
+        }
         //Controller.UpdateSeats(newInterior);
     }
 }

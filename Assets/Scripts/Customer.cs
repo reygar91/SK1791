@@ -9,10 +9,12 @@ public class Customer : Character {
     private GameController Controller;
     private GameObject TargetObject;
     private int StatusID;
-    private GameObject[] WaypointRecord;
+    public GameObject[] WaypointRecord;
 
     private GameObject Seat;
     private Animator AnimatorComponent;
+
+    public ICustBehaviour Behaviour;
 
     private void Awake()
     {
@@ -80,7 +82,10 @@ public class Customer : Character {
                     }
                     break;
                 case 100: //run out of patience
-                    LeaveTheBar();
+                    Behaviour.SwitchRoom();
+                    Behaviour = new CustLeave();
+                    Behaviour.RoomBehaviour(this, this, AnimatorComponent);
+                    Behaviour.RoomBehaviour();
                     break;
             }
             yield return new WaitForSeconds(1);
@@ -109,26 +114,37 @@ public class Customer : Character {
         Array.Resize(ref WaypointRecord, WaypointRecord.Length + 1);
         WaypointRecord[WaypointRecord.Length - 1] = t.gameObject;
     }
-
-    private void LeaveTheBar()
-    {
-        TargetObject = WaypointRecord[WaypointRecord.Length - 1];
-        if (hasReachedTarget(TargetObject))
-        {
-            if (WaypointRecord.Length == 1)
-            {
-                gameObject.SetActive(false);
-            } else
-            {
-                Array.Resize(ref WaypointRecord, WaypointRecord.Length - 1);
-                TargetObject = WaypointRecord[WaypointRecord.Length - 1];
-            }
-        }
-    }
     
     public int getPatience()
     {
         return patience;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Room")
+        {
+            if (other.name.Contains("Reception"))
+            {
+                Reception RoomType = other.GetComponent<Reception>();
+                Behaviour = new CustReception();
+                Behaviour.RoomBehaviour(this, RoomType, AnimatorComponent);
+                StartCoroutine("RoomBehaviour");
+            }
+            if (other.name.Contains("Bar"))
+            {
+                Debug.Log("CustEnteredBar");
+            }            
+        }        
+    }
+
+    private IEnumerator RoomBehaviour()
+    {
+        while (true)
+        {
+            TargetObject = Behaviour.RoomBehaviour();
+            yield return new WaitForSeconds(.5f);
+        }
     }
 
 }
