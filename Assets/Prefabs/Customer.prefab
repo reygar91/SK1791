@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 136282944728358302}
   - component: {fileID: 114721902563087814}
   - component: {fileID: 114678107833958852}
+  - component: {fileID: 114309151253826490}
   m_Layer: 0
   m_Name: Customer
   m_TagString: Customer
@@ -391,6 +392,17 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114309151253826490
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1504658182625422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd0e7a38c4153c44285265d3d911bd94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114678107833958852
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -413,6 +425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a56c297f4da92c542a97c63a5ab1de8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WaypointRecord: []
 --- !u!136 &136282944728358302
 CapsuleCollider:
   m_ObjectHideFlags: 1

@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class Bar : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public GameObject Doors;
+    public List<GameObject> Seats;
 }

@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class CustReception : ICustBehaviour
 {
-    Customer customer;
+    Customer cust;
     Reception reception;
     Animator animator;
     GameObject Target;
     int targetIndex;
 
-    public void RoomBehaviour<T>(Customer cust, T RoomType, Animator AnimatorComponent)
+    public void RoomBehaviour<T>(Customer customer, T RoomType, Animator AnimatorComponent)
     {
-        customer = cust;
+        cust = customer;
         reception = RoomType as Reception;
         animator = AnimatorComponent;
     }
@@ -44,5 +44,10 @@ public class CustReception : ICustBehaviour
     public void SwitchRoom()
     {
         reception.OccupiedSpot[targetIndex] = false;
+    }
+
+    public GameObject LeaveRoom()
+    {
+        throw new System.NotImplementedException();
     }
 }

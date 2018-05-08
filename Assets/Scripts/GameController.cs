@@ -6,7 +6,7 @@ using UnityEngine;
 public class GameController : MonoBehaviour {
 
     public GameObject MenuPanel;
-    public Transform[] WayPoint;
+   // public Transform[] WayPoint;
     /*
      * 0 - SpawnPoint
      * 1 - BarEntrance
@@ -18,6 +18,7 @@ public class GameController : MonoBehaviour {
      * 0 - CustPanel
      * 1 - PersonelPanel
      * */
+     /*
     public List<GameObject> unOccupiedSeats;
 
     private void Awake()
@@ -29,7 +30,7 @@ public class GameController : MonoBehaviour {
             unOccupiedSeats.Add(item);
         }
     }
-
+    */
     // Use this for initialization
     void Start () {
         StartCoroutine("SpawnCustomer");        
@@ -64,12 +65,5 @@ public class GameController : MonoBehaviour {
                 }
             }
         }
-    }
-    /*
-    public void UpdateSeats(GameObject item)
-    {
-        int seat = item.transform.childCount; Debug.Log(seat);
-        //seat.position = new Vector3(0,0,0);
-    }
-    */
+    }    
 }

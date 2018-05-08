@@ -4,26 +4,20 @@ using UnityEngine;
 
 public class Room : MonoBehaviour {
 
-    //public int RoomSize;
-    //public InteriorPreview Preview;
-    //private GameController Controller;
+    //public GameObject Doors;
     public GameObject[] Interior;
     /*
      * 0 - Bar;
     */
     public bool allowedToBuild;
 
-    private void Awake()
-    {
-        //Controller = FindObjectOfType<GameController>();
-    }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Room")
         {
             allowedToBuild = false;
-        }        
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -46,6 +40,5 @@ public class Room : MonoBehaviour {
             case 1:
                 break;
         }
-        //Controller.UpdateSeats(newInterior);
     }
 }
