@@ -5,30 +5,31 @@ using UnityEngine;
 
 public class Customer : Character {
 
-    private int patience;
-    //private GameController Controller;
-    private GameObject TargetObject;
-    private int StatusID;
-    //public GameObject[] WaypointRecord;
+    public int Patience
+    {
+        get;
+        private set;        
+    }
+    public GameObject TargetObject
+    {
+        get;
+        private set;
+    }
 
-    //private GameObject Seat;
     private Animator AnimatorComponent;
-
-    public ICustBehaviour Behaviour;
+    private ICustBehaviour Behaviour;
+    private Reception reception;
 
     private void Awake()
     {
         AnimatorComponent = GetComponentInChildren<Animator>();
-        //Controller = FindObjectOfType<GameController>();
+        reception = FindObjectOfType<Reception>();
     }
 
     private void OnEnable()
-    {
-        TargetObject = GameObject.FindGameObjectWithTag("Finish");//temporalily
-        //WaypointRecord = new GameObject[1];
-        //WaypointRecord[0] = Controller.WayPoint[0].gameObject;
-        StatusID = 0;
-        patience = 15;
+    {        
+        TargetObject = reception.EntrancePoint;
+        Patience = 15;
         StartCoroutine("Relax");        
     }    
 
@@ -45,44 +46,16 @@ public class Customer : Character {
     {
         while (true)
         {
-            patience--;
-            //Debug.Log("StatusId: " + StatusID);
-            if (patience <= 0)
-                StatusID = 100;
-                
-            switch (StatusID)
+            Patience--;
+            if (Patience <= 0)
             {
-                case 0: //just spawned
-                    //TargetObject = Controller.WayPoint[1].gameObject;
-                    StatusID = 1;                    
-                    break;
-                case 1: //On the way to Bar Entrance
-                    if (hasReachedTarget(TargetObject))
-                    {
-                        AnimatorComponent.SetInteger("AnimationID", 0);
-                        //TargetObject = FindASeat();
-                        //AddWaypoint(Controller.WayPoint[1]);
-                    }                        
-                    break;
-                case 100: //run out of patience
-                    //Behaviour.SwitchRoom();//should make it run only once
-                    StopCoroutine("RoomBehaviour");
-                    TargetObject = Behaviour.LeaveRoom(); //Debug.Log(TargetObject.name);
-                    break;
-            }
+                TargetObject = Behaviour.LeaveRoom();
+            } else if (Behaviour != null)
+            {
+                TargetObject = Behaviour.RoomBehaviour();
+            }                
             yield return new WaitForSeconds(1);
         }
-    }
-    /*
-    private void AddWaypoint(Transform t)
-    {
-        Array.Resize(ref WaypointRecord, WaypointRecord.Length + 1);
-        WaypointRecord[WaypointRecord.Length - 1] = t.gameObject;
-    }
-    */
-    public int getPatience()
-    {
-        return patience;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -91,29 +64,17 @@ public class Customer : Character {
         {
             if (other.name.Contains("Reception"))
             {
-                Reception RoomType = other.GetComponent<Reception>();
-                Behaviour = new CustReception();
-                Behaviour.RoomBehaviour(this, RoomType, AnimatorComponent);
-                StartCoroutine("RoomBehaviour");
+                Behaviour = new CustReception(this, reception, AnimatorComponent);
+                //Behaviour.RoomBehaviour(this, reception, AnimatorComponent);
             }
             if (other.name.Contains("Bar"))
             {
                 Behaviour.SwitchRoom();
                 Bar RoomType = other.GetComponentInChildren<Bar>(); //Debug.Log("BarTime");
-                Behaviour = new CustBar();
-                Behaviour.RoomBehaviour(this, RoomType, AnimatorComponent);
-                StartCoroutine("RoomBehaviour");
+                Behaviour = new CustBar(this, RoomType, AnimatorComponent);
             }            
         }        
     }
 
-    private IEnumerator RoomBehaviour()
-    {
-        while (true)
-        {
-            TargetObject = Behaviour.RoomBehaviour();
-            yield return new WaitForSeconds(.5f);
-        }
-    }
 
 }

@@ -36,7 +36,7 @@ public class CustPanelScript : MonoBehaviour {
     {
         while (true)
         {
-            patience = cust.getPatience();
+            patience = cust.Patience;
             text.text = "Patience: " + patience.ToString();
             yield return new WaitForSeconds(0.25f);
         }

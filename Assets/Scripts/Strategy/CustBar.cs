@@ -10,13 +10,13 @@ public class CustBar : ICustBehaviour
     //GameObject Target;
     GameObject Seat;    
 
-    public void RoomBehaviour<T>(Customer customer, T RoomType, Animator AnimatorComponent)
+    public CustBar(Customer customer, Bar RoomType, Animator AnimatorComponent)
     {
         cust = customer;
-        bar = RoomType as Bar;
+        bar = RoomType;
         animator = AnimatorComponent;
     }
-
+    
     public GameObject RoomBehaviour()
     {
         if (bar.Seats.Count != 0 && !Seat)

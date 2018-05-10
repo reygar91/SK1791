@@ -10,13 +10,14 @@ public class CustReception : ICustBehaviour
     GameObject Target;
     int targetIndex;
 
-    public void RoomBehaviour<T>(Customer customer, T RoomType, Animator AnimatorComponent)
+
+    public CustReception(Customer customer, Reception RoomType, Animator AnimatorComponent)
     {
         cust = customer;
-        reception = RoomType as Reception;
+        reception = RoomType;
         animator = AnimatorComponent;
     }
-
+    
     public GameObject RoomBehaviour()
     {
         if (!Target)
@@ -48,6 +49,6 @@ public class CustReception : ICustBehaviour
 
     public GameObject LeaveRoom()
     {
-        throw new System.NotImplementedException();
+        return reception.SpawnPoint;
     }
 }
