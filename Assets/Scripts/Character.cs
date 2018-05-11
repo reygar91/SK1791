@@ -6,8 +6,8 @@ public class Character : MonoBehaviour {
 
     private float oldDelta, delta;
     
-
-    private Vector3 SetTargetVector(GameObject TargetObject)
+    /*
+    public Vector3 GetTargetVectorFrom(GameObject TargetObject)
     {
         float x, y, z;
         x = TargetObject.transform.position.x;
@@ -16,18 +16,14 @@ public class Character : MonoBehaviour {
         Vector3 TargetVector = new Vector3(x, y, z);
         return TargetVector;
     }
-
-    public float MoveTo(GameObject TargetObject)
+    */
+    public float MoveTo(Vector3 ObjectPosition)
     {
-        float oldPositionX = transform.position.x;
-        if (TargetObject != null)
-        {
-            Vector3 TargetVector = SetTargetVector(TargetObject);
-            float step = Time.deltaTime;            
-            transform.position = Vector3.MoveTowards(transform.position, TargetVector, 3 * step);
-        }        
-        if (delta != 0) { oldDelta = delta; }        
-        delta = oldPositionX - transform.position.x;
+        Vector3 TargetVector = new Vector3(ObjectPosition.x, transform.position.y, ObjectPosition.z);
+        float step = 3 * Time.deltaTime;        
+        transform.position = Vector3.MoveTowards(transform.position, TargetVector, step);
+        if (delta != 0) { oldDelta = delta; }
+        delta = transform.position.x - TargetVector.x;      
         if (Mathf.Sign(oldDelta) != Mathf.Sign(delta))
         {
             if (delta > 0)
@@ -42,13 +38,11 @@ public class Character : MonoBehaviour {
         return delta;
     }
 
-    public bool hasReachedTarget(GameObject TargetObject)
+    public bool hasReachedTarget(Vector3 TargetVector)
     {
-        if (TargetObject != null)
-        {
-            Vector3 TargetVector = SetTargetVector(TargetObject);
-            return (transform.position == TargetVector);
-        }
-        else return false; //maybe should return true?         
+        bool result_x = (Mathf.Abs(transform.position.x - TargetVector.x) < 0.005f);
+        bool result_z = (Mathf.Abs(transform.position.z - TargetVector.z) < 0.005f);
+        bool result = result_x && result_z;
+        return result;       
     }
 }

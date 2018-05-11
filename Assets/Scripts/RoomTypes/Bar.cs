@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class Bar : MonoBehaviour {
 
-    public GameObject Doors;
+    public GameObject Doors, MiddleOfTheRoom;
     public List<GameObject> Seats;
 }

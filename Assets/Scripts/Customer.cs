@@ -10,7 +10,7 @@ public class Customer : Character {
         get;
         private set;        
     }
-    public GameObject TargetObject
+    public Vector3 TargetVector
     {
         get;
         private set;
@@ -20,6 +20,8 @@ public class Customer : Character {
     private ICustBehaviour Behaviour;
     private Reception reception;
 
+    bool leaving;
+
     private void Awake()
     {
         AnimatorComponent = GetComponentInChildren<Animator>();
@@ -27,15 +29,17 @@ public class Customer : Character {
     }
 
     private void OnEnable()
-    {        
-        TargetObject = reception.EntrancePoint;
-        Patience = 15;
+    {
+        TargetVector = reception.EntrancePoint.transform.position;
+        Behaviour = null;
+        Patience = 45;
+        leaving = false;
         StartCoroutine("Relax");        
     }    
 
     private void Update()
     {
-        float delta = MoveTo(TargetObject);      
+        float delta = MoveTo(TargetVector);      
         if (delta != 0 && AnimatorComponent.GetInteger("AnimationID") != 1)
         {
             AnimatorComponent.SetInteger("AnimationID", 1); 
@@ -49,12 +53,20 @@ public class Customer : Character {
             Patience--;
             if (Patience <= 0)
             {
-                TargetObject = Behaviour.LeaveRoom();
+                TargetVector = Behaviour.LeaveRoom();                
+                if (leaving == false){
+                    Behaviour.SwitchRoom();
+                    leaving = true;
+                }
             } else if (Behaviour != null)
             {
-                TargetObject = Behaviour.RoomBehaviour();
-            }                
-            yield return new WaitForSeconds(1);
+                TargetVector = Behaviour.RoomBehaviour(); //Debug.Log(transform.position.z);
+            }
+            if (hasReachedTarget(TargetVector))
+            {
+                AnimatorComponent.SetInteger("AnimationID", 0);
+            }
+            yield return new WaitForSeconds(.5f);
         }
     }
 
@@ -64,6 +76,10 @@ public class Customer : Character {
         {
             if (other.name.Contains("Reception"))
             {
+                if (Behaviour != null)
+                {
+                    Behaviour.SwitchRoom();
+                }
                 Behaviour = new CustReception(this, reception, AnimatorComponent);
                 //Behaviour.RoomBehaviour(this, reception, AnimatorComponent);
             }

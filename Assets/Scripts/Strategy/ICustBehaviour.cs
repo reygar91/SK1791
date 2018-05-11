@@ -4,7 +4,7 @@ using UnityEngine;
 public interface ICustBehaviour
 {
     //void RoomBehaviour<T>(Customer customer, T RoomType, Animator AnimatorComponent);
-    GameObject RoomBehaviour();
+    Vector3 RoomBehaviour();
     void SwitchRoom();
-    GameObject LeaveRoom();
+    Vector3 LeaveRoom();
 }

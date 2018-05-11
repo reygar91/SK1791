@@ -8,16 +8,18 @@ public class CustBar : ICustBehaviour
     Bar bar;
     Animator animator;
     //GameObject Target;
-    GameObject Seat;    
+    GameObject Seat;
+    int StatusID;
 
     public CustBar(Customer customer, Bar RoomType, Animator AnimatorComponent)
     {
         cust = customer;
         bar = RoomType;
         animator = AnimatorComponent;
+        StatusID = 0;
     }
     
-    public GameObject RoomBehaviour()
+    public Vector3 RoomBehaviour()
     {
         if (bar.Seats.Count != 0 && !Seat)
         {
@@ -25,7 +27,7 @@ public class CustBar : ICustBehaviour
             Seat = bar.Seats[RandomSeat];
             bar.Seats.Remove(Seat);
         }
-        return Seat;
+        return Seat.transform.position;
     }
 
     public void SwitchRoom()
@@ -33,8 +35,32 @@ public class CustBar : ICustBehaviour
         bar.Seats.Add(Seat);
     }
 
-    public GameObject LeaveRoom()
+    public Vector3 LeaveRoom()
     {
-        return bar.Doors;
+        Vector3 targetVector;
+        switch (StatusID)
+        {
+            case 1:
+                targetVector = new Vector3(bar.Doors.transform.position.x, bar.Doors.transform.position.y, bar.MiddleOfTheRoom.transform.position.z);
+                if (cust.hasReachedTarget(targetVector))
+                {
+                    StatusID = 2;
+                }
+                break;
+            case 2:
+                targetVector = bar.Doors.transform.position;
+                if (cust.hasReachedTarget(targetVector))
+                {
+                    StatusID = 2;
+                }
+                break;
+            default:
+                targetVector = new Vector3(cust.transform.position.x, cust.transform.position.y, bar.MiddleOfTheRoom.transform.position.z);
+                if (cust.hasReachedTarget(targetVector)) {
+                    StatusID = 1;
+                }
+                break;
+        }
+        return targetVector;
     }
 }

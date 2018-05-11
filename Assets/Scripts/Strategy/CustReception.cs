@@ -18,7 +18,7 @@ public class CustReception : ICustBehaviour
         animator = AnimatorComponent;
     }
     
-    public GameObject RoomBehaviour()
+    public Vector3 RoomBehaviour()
     {
         if (!Target)
         {
@@ -39,7 +39,7 @@ public class CustReception : ICustBehaviour
             reception.OccupiedSpot[targetIndex] = false;
             targetIndex--;
         }
-        return Target;
+        return Target.transform.position;
     }
 
     public void SwitchRoom()
@@ -47,8 +47,12 @@ public class CustReception : ICustBehaviour
         reception.OccupiedSpot[targetIndex] = false;
     }
 
-    public GameObject LeaveRoom()
+    public Vector3 LeaveRoom()
     {
-        return reception.SpawnPoint;
+        if (cust.gameObject.transform.position == reception.SpawnPoint.transform.position)
+        {
+            cust.gameObject.SetActive(false);
+        }
+        return reception.SpawnPoint.transform.position;
     }
 }
