@@ -8,14 +8,15 @@ public class CustReception : ICustBehaviour
     Reception reception;
     Animator animator;
     GameObject Target;
-    int targetIndex;
+    int targetIndex, StatusID;
 
 
-    public CustReception(Customer customer, Reception RoomType, Animator AnimatorComponent)
+    public CustReception(Customer customer, Reception RoomType)
     {
         cust = customer;
         reception = RoomType;
-        animator = AnimatorComponent;
+        //animator = AnimatorComponent;
+        StatusID = 0;
     }
     
     public Vector3 RoomBehaviour()
@@ -49,10 +50,35 @@ public class CustReception : ICustBehaviour
 
     public Vector3 LeaveRoom()
     {
-        if (cust.gameObject.transform.position == reception.SpawnPoint.transform.position)
+        Vector3 targetVector;
+        switch (StatusID)
         {
-            cust.gameObject.SetActive(false);
+            case 1:
+                targetVector = cust.reception.EntrancePoint.transform.position;
+                if (cust.hasReachedTarget(targetVector))
+                {
+                    StatusID = 2;
+                }
+                break;
+            case 2:
+                targetVector = cust.reception.SpawnPoint.transform.position;
+                if (cust.hasReachedTarget(targetVector))
+                {
+                    cust.gameObject.SetActive(false);
+                }
+                break;
+            default:
+                targetVector = new Vector3(cust.transform.position.x, cust.transform.position.y, reception.EntrancePoint.transform.position.z);
+                if (cust.hasReachedTarget(targetVector))
+                {
+                    StatusID = 1;
+                    if (Target)
+                    {
+                        SwitchRoom();
+                    }                   
+                }
+                break;
         }
-        return reception.SpawnPoint.transform.position;
+        return targetVector;
     }
 }

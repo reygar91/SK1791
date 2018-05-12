@@ -11,11 +11,11 @@ public class CustBar : ICustBehaviour
     GameObject Seat;
     int StatusID;
 
-    public CustBar(Customer customer, Bar RoomType, Animator AnimatorComponent)
+    public CustBar(Customer customer, Bar RoomType)
     {
         cust = customer;
         bar = RoomType;
-        animator = AnimatorComponent;
+        //animator = AnimatorComponent;
         StatusID = 0;
     }
     
@@ -51,8 +51,13 @@ public class CustBar : ICustBehaviour
                 targetVector = bar.Doors.transform.position;
                 if (cust.hasReachedTarget(targetVector))
                 {
-                    StatusID = 2;
+                    cust.transform.position = cust.reception.InternalDoor.transform.position;
+                    targetVector = new Vector3(cust.transform.position.x, cust.transform.position.y, cust.reception.EntrancePoint.transform.position.z);
+                    StatusID = 3;
                 }
+                break;
+            case 3:                
+                targetVector = new Vector3(cust.transform.position.x, cust.transform.position.y, cust.reception.EntrancePoint.transform.position.z);
                 break;
             default:
                 targetVector = new Vector3(cust.transform.position.x, cust.transform.position.y, bar.MiddleOfTheRoom.transform.position.z);

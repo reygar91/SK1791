@@ -7,20 +7,22 @@ public class Customer : Character {
 
     public int Patience
     {
-        get;
-        private set;        
+        get;    private set;        
     }
     public Vector3 TargetVector
     {
-        get;
-        private set;
+        get;    private set;
+    }
+    public Reception reception
+    {
+        get;    private set;
+    }
+    public Animator AnimatorComponent
+    {
+        get;    private set;
     }
 
-    private Animator AnimatorComponent;
     private ICustBehaviour Behaviour;
-    private Reception reception;
-
-    bool leaving;
 
     private void Awake()
     {
@@ -33,9 +35,13 @@ public class Customer : Character {
         TargetVector = reception.EntrancePoint.transform.position;
         Behaviour = null;
         Patience = 45;
-        leaving = false;
-        StartCoroutine("Relax");        
-    }    
+        StartCoroutine("Relax");
+    }
+
+    private void OnDisable()
+    {
+        AnimatorComponent.StopPlayback();
+    }
 
     private void Update()
     {
@@ -52,13 +58,10 @@ public class Customer : Character {
         {
             Patience--;
             if (Patience <= 0)
-            {
-                TargetVector = Behaviour.LeaveRoom();                
-                if (leaving == false){
-                    Behaviour.SwitchRoom();
-                    leaving = true;
-                }
-            } else if (Behaviour != null)
+            {                
+                TargetVector = Behaviour.LeaveRoom();
+            }
+            else if (Behaviour != null)
             {
                 TargetVector = Behaviour.RoomBehaviour(); //Debug.Log(transform.position.z);
             }
@@ -80,14 +83,14 @@ public class Customer : Character {
                 {
                     Behaviour.SwitchRoom();
                 }
-                Behaviour = new CustReception(this, reception, AnimatorComponent);
+                Behaviour = new CustReception(this, reception);
                 //Behaviour.RoomBehaviour(this, reception, AnimatorComponent);
             }
             if (other.name.Contains("Bar"))
             {
                 Behaviour.SwitchRoom();
                 Bar RoomType = other.GetComponentInChildren<Bar>(); //Debug.Log("BarTime");
-                Behaviour = new CustBar(this, RoomType, AnimatorComponent);
+                Behaviour = new CustBar(this, RoomType);
             }            
         }        
     }
