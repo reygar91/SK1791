@@ -5,10 +5,6 @@ using UnityEngine.UI;
 
 public class PersPanelScript : MonoBehaviour {
 
-    //public GameController Controller;
-    //public MyRaycaster Raycaster2D;
-    //private GameObject previousSelectedObject;
-    //public GameObject selectedObject;
     private Text TextComponent;
     private Personel pers;
     private Dropdown DropdownComponent;
@@ -22,7 +18,6 @@ public class PersPanelScript : MonoBehaviour {
     }
     private void OnEnable()
     {
-        //selectedObject = Raycaster2D.getSelectedObject();
         Initialize();
     }
 
@@ -38,10 +33,10 @@ public class PersPanelScript : MonoBehaviour {
         switch (DropdownComponent.value)
         {
             case 0:
-                pers.Job = new Idle();
+                //pers.Job = new Idle();
                 break;
             case 1:
-                pers.Job = new Waiter();
+                //pers.Job = new Waiter();
                 break;
         }
     }

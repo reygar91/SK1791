@@ -4,11 +4,20 @@ using UnityEngine;
 
 public class Personel : Character {
 
-    //public GameController Controller;
-    private Vector3 TargetVector;
-    private GameObject[] WaypointRecord;
-    public IPersJob Job;
-    private Animator AnimatorComponent;
+    public Vector3 TargetVector
+    {
+        get; private set;
+    }
+    public Reception reception
+    {
+        get; private set;
+    }
+    public Animator AnimatorComponent
+    {
+        get; private set;
+    }
+
+    private IPersBehaviour Behaviour;
 
     private void Awake()
     {
@@ -17,8 +26,8 @@ public class Personel : Character {
 
     // Use this for initialization
     void Start () {
-        Job = new Idle();
-        //StartCoroutine("DoTheJob");
+        //Job = new Idle();
+        StartCoroutine("Behave");
     }
 	
 	// Update is called once per frame
@@ -29,16 +38,46 @@ public class Personel : Character {
             AnimatorComponent.SetInteger("AnimationID", 1);
         }
     }
-    
+
+    private IEnumerator Behave()
+    {
+        while (true)
+        {
+            if (Behaviour != null)
+            {
+                TargetVector = Behaviour.RoomBehaviour(); //Debug.Log(transform.position.z);
+            }
+            if (hasReachedTarget(TargetVector))
+            {
+                AnimatorComponent.SetInteger("AnimationID", 0);
+            }
+            yield return new WaitForSeconds(.5f);
+        }
+    }
+    /*
     public void SelectJob(string JobName)
     {
         switch (JobName)
         {
             case "Waiter":
-                Job = new Waiter();                
+                //Job = new Waiter();                
                 break;
         }
     }
+    */
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Room")
+        {
+            if (other.name.Contains("Bar"))
+            {
+                //Behaviour.SwitchRoom();
+                Bar RoomType = other.GetComponentInChildren<Bar>(); Debug.Log("BarTime");
+                Behaviour = new PersBar(this, RoomType);
+            }
+        }
+    }
+
     /*
     private IEnumerator DoTheJob()
     {

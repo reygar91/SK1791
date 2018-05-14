@@ -18,19 +18,7 @@ public class GameController : MonoBehaviour {
      * 0 - CustPanel
      * 1 - PersonelPanel
      * */
-     /*
-    public List<GameObject> unOccupiedSeats;
-
-    private void Awake()
-    {
-        unOccupiedSeats = new List<GameObject>();
-        GameObject[] Seats = GameObject.FindGameObjectsWithTag("Seat");
-        foreach (GameObject item in Seats)
-        {
-            unOccupiedSeats.Add(item);
-        }
-    }
-    */
+     
     // Use this for initialization
     void Start () {
         StartCoroutine("SpawnCustomer");        

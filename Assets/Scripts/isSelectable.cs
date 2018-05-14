@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class isSelectable : MonoBehaviour {
 
@@ -18,9 +17,9 @@ public class isSelectable : MonoBehaviour {
         PersPanel = Controller.Panels[1].GetComponent<PersPanelScript>(); //Debug.Log(PersPanel);
     }
 
-    private void OnMouseDown()
+    private void OnMouseOver() //OnMouseDown() could be used for left click, but for right click OnMouseOver + Input.GetMouseButtonDown(1)
     {
-        if (!IsPointerOverUIObject())
+        if (Input.GetMouseButtonDown(1) && !UI_helper.isPointerOverUI())
         {
             previousObject = selectedObject; //if (previousObject) Debug.Log("previous " + previousObject.name);
             selectedObject = gameObject; //Debug.Log("selected " + selectedObject.name);
@@ -53,14 +52,4 @@ public class isSelectable : MonoBehaviour {
             }
         }
     }
-
-    private bool IsPointerOverUIObject()
-    {
-        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
-        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-        List<RaycastResult> results = new List<RaycastResult>();
-        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
-        return results.Count > 0;
-    }
-
 }

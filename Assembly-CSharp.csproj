@@ -77,12 +77,11 @@
     <Compile Include="Assets\Scripts\Room.cs" />
     <Compile Include="Assets\Scripts\RoomTypes\Bar.cs" />
     <Compile Include="Assets\Scripts\RoomTypes\Reception.cs" />
-    <Compile Include="Assets\Scripts\Strategy\CustBar.cs" />
-    <Compile Include="Assets\Scripts\Strategy\CustReception.cs" />
-    <Compile Include="Assets\Scripts\Strategy\ICustBehaviour.cs" />
-    <Compile Include="Assets\Scripts\Strategy\Idle.cs" />
-    <Compile Include="Assets\Scripts\Strategy\IPersJob.cs" />
-    <Compile Include="Assets\Scripts\Strategy\Waiter.cs" />
+    <Compile Include="Assets\Scripts\Strategy\Customer\CustBar.cs" />
+    <Compile Include="Assets\Scripts\Strategy\Customer\CustReception.cs" />
+    <Compile Include="Assets\Scripts\Strategy\Customer\ICustBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Strategy\Personel\IPersBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Strategy\Personel\PersBar.cs" />
     <Compile Include="Assets\Scripts\UI\CameraMovement.cs" />
     <Compile Include="Assets\Scripts\UI\DisableWithEsc.cs" />
     <Compile Include="Assets\Scripts\UI\EscMenu.cs" />

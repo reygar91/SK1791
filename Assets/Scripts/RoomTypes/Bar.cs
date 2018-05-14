@@ -6,4 +6,5 @@ public class Bar : MonoBehaviour {
 
     public GameObject Doors, MiddleOfTheRoom;
     public List<GameObject> Seats;
+    public List<Customer> custAtBar;
 }
