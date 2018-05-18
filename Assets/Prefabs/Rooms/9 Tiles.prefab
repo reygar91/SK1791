@@ -79,7 +79,6 @@ GameObject:
   - component: {fileID: 4984023912299474}
   - component: {fileID: 54443862955181106}
   - component: {fileID: 65753325979351902}
-  - component: {fileID: 114274133865194310}
   m_Layer: 0
   m_Name: 9 Tiles
   m_TagString: Room
@@ -1632,21 +1631,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _entityType: 0
---- !u!114 &114274133865194310
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1315725597358616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d354ad67c293e34296ef99fce4e3db3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  RoomSize: 9
-  Interior:
-  - {fileID: 0}
-  allowedToBuild: 1
 --- !u!114 &114431042759856180
 MonoBehaviour:
   m_ObjectHideFlags: 1

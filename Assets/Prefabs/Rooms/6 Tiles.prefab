@@ -60,7 +60,6 @@ GameObject:
   - component: {fileID: 4925329652907610}
   - component: {fileID: 54173078862545282}
   - component: {fileID: 65760388386464978}
-  - component: {fileID: 114766854198102304}
   m_Layer: 0
   m_Name: 6 Tiles
   m_TagString: Room
@@ -4822,21 +4821,6 @@ MonoBehaviour:
   m_selectedFaces: 
   m_SelectedEdges: []
   m_selectedTriangles: 
---- !u!114 &114766854198102304
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1657204141509190}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d354ad67c293e34296ef99fce4e3db3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  RoomSize: 6
-  Interior:
-  - {fileID: 0}
-  allowedToBuild: 1
 --- !u!114 &114770556191201404
 MonoBehaviour:
   m_ObjectHideFlags: 1

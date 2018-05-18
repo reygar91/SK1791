@@ -75,9 +75,10 @@ public class Customer : Character {
 
     private void OnTriggerEnter(Collider other)
     {
+        GameObject another = other.transform.parent.gameObject;
         if (other.tag == "Room")
         {
-            if (other.name.Contains("Reception"))
+            if (another.name.Contains("Reception"))
             {
                 if (Behaviour != null)
                 {
@@ -86,10 +87,11 @@ public class Customer : Character {
                 Behaviour = new CustReception(this, reception);
                 //Behaviour.RoomBehaviour(this, reception, AnimatorComponent);
             }
-            if (other.name.Contains("Bar"))
+            if (another.name.Contains("Bar"))
             {
                 Behaviour.SwitchRoom();
-                Bar RoomType = other.GetComponentInChildren<Bar>(); //Debug.Log("BarTime");
+                Bar RoomType = another.GetComponent<Bar>();
+                //Bar RoomType = other.GetComponentInChildren<Bar>(); //Debug.Log("BarTime");
                 Behaviour = new CustBar(this, RoomType);
             }            
         }        

@@ -5,16 +5,26 @@ using UnityEngine;
 public class BuildPreview : MonoBehaviour {
 
     //public GameObject Doors;
-    public GameObject[] InteriorOption;
+    public GameObject[] Rooms;
     /*
      * 0 - Bar;
     */
-    public GameObject Interior, InteriorContainer, RoomContainer;
+    public GameObject RoomContainer;
     private bool allowedToBuild = true;
+    private BoxCollider myCollider;
+    private GameObject child;
 
+    private void Awake()
+    {
+        myCollider = GetComponent<BoxCollider>();
+    }
     private void OnEnable()
     {
-        Interior.transform.SetParent(transform);
+        child = gameObject.transform.GetChild(0).gameObject;
+        BoxCollider ChildCollider = child.GetComponentInChildren<BoxCollider>();
+        myCollider.center = new Vector3(ChildCollider.center.x, myCollider.center.y, myCollider.center.z);
+        myCollider.size = new Vector3(ChildCollider.size.x, myCollider.size.y, myCollider.size.z);       
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -35,17 +45,14 @@ public class BuildPreview : MonoBehaviour {
 
     private void SelectBuildPosition()
     {
-        Vector3 newPosition = UI_helper.MoveWithMouse(gameObject, 3, new Vector3(0, -0.1f, 0.9f));
+        Vector3 newPosition = UI_helper.MoveWithMouse(gameObject, 3, new Vector3(0, 0, 0));
         if (Input.GetMouseButtonDown(0) && !UI_helper.isPointerOverUI())
         {
             if (allowedToBuild == true)
             {
-                GameObject newRoom = Instantiate(gameObject, RoomContainer.transform);
+                GameObject newRoom = Instantiate(child, RoomContainer.transform);
                 newRoom.transform.position = newPosition;
-                Destroy(newRoom.GetComponent<BuildPreview>());
-                Interior.transform.SetParent(InteriorContainer.transform);
-                newRoom.name = Interior.name;
-                gameObject.SetActive(false);
+                resetPreview();
             }
             else
             {
@@ -59,8 +66,18 @@ public class BuildPreview : MonoBehaviour {
         SelectBuildPosition();
         if (Input.GetMouseButtonDown(1))
         {
-            gameObject.SetActive(false);
+            resetPreview();
         }
     }
+
+    private void resetPreview()
+    {
+        transform.position = new Vector3();
+        child.transform.SetParent(transform.parent);
+        //child.transform.position = new Vector3();        
+        child.SetActive(false);        
+        gameObject.SetActive(false);
+    }
+
 
 }
