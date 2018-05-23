@@ -7,8 +7,8 @@ TagManager:
   - Customer
   - Personel
   - Seat
-  - InteriorPreview
   - Room
+  - RoomNearby
   layers:
   - Default
   - TransparentFX
