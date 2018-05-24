@@ -67,12 +67,13 @@ public class Personel : Character {
     */
     private void OnTriggerEnter(Collider other)
     {
+        GameObject another = other.transform.parent.gameObject;
         if (other.tag == "Room")
         {
-            if (other.name.Contains("Bar"))
+            if (another.name.Contains("Bar"))
             {
                 //Behaviour.SwitchRoom();
-                Bar RoomType = other.GetComponentInChildren<Bar>(); Debug.Log("BarTime");
+                Bar RoomType = another.GetComponent<Bar>(); Debug.Log("BarTime");
                 Behaviour = new PersBar(this, RoomType);
             }
         }

@@ -63,9 +63,29 @@ public class CustBar : ICustBehaviour
                     int RandomSeat = Random.Range(0, bar.Seats.Count);
                     Seat = bar.Seats[RandomSeat];
                     bar.Seats.Remove(Seat);
-                    bar.custAtBar.Add(cust);
                     targetVector = Seat.transform.position;
+                    StatusID = 2;
                 }
+                break;
+            case 2:
+                if (cust.hasReachedTarget(targetVector))
+                {
+                    bar.custAtBar.Add(cust);
+                    int startIndex = Seat.name.IndexOf("_");
+                    string orientation = Seat.name.Substring(startIndex + 1);
+                    switch (orientation)
+                    {
+                        case "Right":
+                            cust.transform.rotation = new Quaternion(0, -1, 0, 0);//facing from right to left
+                            break;
+                        case "Left":
+                            cust.transform.rotation = new Quaternion(0, 0, 0, 1);//facing from left to right
+                            break;
+                    }
+                    StatusID = 3;
+                }
+                break;
+            case 3:
                 break;
             default:
                 targetVector = new Vector3(cust.transform.position.x, 
@@ -82,6 +102,10 @@ public class CustBar : ICustBehaviour
 
     public void SwitchRoom()
     {
-        bar.Seats.Add(Seat);
+        if (Seat)
+        {
+            bar.Seats.Add(Seat);
+            bar.custAtBar.Remove(cust);
+        }        
     }
 }

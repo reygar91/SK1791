@@ -28,8 +28,11 @@ public class PersBar : IPersBehaviour
         //Vector3 targetVector;
         switch (StatusID)
         {
-            case 1://set random target to move along the room and change statusID so it was done only once                
-                targetVector = new Vector3(pers.transform.position.x,
+            case 1://set random target to move along the room and change statusID so it was done only once 
+                float delta = bar.Doors.transform.position.x - bar.MiddleOfTheRoom.transform.position.x;//distance from center of the room to the doors, considering doors located right to the center. doors.x > center.x
+                float minX = bar.MiddleOfTheRoom.transform.position.x - delta;
+                float maxX = bar.MiddleOfTheRoom.transform.position.x + delta;
+                targetVector = new Vector3(Random.Range(minX, maxX),
                     pers.transform.position.y,
                     bar.MiddleOfTheRoom.transform.position.z);
                 StatusID = 2;
