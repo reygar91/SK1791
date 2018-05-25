@@ -26,27 +26,18 @@ public class CustReception : ICustBehaviour
         {
             case 1:
                 targetVector = cust.reception.EntrancePoint.transform.position;
-                if (cust.hasReachedTarget(targetVector))
-                {
-                    StatusID = 2;
-                }
+                StatusID = 2;
                 break;
             case 2:
                 targetVector = cust.reception.SpawnPoint.transform.position;
-                if (cust.hasReachedTarget(targetVector))
-                {
-                    cust.gameObject.SetActive(false);
-                }
+                cust.gameObject.SetActive(false);
                 break;
             default:
                 targetVector = new Vector3(cust.transform.position.x, cust.transform.position.y, reception.EntrancePoint.transform.position.z);
-                if (cust.hasReachedTarget(targetVector))
+                StatusID = 1;
+                if (Target)
                 {
-                    StatusID = 1;
-                    if (Target)
-                    {
-                        SwitchRoom();
-                    }
+                    SwitchRoom();
                 }
                 break;
         }

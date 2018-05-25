@@ -12,17 +12,10 @@ public class Personel : Character {
     {
         get; private set;
     }
-    public Animator AnimatorComponent
-    {
-        get; private set;
-    }
 
     private IPersBehaviour Behaviour;
 
-    private void Awake()
-    {
-        AnimatorComponent = GetComponentInChildren<Animator>();
-    }
+
 
     // Use this for initialization
     void Start () {
@@ -32,11 +25,7 @@ public class Personel : Character {
 	
 	// Update is called once per frame
 	void Update () {
-        float delta = MoveTo(TargetVector);
-        if (delta != 0 && AnimatorComponent.GetInteger("AnimationID") != 1)
-        {
-            AnimatorComponent.SetInteger("AnimationID", 1);
-        }
+        MoveTo(TargetVector);
     }
 
     private IEnumerator Behave()

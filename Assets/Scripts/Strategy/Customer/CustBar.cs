@@ -11,6 +11,8 @@ public class CustBar : ICustBehaviour
     Vector3 targetVector;
     int StatusID;
 
+    //int counter = 0;
+
     public CustBar(Customer customer, Bar RoomType)
     {
         cust = customer;
@@ -20,7 +22,6 @@ public class CustBar : ICustBehaviour
 
     public Vector3 LeaveRoom()
     {
-        //Vector3 targetVector;
         switch (StatusID)
         {
             case 101:
@@ -54,10 +55,9 @@ public class CustBar : ICustBehaviour
 
     public Vector3 RoomBehaviour()
     {
-        //Vector3 targetVector;
         switch (StatusID)
         {
-            case 1:
+            case 1: //find a seat and select it as new target
                 if (bar.Seats.Count != 0 && !Seat)
                 {
                     int RandomSeat = Random.Range(0, bar.Seats.Count);
@@ -67,9 +67,7 @@ public class CustBar : ICustBehaviour
                     StatusID = 2;
                 }
                 break;
-            case 2:
-                if (cust.hasReachedTarget(targetVector))
-                {
+            case 2: //adding cust to custAtBar list + setting his orientation to correct side
                     bar.custAtBar.Add(cust);
                     int startIndex = Seat.name.IndexOf("_");
                     string orientation = Seat.name.Substring(startIndex + 1);
@@ -83,18 +81,21 @@ public class CustBar : ICustBehaviour
                             break;
                     }
                     StatusID = 3;
-                }
                 break;
-            case 3:
+            case 3://here we play animation for cust.AnimationTime duration
+                cust.AnimationTime = 5f; //Debug.Log(StatusID);
+                cust.Wait = true;                
+                StatusID = 4;
                 break;
-            default:
+            case 4://after main action finished playing idle animation till the rest of patience
+                cust.AnimationTime = cust.Patience; //Debug.Log(StatusID);
+                cust.Wait = true; 
+                break;
+            default: // move to center of the room
                 targetVector = new Vector3(cust.transform.position.x, 
                     cust.transform.position.y, 
                     bar.MiddleOfTheRoom.transform.position.z);
-                if (cust.hasReachedTarget(targetVector))
-                {
                     StatusID = 1;
-                }
                 break;
         }
         return targetVector;

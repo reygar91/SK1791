@@ -17,13 +17,16 @@ public class Customer : Character {
     {
         get;    private set;
     }
-    public Animator AnimatorComponent
-    {
-        get;    private set;
-    }
-    
-    delegate bool TaskFuncDelegate(Vector3 target);
-    TaskFuncDelegate TaskCompleted;
+    //public Animator AnimatorComponent
+    //{
+    //    get;    private set;
+    //}
+
+
+    public bool Wait;
+    public float AnimationTime;
+    //delegate bool TaskFuncDelegate(Vector3 target);
+    //TaskFuncDelegate TaskCompleted;
 
     private ICustBehaviour Behaviour;
 
@@ -38,66 +41,39 @@ public class Customer : Character {
         TargetVector = reception.EntrancePoint.transform.position;
         Behaviour = null;
         Patience = 25;
+        Wait = false;
+        //TaskCompleted = hasReachedTarget;
         StartCoroutine("CountDown");
         StartCoroutine("Relax");
     }
 
-    private void OnDisable()
-    {
-        //AnimatorComponent.StopPlayback();
-    }
 
     private void Update()
     {
-        float delta = MoveTo(TargetVector);      
-        if (delta != 0 && AnimatorComponent.GetInteger("AnimationID") != 1)
-        {
-            AnimatorComponent.SetInteger("AnimationID", 1); 
-        }      
+        MoveTo(TargetVector);    
     }
-    /*
+
     private IEnumerator Relax()
     {
         while (true)
         {
-            Patience--;
-            if (Patience <= 0)
-            {                
-                TargetVector = Behaviour.LeaveRoom();
-            }
-            else if (Behaviour != null)
+            if (Wait)
             {
-                TargetVector = Behaviour.RoomBehaviour(); //Debug.Log(transform.position.z);
-            }
-            if (hasReachedTarget(TargetVector))
+                Wait = false;
+                yield return new WaitForSeconds(AnimationTime);
+            } else
             {
                 AnimatorComponent.SetInteger("AnimationID", 0);
-            }
-            yield return new WaitForSeconds(.5f);
-            //yield return new WaitWhile();
-        }
-    }
-    */
-    private IEnumerator Relax()
-    {
-        while (true)
-        {
-            AnimatorComponent.SetInteger("AnimationID", 0);
-            TaskCompleted = hasReachedTarget;
-            if (Patience <= 0)
-            {
-                TargetVector = Behaviour.LeaveRoom();
-            }
-            else if (Behaviour != null)
-            {
-                TargetVector = Behaviour.RoomBehaviour(); //Debug.Log(transform.position.z);
-            }
-            if (hasReachedTarget(TargetVector))
-            {
-                AnimatorComponent.SetInteger("AnimationID", 0);
-            }
-            //yield return new WaitForSeconds(.5f);
-            yield return new WaitUntil(() => TaskCompleted(TargetVector));
+                if (Patience <= 0)
+                {
+                    TargetVector = Behaviour.LeaveRoom();
+                }
+                else if (Behaviour != null)
+                {
+                    TargetVector = Behaviour.RoomBehaviour();
+                }
+                yield return new WaitUntil(() => hasReachedTarget(TargetVector));
+            }  
         }
     }
     private IEnumerator CountDown()
@@ -105,9 +81,9 @@ public class Customer : Character {
         while (true)
         {
             Patience--;
-            if (Patience <= 0)
+            if (Patience <= 0 && Wait)
             {
-                //TargetVector = Behaviour.LeaveRoom();
+                Wait = false;
             }
             yield return new WaitForSeconds(1);
         }
@@ -125,24 +101,17 @@ public class Customer : Character {
                     Behaviour.SwitchRoom();
                 }
                 Behaviour = new CustReception(this, reception);
-                TaskCompleted = AlwaysTrue;
-                //Behaviour.RoomBehaviour(this, reception, AnimatorComponent);
+                TargetVector = transform.position; //make itself a target so hasReachedTarged evaluates to true
             }
             if (another.name.Contains("Bar"))
             {
                 Behaviour.SwitchRoom();
                 Bar RoomType = another.GetComponent<Bar>();
-                //Bar RoomType = other.GetComponentInChildren<Bar>(); //Debug.Log("BarTime");
                 Behaviour = new CustBar(this, RoomType);
-                TaskCompleted = AlwaysTrue;
+                TargetVector = transform.position; //make itself a target so hasReachedTarged evaluates to true
+
             }            
         }        
     }
-
-    private bool AlwaysTrue(Vector3 anyVector)
-    {
-        return true;
-    }
-
 
 }
