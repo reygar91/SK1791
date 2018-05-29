@@ -13,13 +13,20 @@ public class Personel : Character {
         get; private set;
     }
 
+    public bool Wait;
+    public float AnimationTime;
+
     private IPersBehaviour Behaviour;
 
+    private void Awake()
+    {
+        AnimatorComponent = GetComponentInChildren<Animator>();
+        TargetVector = transform.position;
+    }
 
 
     // Use this for initialization
-    void Start () {
-        //Job = new Idle();
+    void Start () {        
         StartCoroutine("Behave");
     }
 	
@@ -32,15 +39,20 @@ public class Personel : Character {
     {
         while (true)
         {
-            if (Behaviour != null)
+            if (Wait)
             {
-                TargetVector = Behaviour.RoomBehaviour(); //Debug.Log(transform.position.z);
+                Wait = false;
+                yield return new WaitForSeconds(AnimationTime);
             }
-            if (hasReachedTarget(TargetVector))
+            else
             {
                 AnimatorComponent.SetInteger("AnimationID", 0);
+                if (Behaviour != null)
+                {
+                    TargetVector = Behaviour.RoomBehaviour();
+                }
+                yield return new WaitUntil(() => hasReachedTarget(TargetVector));
             }
-            yield return new WaitForSeconds(.5f);
         }
     }
     /*
@@ -62,30 +74,10 @@ public class Personel : Character {
             if (another.name.Contains("Bar"))
             {
                 //Behaviour.SwitchRoom();
-                Bar RoomType = another.GetComponent<Bar>(); Debug.Log("BarTime");
+                Bar RoomType = another.GetComponent<Bar>();// Debug.Log("BarTime");
                 Behaviour = new PersBar(this, RoomType);
+                TargetVector = transform.position; //make itself a target so hasReachedTarged evaluates to true
             }
         }
     }
-
-    /*
-    private IEnumerator DoTheJob()
-    {
-        while (true)
-        {
-            bool isReachedTarget;
-            if (TargetObject == gameObject)
-            {
-                isReachedTarget = false;
-            }
-            else
-            {
-                isReachedTarget = hasReachedTarget(TargetVector);
-                if (isReachedTarget) { AnimatorComponent.SetInteger("AnimationID", 0); }
-            }
-            TargetObject = Job.JobInstructions(isReachedTarget);
-            yield return new WaitForSeconds(1);
-        }
-    }
-    */
 }

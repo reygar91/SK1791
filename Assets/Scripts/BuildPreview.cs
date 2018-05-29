@@ -17,28 +17,28 @@ public class BuildPreview : MonoBehaviour {
 
     private void Awake()
     {
-        int GridXLenght = 8;
+        int GridXLenght = 9;
         int GridYHeight = 4;
         PermissionUpper = new int[GridYHeight, GridXLenght];
         PermissionLower = new int[GridYHeight, GridXLenght];
-        //assinning values 0 - strict not allowed, 1 - allowed; -1 soft not allowed
+        //assinning values 0 - strict not allowed, 2 - allowed; 1 soft not allowed
         for (int row = 0; row < GridYHeight; row++)
         {
             for (int col = 0; col < GridXLenght; col++)
             {
-                if (row == 0 && col >= 4)
+                if (row == 0 && col == 3)
                 {
-                    PermissionUpper[row, col] = 1;
-                } else if (row == 1 && col < 4)
+                    PermissionUpper[row, col] = 2;
+                } else if (row == 1 && col < 3)
                 {
-                    PermissionUpper[row, col] = 1;
+                    PermissionUpper[row, col] = 2;
                     PermissionUpper[row-1, col] = 0;
-                    PermissionLower[row, col] = 1;
+                    PermissionLower[row, col] = 2;
                 }
                 else
                 {
-                    PermissionUpper[row, col] = -1;
-                    PermissionLower[row, col] = -1;
+                    PermissionUpper[row, col] = 1;
+                    PermissionLower[row, col] = 1;
                 }               
             }
         }
@@ -69,15 +69,15 @@ public class BuildPreview : MonoBehaviour {
         {
             Permission = PermissionUpper;
         }
-        int GridYAbs = Mathf.Abs(GridY);
-        if (Permission[GridYAbs, GridX] == 1)
+        int GridYAbs = Mathf.Abs(GridY); //Debug.Log("length" +Permission.Length + "gridX+"+ GridX + roomSizeKoef);
+        if (Permission[GridYAbs, GridX] != 0 && (GridX + roomSizeKoef) < Permission.Length/4)
         {
             int BuildAllowed = 1;
             for (int col = GridX + roomSizeKoef; col >= GridX; col--)
             {
                 BuildAllowed = BuildAllowed * Permission[GridYAbs, col];
             }
-            if (BuildAllowed !=0)
+            if (BuildAllowed > 1)
             {
                 gameObject.transform.position = newPosition;
                 if (Input.GetMouseButtonDown(0) && !UI_helper.isPointerOverUI())
@@ -86,10 +86,25 @@ public class BuildPreview : MonoBehaviour {
                     newRoom.transform.position = newPosition;
                     resetPreview();
                     //setting allowed to build spots in array
-                    for (int col = GridX + roomSizeKoef; col >= GridX; col--)
+                    if (GridY == 0)
                     {
-                        Permission[GridYAbs, col] = 0;
-                        Permission[GridYAbs + 1, col] = 1;
+                        if ((GridX + roomSizeKoef + 1) < Permission.Length / 4)
+                        {
+                            Permission[0, GridX + roomSizeKoef + 1] = 2;
+                        }                        
+                        for (int col = GridX + roomSizeKoef; col >= GridX; col--)
+                        {
+                            Permission[0, col] = 0;
+                            Permission[1, col] = 2;
+                            PermissionLower[1, col] = 2;
+                        }
+                    } else
+                    {
+                        for (int col = GridX + roomSizeKoef; col >= GridX; col--)
+                        {
+                            Permission[GridYAbs, col] = 0;
+                            Permission[GridYAbs + 1, col] = 2;
+                        }
                     }
                     //end
                 }

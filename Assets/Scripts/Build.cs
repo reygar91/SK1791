@@ -9,7 +9,31 @@ public class Build : MonoBehaviour {
     public RectTransform SizeGroup;
     public BuildPreview Preview;
     private int RoomIndex;
-    
+
+    //private List<GameObject> Rooms;
+
+    GameObject[] Rooms;
+
+    private void OnEnable()
+    {        
+        Rooms = GameObject.FindGameObjectsWithTag("Room");
+        foreach (GameObject item in Rooms)
+        {
+            item.layer = 0;
+        }
+    }
+    private void OnDisable()
+    {
+        //Rooms = GameObject.FindGameObjectsWithTag("Room");
+        foreach (GameObject item in Rooms)
+        {
+            item.layer = 2;
+        }
+        if (Preview)
+        {
+            Preview.gameObject.SetActive(false);
+        }
+    }
 
 
     public void SelectSize(int i)
@@ -31,14 +55,6 @@ public class Build : MonoBehaviour {
         {
             RoomIndex = i;
             SizeGroup.gameObject.SetActive(true);
-        }
-    }
-
-    private void OnDisable()
-    {
-        if (Preview)
-        {
-            Preview.gameObject.SetActive(false);
         }
     }
 
