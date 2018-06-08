@@ -26,28 +26,23 @@ public class CustBar : ICustBehaviour
         {
             case 101:
                 targetVector = new Vector3(bar.Doors.transform.position.x, bar.Doors.transform.position.y, bar.MiddleOfTheRoom.transform.position.z);
-                if (cust.hasReachedTarget(targetVector))
-                {
-                    StatusID = 102;
-                }
+                StatusID = 102;
                 break;
             case 102:
                 targetVector = bar.Doors.transform.position;
-                if (cust.hasReachedTarget(targetVector))
-                {
-                    cust.transform.position = cust.reception.InternalDoor.transform.position;
-                    targetVector = new Vector3(cust.transform.position.x, cust.transform.position.y, cust.reception.EntrancePoint.transform.position.z);
-                    StatusID = 103;
-                }
+                StatusID = 103;
                 break;
-            case 103:                
+            case 103:
+                cust.transform.position = cust.reception.InternalDoor.transform.position;
+                targetVector = new Vector3(cust.transform.position.x, cust.transform.position.y, cust.reception.EntrancePoint.transform.position.z);
+                StatusID = 104;
+                break;
+            case 104:
                 targetVector = new Vector3(cust.transform.position.x, cust.transform.position.y, cust.reception.EntrancePoint.transform.position.z);
                 break;
             default://move to the center of the room
                 targetVector = new Vector3(cust.transform.position.x, cust.transform.position.y, bar.MiddleOfTheRoom.transform.position.z);
-                if (cust.hasReachedTarget(targetVector)) {
-                    StatusID = 101;
-                }
+                StatusID = 101;
                 break;
         }
         return targetVector;

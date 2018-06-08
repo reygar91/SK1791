@@ -15,7 +15,14 @@ public class Character : MonoBehaviour {
         if (!hasReachedTarget(ObjectPosition))
         {
             Vector3 TargetVector = new Vector3(ObjectPosition.x, transform.position.y, ObjectPosition.z);
-            float step = 3 * Time.deltaTime;
+            float step;
+            if (TimeFlow.Pause)
+            {
+                step = 0; AnimatorComponent.enabled = false;
+            } else
+            {
+                step = 3 * Time.deltaTime; AnimatorComponent.enabled = true;
+            }
             transform.position = Vector3.MoveTowards(transform.position, TargetVector, step);
             MovingDirection(TargetVector);
             if (AnimatorComponent.GetInteger("AnimationID") != 1)

@@ -76,6 +76,7 @@
     <Compile Include="Assets\Scripts\PersPanelScript.cs" />
     <Compile Include="Assets\Scripts\RoomTypes\Bar.cs" />
     <Compile Include="Assets\Scripts\RoomTypes\Reception.cs" />
+    <Compile Include="Assets\Scripts\RoomTypes\Room.cs" />
     <Compile Include="Assets\Scripts\Strategy\Customer\CustBar.cs" />
     <Compile Include="Assets\Scripts\Strategy\Customer\CustReception.cs" />
     <Compile Include="Assets\Scripts\Strategy\Customer\ICustBehaviour.cs" />

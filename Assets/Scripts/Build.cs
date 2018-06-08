@@ -12,22 +12,22 @@ public class Build : MonoBehaviour {
 
     //private List<GameObject> Rooms;
 
-    GameObject[] Rooms;
+    //GameObject[] Rooms;
 
     private void OnEnable()
     {        
-        Rooms = GameObject.FindGameObjectsWithTag("Room");
-        foreach (GameObject item in Rooms)
+        //Rooms = GameObject.FindGameObjectsWithTag("Room");
+        foreach (Room item in Room.roomsList)
         {
-            item.layer = 0;
+            item.boxCollider.gameObject.layer = 0;
         }
     }
     private void OnDisable()
     {
         //Rooms = GameObject.FindGameObjectsWithTag("Room");
-        foreach (GameObject item in Rooms)
+        foreach (Room item in Room.roomsList)
         {
-            item.layer = 2;
+            item.boxCollider.gameObject.layer = 2;
         }
         if (Preview)
         {
@@ -41,7 +41,7 @@ public class Build : MonoBehaviour {
         if (SizeToggles[i].isOn)
         {
             Preview.Rooms[3 * RoomIndex + i].transform.SetParent(Preview.transform);
-            Preview.Rooms[3 * RoomIndex + i].SetActive(true);
+            Preview.Rooms[3 * RoomIndex + i].gameObject.SetActive(true);
             Preview.gameObject.SetActive(true);
             SizeToggles[i].isOn = false; // Disabling Toggle, so dont have to click twice when building similar constructions
             RoomToggles[RoomIndex].isOn = false;

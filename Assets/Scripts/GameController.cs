@@ -29,7 +29,11 @@ public class GameController : MonoBehaviour {
         if (Input.GetButtonDown("Cancel") && !DisableWithEsc.ActivePanel())
         {
             MenuPanel.SetActive(true);
-        }               
+        }
+        if (Input.GetButtonDown("Jump"))
+        {
+            TimeFlow.Pause = !TimeFlow.Pause;
+        }
     }
 
     private IEnumerator SpawnCustomer()

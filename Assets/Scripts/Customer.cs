@@ -42,6 +42,8 @@ public class Customer : Character {
         Behaviour = null;
         Patience = 25;
         Wait = false;
+        int RandomNumber = UnityEngine.Random.Range(0, 1000);
+        name = "Customer_" + RandomNumber;
         //TaskCompleted = hasReachedTarget;
         StartCoroutine("CountDown");
         StartCoroutine("Relax");
@@ -80,12 +82,19 @@ public class Customer : Character {
     {
         while (true)
         {
-            Patience--;
-            if (Patience <= 0 && Wait)
+            if (TimeFlow.Pause)
             {
-                Wait = false;
+                yield return new WaitWhile(() => TimeFlow.Pause);
             }
-            yield return new WaitForSeconds(1);
+            else
+            {
+                Patience--;
+                if (Patience <= 0 && Wait)
+                {
+                    Wait = false;
+                }
+                yield return new WaitForSeconds(1);
+            }
         }
     }
 
@@ -98,7 +107,7 @@ public class Customer : Character {
             {
                 if (Behaviour != null)
                 {
-                    Behaviour.SwitchRoom();
+                    Behaviour.SwitchRoom(); //Debug.Log("leave room onTirggerEnter switch");
                 }
                 Behaviour = new CustReception(this, reception);
                 TargetVector = transform.position; //make itself a target so hasReachedTarged evaluates to true

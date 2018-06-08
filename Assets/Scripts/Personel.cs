@@ -22,6 +22,8 @@ public class Personel : Character {
     {
         AnimatorComponent = GetComponentInChildren<Animator>();
         TargetVector = transform.position;
+        //SpriteRenderer[] charModel = GetComponentsInChildren<SpriteRenderer>();//collection of sprites of this item
+        //Debug.Log(charModel[0].sprite.name);
     }
 
 

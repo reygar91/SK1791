@@ -8,6 +8,7 @@ public class CustReception : ICustBehaviour
     Reception reception;
     Animator animator;
     GameObject Target;
+    Vector3 targetVector;
     int targetIndex, StatusID;
 
 
@@ -21,7 +22,6 @@ public class CustReception : ICustBehaviour
 
     public Vector3 LeaveRoom()
     {
-        Vector3 targetVector;
         switch (StatusID)
         {
             case 1:
@@ -30,15 +30,15 @@ public class CustReception : ICustBehaviour
                 break;
             case 2:
                 targetVector = cust.reception.SpawnPoint.transform.position;
+                StatusID = 3;
+                break;
+            case 3:
                 cust.gameObject.SetActive(false);
                 break;
             default:
                 targetVector = new Vector3(cust.transform.position.x, cust.transform.position.y, reception.EntrancePoint.transform.position.z);
                 StatusID = 1;
-                if (Target)
-                {
-                    SwitchRoom();
-                }
+                SwitchRoom(); //Debug.Log("leave room default switch");
                 break;
         }
         return targetVector;
@@ -70,7 +70,11 @@ public class CustReception : ICustBehaviour
 
     public void SwitchRoom()
     {
-        reception.OccupiedSpot[targetIndex] = false;
+        if (Target)
+        {
+            reception.OccupiedSpot[targetIndex] = false; //Debug.Log(cust.name + "_triggers");
+            Target = null;
+        }
     }
     
 }

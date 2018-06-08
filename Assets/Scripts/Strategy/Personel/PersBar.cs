@@ -25,61 +25,48 @@ public class PersBar : IPersBehaviour
 
     public Vector3 RoomBehaviour()
     {
-        //Vector3 targetVector;
+        Vector3 persPos = pers.transform.position;
+        Vector3 custPos;
+        Vector3 Middle = bar.MiddleOfTheRoom.transform.position;
         switch (StatusID)
         {
-            case 1://set random target to move along the room and change statusID so it was done only once 
-                float delta = bar.Doors.transform.position.x - bar.MiddleOfTheRoom.transform.position.x;//distance from center of the room to the doors, considering doors located right to the center. doors.x > center.x
-                float minX = bar.MiddleOfTheRoom.transform.position.x - delta;
-                float maxX = bar.MiddleOfTheRoom.transform.position.x + delta;
-                targetVector = new Vector3(Random.Range(minX, maxX),
-                    pers.transform.position.y,
-                    bar.MiddleOfTheRoom.transform.position.z);
-                StatusID = 2;
-                break;
-            case 2:// cheking if there are any custs to serve or reached previous random target
+            case 1:// cheking if there are any custs to serve or reached previous random target
                 if (bar.custAtBar.Count != 0)
                 {
                     StatusID = 3;
                 }
-                else if (pers.hasReachedTarget(targetVector))
+                else
                 {
-                    StatusID = 1;
+                    StatusID = 2;
                 }
+                break;
+            case 2://set random target to move along the room and change statusID so it was done only once 
+                float delta = bar.Doors.transform.position.x - Middle.x;//distance from center of the room to the doors, considering doors located right to the center. doors.x > center.x
+                float minX = Middle.x - delta;
+                float maxX = Middle.x + delta;
+                targetVector = new Vector3(Random.Range(minX, maxX), persPos.y, Middle.z);
+                StatusID = 1;                
                 break;
             case 3://setting target to guest X position and changing StatusID, so it is done only once
                 int index = Random.Range(0, bar.custAtBar.Count);
                 cust = bar.custAtBar[index];
-                targetVector = new Vector3(cust.gameObject.transform.position.x,
-                    pers.transform.position.y,
-                    bar.MiddleOfTheRoom.transform.position.z);
+                custPos = cust.gameObject.transform.position;
+                targetVector = new Vector3(custPos.x, persPos.y, Middle.z);
                 bar.custAtBar.Remove(cust);
                 StatusID = 4;
                 break;
             case 4://setting target to guest X,Z position & changing StatusID
-                if (pers.hasReachedTarget(targetVector))
-                {
-                    targetVector = new Vector3(cust.gameObject.transform.position.x,
-                        pers.transform.position.y,
-                        cust.gameObject.transform.position.z);
-                    StatusID = 5;
-                }
+                custPos = cust.gameObject.transform.position;
+                targetVector = new Vector3(custPos.x, persPos.y, custPos.z);
+                StatusID = 5;
                 break;
             case 5:
-                if (pers.hasReachedTarget(targetVector))
-                {
-                    GoldManager.AddGold(150);
-                    StatusID = 0;
-                }
+                GoldManager.AddGold(150);
+                StatusID = 0;
                 break;
             default://when just entered the room or just served cust
-                targetVector = new Vector3(pers.transform.position.x, 
-                    pers.transform.position.y, 
-                    bar.MiddleOfTheRoom.transform.position.z);
-                if (pers.hasReachedTarget(targetVector))
-                {
-                    StatusID = 1;
-                }
+                targetVector = new Vector3(persPos.x, persPos.y, Middle.z);
+                StatusID = 1;
                 break;
         }
         return targetVector;
