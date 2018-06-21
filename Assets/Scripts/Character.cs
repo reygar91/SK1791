@@ -9,21 +9,15 @@ public class Character : MonoBehaviour {
         get; set;
     }
 
+    public float WalkSpeed;
+
 
     public void MoveTo(Vector3 ObjectPosition)
     {
         if (!hasReachedTarget(ObjectPosition))
         {
             Vector3 TargetVector = new Vector3(ObjectPosition.x, transform.position.y, ObjectPosition.z);
-            float step;
-            if (TimeFlow.Pause)
-            {
-                step = 0; AnimatorComponent.enabled = false;
-            } else
-            {
-                step = 3 * Time.deltaTime; AnimatorComponent.enabled = true;
-            }
-            transform.position = Vector3.MoveTowards(transform.position, TargetVector, step);
+            transform.position = Vector3.MoveTowards(transform.position, TargetVector, WalkSpeed * Time.deltaTime);
             MovingDirection(TargetVector);
             if (AnimatorComponent.GetInteger("AnimationID") != 1)
             {
@@ -51,4 +45,5 @@ public class Character : MonoBehaviour {
             transform.rotation = new Quaternion(0, 0, 0, 1);//facing from left to right
         }
     }
+
 }

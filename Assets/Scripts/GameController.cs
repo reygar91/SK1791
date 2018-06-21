@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 
@@ -18,7 +19,15 @@ public class GameController : MonoBehaviour {
      * 0 - CustPanel
      * 1 - PersonelPanel
      * */
-     
+
+    public Toggle PauseToggle;
+    public GameObject CutSceneUI;
+ 
+    public static List<Character> CharList = new List<Character>();
+
+    public int Reputation = 1;//at 0 there will be only 1 cust spawned initially, at 7 - cust spawns every 5 sec
+    //public int CountDown;
+
     // Use this for initialization
     void Start () {
         StartCoroutine("SpawnCustomer");        
@@ -30,9 +39,9 @@ public class GameController : MonoBehaviour {
         {
             MenuPanel.SetActive(true);
         }
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") && !CutSceneUI)
         {
-            TimeFlow.Pause = !TimeFlow.Pause;
+            PauseToggle.isOn = !PauseToggle.isOn;
         }
     }
 
@@ -40,22 +49,36 @@ public class GameController : MonoBehaviour {
     {
         GameObject[] CustomerList = new GameObject[1];
         CustomerList[0] = Instantiate(CustomerOriginal, CustomerContainer.transform);
+        int CountDown = 0;
         while (true)
         {
-            for (int i=0; i < CustomerList.Length; i++)
+            if (TimeFlow.isPause)
             {
-                if (CustomerList[i].gameObject.activeSelf == false)
-                {
-                    CustomerList[i].gameObject.SetActive(true);
-                    yield return new WaitForSeconds(5);
-                }
-                else if (i == (CustomerList.Length - 1))
-                {
-                    Array.Resize(ref CustomerList, i + 2);
-                    CustomerList[i + 1] = Instantiate(CustomerOriginal, CustomerContainer.transform);
-                    //yield return new WaitForSeconds(5);
-                }
+                yield return new WaitWhile(() => TimeFlow.isPause);
             }
+            else
+            {
+                CountDown -= Reputation;
+                if (CountDown <= 0)
+                {
+                    for (int i = 0; i < CustomerList.Length; i++)
+                    {
+                        if (CustomerList[i].gameObject.activeSelf == false)
+                        {
+                            CustomerList[i].gameObject.SetActive(true);
+                            break;
+                        }
+                        else if (i == (CustomerList.Length - 1))
+                        {
+                            Array.Resize(ref CustomerList, i + 2); //increasing size of array also increases current bumber of loops in FOR cycle
+                            CustomerList[i + 1] = Instantiate(CustomerOriginal, CustomerContainer.transform);//instantiates inactive cust, which will be activated on next loop
+                        }
+                    }
+                    CountDown = 35;
+                }
+                yield return new WaitForSeconds(1 / TimeFlow.timeSpeed);
+            }            
         }
-    }    
+    }
+
 }

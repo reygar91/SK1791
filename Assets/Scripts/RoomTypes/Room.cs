@@ -21,7 +21,7 @@ public class Room : MonoBehaviour {
     {
         if (!UI_helper.isPointerOverUI())
         {
-            Debug.Log("MouseDown over Room" + gameObject.name + " => " + gameObject.transform.position);
+            //Debug.Log("MouseDown over Room" + gameObject.name + " => " + gameObject.transform.position);
         }        
     }
 

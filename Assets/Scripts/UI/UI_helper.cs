@@ -24,4 +24,9 @@ public class UI_helper : MonoBehaviour {
         return newPosition;
     }
 
+    public static bool isPointerOverUI2()
+    {
+        return EventSystem.current.IsPointerOverGameObject();
+    }
+
 }

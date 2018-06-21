@@ -81,7 +81,7 @@ public class BuildPreview : MonoBehaviour {
             if (BuildAllowed > 1)
             {
                 gameObject.transform.position = newPosition;
-                if (Input.GetMouseButtonDown(0) && !UI_helper.isPointerOverUI())
+                if (Input.GetMouseButtonDown(0) && !UI_helper.isPointerOverUI2())
                 {
                     Room newRoom = Instantiate(child, RoomContainer.transform);
                     newRoom.transform.position = newPosition;

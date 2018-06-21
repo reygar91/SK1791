@@ -7,8 +7,8 @@ public class TimeFlow : MonoBehaviour {
 
     private Text TextComponent;
     private int timePassed = 1980; // day 1, 09:00
-    private float timeSpeed = 1.0f;
-    public static bool Pause = false;
+    public static float timeSpeed = 1.0f;
+    public static bool isPause = false;
 
     private void Awake()
     {
@@ -24,9 +24,9 @@ public class TimeFlow : MonoBehaviour {
     {
         while (true)
         {
-            if (Pause)
+            if (isPause)
             {
-                yield return new WaitWhile(() => Pause);
+                yield return new WaitWhile(() => isPause);
             } else
             {
                 int minutes = (timePassed % 60);
@@ -49,6 +49,18 @@ public class TimeFlow : MonoBehaviour {
                 TextComponent.text = "Day: " + days + " Time: " + iHours + ":" + iMinutes;
                 yield return new WaitForSeconds(1 / timeSpeed);
                 timePassed++;
+            }
+        }
+    }
+
+    public void Pause()
+    {
+        isPause = !isPause;
+        foreach (Character item in GameController.CharList)
+        {
+            if (item.gameObject.activeSelf)
+            {
+                item.AnimatorComponent.enabled = !item.AnimatorComponent.enabled;
             }
         }
     }

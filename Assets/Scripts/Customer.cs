@@ -34,6 +34,7 @@ public class Customer : Character {
     {
         AnimatorComponent = GetComponentInChildren<Animator>();
         reception = FindObjectOfType<Reception>();
+        GameController.CharList.Add(this);
     }
 
     private void OnEnable()
@@ -44,15 +45,22 @@ public class Customer : Character {
         Wait = false;
         int RandomNumber = UnityEngine.Random.Range(0, 1000);
         name = "Customer_" + RandomNumber;
-        //TaskCompleted = hasReachedTarget;
+        AnimatorComponent.enabled = true;
         StartCoroutine("CountDown");
         StartCoroutine("Relax");
+    }
+    private void OnDisable()
+    {
+        AnimatorComponent.enabled = false;
     }
 
 
     private void Update()
     {
-        MoveTo(TargetVector);    
+        if (!TimeFlow.isPause)
+        {
+            MoveTo(TargetVector);
+        }           
     }
 
     private IEnumerator Relax()
@@ -82,9 +90,9 @@ public class Customer : Character {
     {
         while (true)
         {
-            if (TimeFlow.Pause)
+            if (TimeFlow.isPause)
             {
-                yield return new WaitWhile(() => TimeFlow.Pause);
+                yield return new WaitWhile(() => TimeFlow.isPause);
             }
             else
             {

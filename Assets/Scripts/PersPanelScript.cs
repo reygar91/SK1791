@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PersPanelScript : MonoBehaviour {
 
     private Text TextComponent;
-    private Personel pers;
+    //private Personel pers;
     private Dropdown DropdownComponent;
 
     // Use this for initialization
@@ -23,7 +23,7 @@ public class PersPanelScript : MonoBehaviour {
 
     public void Initialize()
     {
-        pers = isSelectable.selectedObject.GetComponent<Personel>();
+        //pers = isSelectable.selectedObject.GetComponent<Personel>();
         TextComponent.text = isSelectable.selectedObject.name;
     }
 
