@@ -21,6 +21,10 @@ public class DisableWithEsc : MonoBehaviour {
     
     public static bool ActivePanel()
     {
-        return Panel.activeSelf;
+        if (Panel)
+        {
+            return Panel.activeSelf;
+        }
+        else return false;        
     }
 }

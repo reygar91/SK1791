@@ -71,6 +71,8 @@
     <Compile Include="Assets\Scripts\CustPanelScript.cs" />
     <Compile Include="Assets\Scripts\DialougeManager.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
+    <Compile Include="Assets\Scripts\GamePause.cs" />
+    <Compile Include="Assets\Scripts\GameState.cs" />
     <Compile Include="Assets\Scripts\GoldManager.cs" />
     <Compile Include="Assets\Scripts\isDragable.cs" />
     <Compile Include="Assets\Scripts\isSelectable.cs" />

@@ -20,13 +20,14 @@ public class GameController : MonoBehaviour {
      * 1 - PersonelPanel
      * */
 
-    public Toggle PauseToggle;
+    public Toggle PauseToggle, GameStateToggle;
     public GameObject CutSceneUI;
  
     public static List<Character> CharList = new List<Character>();
 
     public int Reputation = 1;//at 0 there will be only 1 cust spawned initially, at 7 - cust spawns every 5 sec
-    //public int CountDown;
+    
+    //CustomYieldInstruction yieldInstruction;
 
     // Use this for initialization
     void Start () {
@@ -39,7 +40,7 @@ public class GameController : MonoBehaviour {
         {
             MenuPanel.SetActive(true);
         }
-        if (Input.GetButtonDown("Jump") && !CutSceneUI)
+        if (Input.GetButtonDown("Jump") && !CutSceneUI.activeSelf)
         {
             PauseToggle.isOn = !PauseToggle.isOn;
         }
@@ -80,5 +81,5 @@ public class GameController : MonoBehaviour {
             }            
         }
     }
-
+    
 }

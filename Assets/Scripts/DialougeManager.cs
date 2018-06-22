@@ -25,14 +25,14 @@ public class DialougeManager : MonoBehaviour {
     }
     private void OnEnable()
     {
-        PauseToggle.isOn = true;
+        //PauseToggle.isOn = true;
         GameUI.SetActive(false);
         Time.timeScale = 0;
     }
     private void OnDisable()
     {
         GameUI.SetActive(true);
-        PauseToggle.isOn = false;
+        //PauseToggle.isOn = false;
         Time.timeScale = 1;
     }
 
