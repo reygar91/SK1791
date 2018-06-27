@@ -13,7 +13,7 @@ public class DialougeManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+
 	}
 	
 	// Update is called once per frame
@@ -40,5 +40,10 @@ public class DialougeManager : MonoBehaviour {
     {
         int index = Random.Range(0, 3);
         DialogPhrase.text = textAssets[index].text;
+    }
+
+    public DialougeManager GetDialogMNGR()
+    {
+        return this;
     }
 }

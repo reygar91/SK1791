@@ -10,25 +10,14 @@ public class Build : MonoBehaviour {
     public BuildPreview Preview;
     private int RoomIndex;
 
-    //private List<GameObject> Rooms;
-
-    //GameObject[] Rooms;
-
     private void OnEnable()
-    {        
-        //Rooms = GameObject.FindGameObjectsWithTag("Room");
-        foreach (Room item in Room.roomsList)
-        {
-            item.boxCollider.gameObject.layer = 0;
-        }
+    {
+        GameController.gameState = new RoomMode();
     }
+
     private void OnDisable()
     {
-        //Rooms = GameObject.FindGameObjectsWithTag("Room");
-        foreach (Room item in Room.roomsList)
-        {
-            item.boxCollider.gameObject.layer = 2;
-        }
+        GameController.gameState = new RegularState();
         if (Preview)
         {
             Preview.gameObject.SetActive(false);

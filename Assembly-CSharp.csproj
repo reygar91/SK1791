@@ -67,12 +67,14 @@
     <Compile Include="Assets\Scripts\Build.cs" />
     <Compile Include="Assets\Scripts\BuildPreview.cs" />
     <Compile Include="Assets\Scripts\Character.cs" />
+    <Compile Include="Assets\Scripts\Command\CommandPattern.cs" />
+    <Compile Include="Assets\Scripts\Command\CommandsList.cs" />
     <Compile Include="Assets\Scripts\Customer.cs" />
     <Compile Include="Assets\Scripts\CustPanelScript.cs" />
     <Compile Include="Assets\Scripts\DialougeManager.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
-    <Compile Include="Assets\Scripts\GamePause.cs" />
-    <Compile Include="Assets\Scripts\GameState.cs" />
+    <Compile Include="Assets\Scripts\GameFSM.cs" />
+    <Compile Include="Assets\Scripts\GameStates.cs" />
     <Compile Include="Assets\Scripts\GoldManager.cs" />
     <Compile Include="Assets\Scripts\isDragable.cs" />
     <Compile Include="Assets\Scripts\isSelectable.cs" />

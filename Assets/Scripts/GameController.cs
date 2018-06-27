@@ -26,23 +26,25 @@ public class GameController : MonoBehaviour {
     public static List<Character> CharList = new List<Character>();
 
     public int Reputation = 1;//at 0 there will be only 1 cust spawned initially, at 7 - cust spawns every 5 sec
-    
-    //CustomYieldInstruction yieldInstruction;
+
+    public static GameFSM gameState;
 
     // Use this for initialization
     void Start () {
-        StartCoroutine("SpawnCustomer");        
+        StartCoroutine("SpawnCustomer");
+        gameState = new RegularState();
     }
 
     // Update is called once per frame
     void Update () {
-        if (Input.GetButtonDown("Cancel") && !DisableWithEsc.ActivePanel())
+        if (Input.GetButtonDown("Cancel") && !DisableWithEsc.ActivePanel())//should remove 2nd condition and put it to state
         {
             MenuPanel.SetActive(true);
         }
-        if (Input.GetButtonDown("Jump") && !CutSceneUI.activeSelf)
+        if (Input.GetButtonDown("Jump") && !CutSceneUI.activeSelf) //and then define command with Command Pattern
         {
-            PauseToggle.isOn = !PauseToggle.isOn;
+            gameState.JumpButton();
+            //PauseToggle.isOn = !PauseToggle.isOn;
         }
     }
 
