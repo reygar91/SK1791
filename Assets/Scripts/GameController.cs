@@ -20,30 +20,33 @@ public class GameController : MonoBehaviour {
      * 1 - PersonelPanel
      * */
 
-    public Toggle PauseToggle, GameStateToggle;
-    public GameObject CutSceneUI;
+    public Toggle PauseToggle;
+    //public GameObject CutSceneUI;
  
     public static List<Character> CharList = new List<Character>();
 
     public int Reputation = 1;//at 0 there will be only 1 cust spawned initially, at 7 - cust spawns every 5 sec
 
-    public static GameFSM gameState;
+    public CommandPattern CancelButton, JumpButton;
+    //public static GameFSM gameState;
 
     // Use this for initialization
     void Start () {
         StartCoroutine("SpawnCustomer");
-        gameState = new RegularState();
+        CancelButton = new DisablePanel(MenuPanel);
+        JumpButton = new Pause(PauseToggle);
+        //gameState = new RegularState();
     }
 
     // Update is called once per frame
     void Update () {
-        if (Input.GetButtonDown("Cancel") && !DisableWithEsc.ActivePanel())//should remove 2nd condition and put it to state
+        if (Input.GetButtonDown("Cancel"))//should remove 2nd condition and put it to state
         {
-            MenuPanel.SetActive(true);
+            CancelButton.Execute();
         }
-        if (Input.GetButtonDown("Jump") && !CutSceneUI.activeSelf) //and then define command with Command Pattern
+        if (Input.GetButtonDown("Jump")) //and then define command with Command Pattern
         {
-            gameState.JumpButton();
+            JumpButton.Execute();
             //PauseToggle.isOn = !PauseToggle.isOn;
         }
     }

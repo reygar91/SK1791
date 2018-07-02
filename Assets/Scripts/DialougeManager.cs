@@ -11,6 +11,8 @@ public class DialougeManager : MonoBehaviour {
     public GameObject GameUI;
     public Toggle PauseToggle;
 
+    public GameController gameController;
+
 	// Use this for initialization
 	void Start () {
 
@@ -26,14 +28,18 @@ public class DialougeManager : MonoBehaviour {
     private void OnEnable()
     {
         //PauseToggle.isOn = true;
+        gameController.JumpButton.Execute();
+        gameController.JumpButton = new DialogNext(this);
         GameUI.SetActive(false);
-        Time.timeScale = 0;
+        //Time.timeScale = 0;
     }
     private void OnDisable()
     {
+        gameController.JumpButton = new Pause(PauseToggle);
+        gameController.JumpButton.Execute();
         GameUI.SetActive(true);
         //PauseToggle.isOn = false;
-        Time.timeScale = 1;
+        //Time.timeScale = 1;
     }
 
     public void NextPhrase()
@@ -42,8 +48,4 @@ public class DialougeManager : MonoBehaviour {
         DialogPhrase.text = textAssets[index].text;
     }
 
-    public DialougeManager GetDialogMNGR()
-    {
-        return this;
-    }
 }

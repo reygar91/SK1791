@@ -55,8 +55,6 @@ public class TimeFlow : MonoBehaviour {
 
     public void Pause()
     {
-        
-        /*
         isPause = !isPause;
         foreach (Character item in GameController.CharList)
         {
@@ -65,6 +63,5 @@ public class TimeFlow : MonoBehaviour {
                 item.AnimatorComponent.enabled = !item.AnimatorComponent.enabled;
             }
         }
-        */
     }
 }

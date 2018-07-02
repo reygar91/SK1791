@@ -12,12 +12,18 @@ public class Build : MonoBehaviour {
 
     private void OnEnable()
     {
-        GameController.gameState = new RoomMode();
+        foreach (Room item in Room.roomsList)
+        {
+            item.boxCollider.gameObject.layer = 0;
+        }
     }
 
     private void OnDisable()
     {
-        GameController.gameState = new RegularState();
+        foreach (Room item in Room.roomsList)
+        {
+            item.boxCollider.gameObject.layer = 2;
+        }
         if (Preview)
         {
             Preview.gameObject.SetActive(false);
