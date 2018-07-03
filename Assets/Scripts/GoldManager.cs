@@ -6,11 +6,15 @@ using UnityEngine.UI;
 public class GoldManager : MonoBehaviour {
 
     private Text TextComponent;
-    private static int Gold = 0;
+    public static int Gold
+    {
+        get;    private set;        
+    }    
 
-    private void Awake()
+private void Awake()
     {
         TextComponent = GetComponent<Text>();
+        //Gold = 0;
     }
 	
 	// Update is called once per frame
@@ -27,4 +31,5 @@ public class GoldManager : MonoBehaviour {
     {
         Gold = Gold - SubtractedValue;
     }
+
 }

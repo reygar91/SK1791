@@ -79,6 +79,7 @@
     <Compile Include="Assets\Scripts\isDragable.cs" />
     <Compile Include="Assets\Scripts\isSelectable.cs" />
     <Compile Include="Assets\Scripts\Market.cs" />
+    <Compile Include="Assets\Scripts\myEvents.cs" />
     <Compile Include="Assets\Scripts\Personel.cs" />
     <Compile Include="Assets\Scripts\PersPanelScript.cs" />
     <Compile Include="Assets\Scripts\RoomTypes\Bar.cs" />

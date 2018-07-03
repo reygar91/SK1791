@@ -49,15 +49,15 @@ public class DisablePanel : CommandPattern
 
     public override void Execute()
     {
-        if (DisableWithEsc.Panels.Count != 0)
-        {
-            foreach (DisableWithEsc item in DisableWithEsc.Panels)
-            {
-                item.gameObject.SetActive(false);
-            }
-        } else
+        if (DisableWithEsc.Panels.Count == 0)
         {
             panel.SetActive(true);
+        } else
+        {
+            do
+            {
+                DisableWithEsc.Panels[0].gameObject.SetActive(false);
+            } while (DisableWithEsc.Panels.Count != 0);
         }        
     }
 }

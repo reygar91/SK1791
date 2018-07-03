@@ -7,13 +7,7 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour {
 
     public GameObject MenuPanel;
-   // public Transform[] WayPoint;
-    /*
-     * 0 - SpawnPoint
-     * 1 - BarEntrance
-     */
     public GameObject CustomerOriginal, CustomerContainer; //IMPORTANT CustOrig must be not active, or in coroutine it lead to endless Instantiations
-    //private Customer[] CustomerList;
     public GameObject[] Panels;
     /* Panels:
      * 0 - CustPanel
@@ -21,33 +15,29 @@ public class GameController : MonoBehaviour {
      * */
 
     public Toggle PauseToggle;
-    //public GameObject CutSceneUI;
  
     public static List<Character> CharList = new List<Character>();
 
     public int Reputation = 1;//at 0 there will be only 1 cust spawned initially, at 7 - cust spawns every 5 sec
 
     public CommandPattern CancelButton, JumpButton;
-    //public static GameFSM gameState;
 
     // Use this for initialization
     void Start () {
         StartCoroutine("SpawnCustomer");
         CancelButton = new DisablePanel(MenuPanel);
         JumpButton = new Pause(PauseToggle);
-        //gameState = new RegularState();
     }
 
     // Update is called once per frame
     void Update () {
-        if (Input.GetButtonDown("Cancel"))//should remove 2nd condition and put it to state
+        if (Input.GetButtonDown("Cancel"))
         {
             CancelButton.Execute();
         }
-        if (Input.GetButtonDown("Jump")) //and then define command with Command Pattern
+        if (Input.GetButtonDown("Jump"))
         {
             JumpButton.Execute();
-            //PauseToggle.isOn = !PauseToggle.isOn;
         }
     }
 
