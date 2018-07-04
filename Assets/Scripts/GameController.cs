@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameController : MonoBehaviour {
+public class GameController : Singleton<GameController> {
 
     public GameObject MenuPanel;
     public GameObject CustomerOriginal, CustomerContainer; //IMPORTANT CustOrig must be not active, or in coroutine it lead to endless Instantiations
@@ -14,19 +14,21 @@ public class GameController : MonoBehaviour {
      * 1 - PersonelPanel
      * */
 
-    public Toggle PauseToggle;
+    //public Toggle PauseToggle;
  
-    public static List<Character> CharList = new List<Character>();
+    public List<Character> CharList = new List<Character>();
 
     public int Reputation = 1;//at 0 there will be only 1 cust spawned initially, at 7 - cust spawns every 5 sec
 
     public CommandPattern CancelButton, JumpButton;
 
+    protected GameController() { }
+
     // Use this for initialization
     void Start () {
-        StartCoroutine("SpawnCustomer");
+        //StartCoroutine("SpawnCustomer");
         CancelButton = new DisablePanel(MenuPanel);
-        JumpButton = new Pause(PauseToggle);
+        JumpButton = new Pause();
     }
 
     // Update is called once per frame
@@ -48,9 +50,9 @@ public class GameController : MonoBehaviour {
         int CountDown = 0;
         while (true)
         {
-            if (TimeFlow.isPause)
+            if (TimeFlow.Instance.isPause)
             {
-                yield return new WaitWhile(() => TimeFlow.isPause);
+                yield return new WaitWhile(() => TimeFlow.Instance.isPause);
             }
             else
             {
@@ -72,7 +74,7 @@ public class GameController : MonoBehaviour {
                     }
                     CountDown = 35;
                 }
-                yield return new WaitForSeconds(1 / TimeFlow.timeSpeed);
+                yield return new WaitForSeconds(1 / TimeFlow.Instance.timeSpeed);
             }            
         }
     }

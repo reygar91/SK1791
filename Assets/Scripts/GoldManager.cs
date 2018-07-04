@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GoldManager : MonoBehaviour {
+public class GoldManager : Singleton<GoldManager> {
 
     private Text TextComponent;
-    public static int Gold
+    public int Gold
     {
         get;    private set;        
-    }    
+    } 
+    
+    protected GoldManager() { }
 
 private void Awake()
     {
@@ -22,12 +24,12 @@ private void Awake()
         TextComponent.text = "Gold: " + Gold;
     }
 
-    public static void AddGold(int AddedValue)
+    public void AddGold(int AddedValue)
     {
         Gold = Gold + AddedValue;
     }
 
-    public static void SubtractGold(int SubtractedValue)
+    public void SubtractGold(int SubtractedValue)
     {
         Gold = Gold - SubtractedValue;
     }

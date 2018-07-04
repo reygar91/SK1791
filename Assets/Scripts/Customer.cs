@@ -34,7 +34,7 @@ public class Customer : Character {
     {
         AnimatorComponent = GetComponentInChildren<Animator>();
         reception = FindObjectOfType<Reception>();
-        GameController.CharList.Add(this);
+        //GameController.Instance.CharList.Add(this);
     }
 
     private void OnEnable()
@@ -57,7 +57,7 @@ public class Customer : Character {
 
     private void Update()
     {
-        if (!TimeFlow.isPause)
+        if (!TimeFlow.Instance.isPause)
         {
             MoveTo(TargetVector);
         }           
@@ -90,9 +90,9 @@ public class Customer : Character {
     {
         while (true)
         {
-            if (TimeFlow.isPause)
+            if (TimeFlow.Instance.isPause)
             {
-                yield return new WaitWhile(() => TimeFlow.isPause);
+                yield return new WaitWhile(() => TimeFlow.Instance.isPause);
             }
             else
             {

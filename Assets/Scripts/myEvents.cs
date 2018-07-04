@@ -1,72 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class myEvents : MonoBehaviour {
-
-    public delegate void MethodContainer(int someID);
-    public static event MethodContainer GoldAmmount;
-    //public DialougeManager dialougeManager;
-    public static List<myEventConditions> conditions = new List<myEventConditions>();
-
-	// Use this for initialization
-	void Start () {
-        //GoldAmmount += dialougeManager.TestEvent;
-        //conditions.Add(new GoldCheck(100));
-        StartCoroutine("ConditionsChecks");
-    }
-	
-	// Update is called once per frame
-	void Update () {
-	}
-
-    private IEnumerator ConditionsChecks()
-    {
-        while (true)
-        {
-            if (conditions.Count > 0)
-            {
-                int i = 0;
-                do
-                {
-                    if (conditions[i].Condition())
-                    {
-                        RunEvent(conditions[i]);
-                    }
-                    i++;
-                } while (conditions.Count > i);
-            }
-            yield return new WaitForSeconds(5);
-        }
-    }
-
-    private void RunEvent(myEventConditions condition)
-    {
-        switch (condition.GetType().ToString())
-        {
-            case "GoldCheck":
-                GoldAmmount(0);
-                break;
-            default:
-                Debug.Log("Unidentified Event Type");
-                break;
-        }
-        conditions.Remove(condition);
-    }
-
-}
-
-
-public abstract class myEventConditions
+﻿public abstract class myEvents
 {
     public abstract bool Condition();
-    public abstract bool EventName();
+    public abstract void Result();
 }
 
-public class GoldCheck : myEventConditions
+public class GoldCheck : myEvents
 {
     private int Gold;
-    //private myEvents my = new myEvents();
 
     public GoldCheck(int value)
     {
@@ -75,11 +15,25 @@ public class GoldCheck : myEventConditions
 
     public override bool Condition()
     {
-        return (GoldManager.Gold > Gold);
+        return (GoldManager.Instance.Gold > Gold);
     }
 
-    public override bool EventName()
+    public override void Result()
     {
-        throw new System.NotImplementedException();
+        DialougeManager.Instance.DialogEvent(1);
+    }
+}
+
+public class StartGameTutorial : myEvents
+{
+    public override bool Condition()
+    {
+        return myEventManager.Instance.ActiveEvents.Contains(this);
+    }
+
+    public override void Result()
+    {
+        DialougeManager.Instance.DialogEvent(0);
+        myEventManager.Instance.ActiveEvents.Add(new GoldCheck(100));//this is adds new event: 100 gold needed
     }
 }

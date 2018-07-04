@@ -69,8 +69,8 @@
     <Compile Include="Assets\Scripts\Build.cs" />
     <Compile Include="Assets\Scripts\BuildPreview.cs" />
     <Compile Include="Assets\Scripts\Character.cs" />
+    <Compile Include="Assets\Scripts\CharacterFactory.cs" />
     <Compile Include="Assets\Scripts\Command\CommandPattern.cs" />
-    <Compile Include="Assets\Scripts\Command\CommandsList.cs" />
     <Compile Include="Assets\Scripts\Customer.cs" />
     <Compile Include="Assets\Scripts\CustPanelScript.cs" />
     <Compile Include="Assets\Scripts\DialougeManager.cs" />
@@ -79,12 +79,14 @@
     <Compile Include="Assets\Scripts\isDragable.cs" />
     <Compile Include="Assets\Scripts\isSelectable.cs" />
     <Compile Include="Assets\Scripts\Market.cs" />
+    <Compile Include="Assets\Scripts\myEventManager.cs" />
     <Compile Include="Assets\Scripts\myEvents.cs" />
     <Compile Include="Assets\Scripts\Personel.cs" />
     <Compile Include="Assets\Scripts\PersPanelScript.cs" />
     <Compile Include="Assets\Scripts\RoomTypes\Bar.cs" />
     <Compile Include="Assets\Scripts\RoomTypes\Reception.cs" />
     <Compile Include="Assets\Scripts\RoomTypes\Room.cs" />
+    <Compile Include="Assets\Scripts\Singleton.cs" />
     <Compile Include="Assets\Scripts\Strategy\Customer\CustBar.cs" />
     <Compile Include="Assets\Scripts\Strategy\Customer\CustReception.cs" />
     <Compile Include="Assets\Scripts\Strategy\Customer\ICustBehaviour.cs" />
@@ -98,9 +100,9 @@
     <Compile Include="Assets\Scripts\UI\TimeFlow.cs" />
     <Compile Include="Assets\Scripts\UI\UI_helper.cs" />
     <None Include="Assets\Resources\Wood texture floor_01\readme.txt" />
-    <None Include="Assets\Resources\example1.txt" />
-    <None Include="Assets\Resources\example.txt" />
+    <None Include="Assets\Resources\0000_Tutorial.txt" />
     <None Include="Assets\Resources\example2.txt" />
+    <None Include="Assets\Resources\0001_GoldAmmount.txt" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>C:/Users/Public/Documents/Unity Projects/SK1791/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>

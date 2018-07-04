@@ -3248,7 +3248,6 @@ GameObject:
   - component: {fileID: 154679978}
   - component: {fileID: 154679980}
   - component: {fileID: 154679979}
-  - component: {fileID: 154679981}
   m_Layer: 5
   m_Name: TimeText
   m_TagString: Untagged
@@ -3313,17 +3312,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 154679977}
---- !u!114 &154679981
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 154679977}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3797ef4f701d36f4e99fdfb9a8e6088d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &178373167
 GameObject:
   m_ObjectHideFlags: 0
@@ -7598,7 +7586,7 @@ MonoBehaviour:
   Panels:
   - {fileID: 548445298}
   - {fileID: 140973887}
-  PauseToggle: {fileID: 1849971880}
+  CharList: []
   Reputation: 1
 --- !u!4 &418579157
 Transform:
@@ -12950,15 +12938,15 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1081157201}
-  - component: {fileID: 1081157203}
   - component: {fileID: 1081157202}
+  - component: {fileID: 1081157203}
   m_Layer: 5
-  m_Name: CutSceneUI
+  m_Name: DialogUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1081157201
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12978,25 +12966,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0.000061035156, y: 0}
   m_SizeDelta: {x: -1820, y: -1340}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1081157202
-MonoBehaviour:
+--- !u!225 &1081157202
+CanvasGroup:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1081157200}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e004e74bb12ebdf459e1e6b90ea14e80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DialogPhrase: {fileID: 1286800031}
-  textAssets:
-  - {fileID: 4900000, guid: 87e3998cab1c56247b6f0e986b237670, type: 3}
-  - {fileID: 4900000, guid: 880324e5021eed24c97f101a0b11f28a, type: 3}
-  - {fileID: 4900000, guid: bac1e4bcc29a9ed49b1b7b8ae6ff182e, type: 3}
-  GameUI: {fileID: 549933577}
-  PauseToggle: {fileID: 1849971880}
-  gameController: {fileID: 1411274722}
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &1081157203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13036,7 +13016,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1081157202}
+      - m_Target: {fileID: 1411274724}
         m_MethodName: NextPhrase
         m_Mode: 1
         m_Arguments:
@@ -16172,6 +16152,8 @@ GameObject:
   - component: {fileID: 1411274721}
   - component: {fileID: 1411274722}
   - component: {fileID: 1411274723}
+  - component: {fileID: 1411274724}
+  - component: {fileID: 1411274725}
   m_Layer: 5
   m_Name: GameController
   m_TagString: Untagged
@@ -16215,7 +16197,7 @@ MonoBehaviour:
   Panels:
   - {fileID: 548445298}
   - {fileID: 140973887}
-  PauseToggle: {fileID: 1849971880}
+  CharList: []
   Reputation: 7
 --- !u!114 &1411274723
 MonoBehaviour:
@@ -16228,6 +16210,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa0ab57d33c2ac947a70152bed0fb80b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1411274724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1411274720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e004e74bb12ebdf459e1e6b90ea14e80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DialogPhrase: {fileID: 1286800031}
+  textAssets:
+  - {fileID: 4900000, guid: 05adb3b8b5dc11849b4922a1dcd30cea, type: 3}
+  - {fileID: 4900000, guid: 8de573cc5a41bce499a83b07cccbdd55, type: 3}
+  - {fileID: 4900000, guid: bac1e4bcc29a9ed49b1b7b8ae6ff182e, type: 3}
+  GameUI: {fileID: 549933577}
+  DialogUI: {fileID: 1081157202}
+--- !u!114 &1411274725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1411274720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a74d4e46d9423ea46b0382bd7df7c92f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CustomerOriginal: {fileID: 114721902563087814, guid: 9da5ba80bba803c49bab101e62bceb7b,
+    type: 2}
+  CustomerContainer: {fileID: 1244811761}
+  CustList: []
 --- !u!1 &1412591866
 GameObject:
   m_ObjectHideFlags: 0
@@ -16723,6 +16738,7 @@ GameObject:
   - component: {fileID: 1450096308}
   - component: {fileID: 1450096310}
   - component: {fileID: 1450096309}
+  - component: {fileID: 1450096311}
   m_Layer: 5
   m_Name: TimePanel
   m_TagString: Untagged
@@ -16783,6 +16799,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1450096307}
+--- !u!114 &1450096311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1450096307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3797ef4f701d36f4e99fdfb9a8e6088d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeSpeed: 1
+  isPause: 0
+  pauseToggle: {fileID: 1849971880}
 --- !u!1 &1468647487
 GameObject:
   m_ObjectHideFlags: 0
@@ -20697,7 +20727,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 154679981}
+      - m_Target: {fileID: 1450096311}
         m_MethodName: Pause
         m_Mode: 1
         m_Arguments:

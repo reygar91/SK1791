@@ -4,70 +4,65 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public class DialougeManager : MonoBehaviour {
+public class DialougeManager : Singleton<DialougeManager> {
 
     public Text DialogPhrase;
 
     public TextAsset[] textAssets;
-    public CanvasGroup GameUI;
-    public Toggle PauseToggle;
+    public CanvasGroup GameUI, DialogUI;
 
-    public GameController gameController;
+    //public GameController gameController;
 
     string[] Phrases;
     int PhraseCounter;
 
-    private void Awake()
-    {
-        myEvents.GoldAmmount += DialogEvent;//test event fires wnen some ammount of gold reached
-        myEvents.conditions.Add(new GoldCheck(100));//this is adding event condition with 100 gold needed
-        gameObject.SetActive(false);
-    }
+    protected DialougeManager() { }
 
-    // Use this for initialization
-    void Start () {
-        
-    }
-	
-	// Update is called once per frame
-	void Update () {
-        if (Input.GetButtonDown("Fire2"))
-        {
-            gameObject.SetActive(false);
-        }
-    }
-    private void OnEnable()
-    {
-        gameController.JumpButton.Execute();
-        gameController.JumpButton = new DialogNext(this);
-        GameUI.alpha = 0;//GameUI.interactable = false;
-        PhraseCounter = 1;
-    }
-    private void OnDisable()
-    {
-        gameController.JumpButton = new Pause(PauseToggle);
-        gameController.JumpButton.Execute();
-        GameUI.alpha = 1;//GameUI.interactable = true;
-    }
+    //private void OnEnable()
+    //{
 
-    public void NextPhrase()
+    //}
+    //private void OnDisable()
+    //{
+
+    //}
+
+    public void NextPhrase() //this is assigned to JumpButton with this line: gameController.JumpButton = new DialogNext(this);
     {
-        //int index = UnityEngine.Random.Range(0, 3);
         if (PhraseCounter < Phrases.Length)
         {
             DialogPhrase.text = Phrases[PhraseCounter];
             PhraseCounter++;
         }
-        else gameObject.SetActive(false);
-        
+        else DisableDialogUI();        
     }
 
     public void DialogEvent(int dialogID)
     {
-        gameObject.SetActive(true);
+        if (!DialogUI.gameObject.activeSelf)
+        {
+            EnableDialogUI();
+        }
         string[] stringSeparators = new string[] { "[break]", "[choice]" };
         Phrases = textAssets[dialogID].text.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);        
         DialogPhrase.text = Phrases[0];
+    }
+
+    private void EnableDialogUI()
+    {
+        DialogUI.gameObject.SetActive(true);
+        GameController.Instance.JumpButton.Execute();
+        GameController.Instance.JumpButton = new DialogNext();
+        GameUI.alpha = 0;//GameUI.interactable = false;//as long as DialogUI is over GameUI this is not needed
+        PhraseCounter = 1;
+    }
+
+    private void DisableDialogUI()
+    {
+        DialogUI.gameObject.SetActive(false);
+        GameController.Instance.JumpButton = new Pause();
+        GameController.Instance.JumpButton.Execute();
+        GameUI.alpha = 1;//GameUI.interactable = true;
     }
 
 }

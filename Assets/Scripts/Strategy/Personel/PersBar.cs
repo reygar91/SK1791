@@ -61,7 +61,7 @@ public class PersBar : IPersBehaviour
                 StatusID = 5;
                 break;
             case 5:
-                GoldManager.AddGold(150);
+                GoldManager.Instance.AddGold(150);
                 StatusID = 0;
                 break;
             default://when just entered the room or just served cust

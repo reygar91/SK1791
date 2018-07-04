@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class isSelectable : MonoBehaviour {
 
-    private static GameController Controller;
+    //private static GameController Controller;
     private static CustPanelScript CustPanel;
     private static PersPanelScript PersPanel;
     public static GameObject selectedObject;
@@ -12,9 +12,9 @@ public class isSelectable : MonoBehaviour {
 
     private void Awake()
     {
-        Controller = FindObjectOfType<GameController>(); //Debug.Log(Controller);
-        CustPanel = Controller.Panels[0].GetComponent<CustPanelScript>(); //Debug.Log(CustPanel);
-        PersPanel = Controller.Panels[1].GetComponent<PersPanelScript>(); //Debug.Log(PersPanel);
+        //Controller = GameController.Instance;
+        CustPanel = GameController.Instance.Panels[0].GetComponent<CustPanelScript>(); //Debug.Log(CustPanel);
+        PersPanel = GameController.Instance.Panels[1].GetComponent<PersPanelScript>(); //Debug.Log(PersPanel);
     }
 
     private void OnMouseOver() //OnMouseDown() could be used for left click, but for right click OnMouseOver + Input.GetMouseButtonDown(1)
@@ -26,13 +26,13 @@ public class isSelectable : MonoBehaviour {
             switch (tag)
             {
                 case "Customer":
-                    if (!Controller.Panels[0].activeSelf)
+                    if (!GameController.Instance.Panels[0].activeSelf)
                     {
-                        Controller.Panels[0].SetActive(true);
+                        GameController.Instance.Panels[0].SetActive(true);
                     }
                     else if (previousObject == selectedObject)
                     {
-                        Controller.Panels[0].SetActive(false);
+                        GameController.Instance.Panels[0].SetActive(false);
                     }
                     else
                     {
@@ -40,9 +40,9 @@ public class isSelectable : MonoBehaviour {
                     }
                     break;
                 case "Personel":
-                    if (!Controller.Panels[1].activeSelf)
+                    if (!GameController.Instance.Panels[1].activeSelf)
                     {
-                        Controller.Panels[1].SetActive(true);
+                        GameController.Instance.Panels[1].SetActive(true);
                     }
                     else
                     {

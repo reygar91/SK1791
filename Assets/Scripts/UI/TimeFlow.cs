@@ -3,16 +3,20 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TimeFlow : MonoBehaviour {
+public class TimeFlow : Singleton<TimeFlow> {
 
     private Text TextComponent;
     private int timePassed = 1980; // day 1, 09:00
-    public static float timeSpeed = 1.0f;
-    public static bool isPause = false;
+    public float timeSpeed = 1.0f;
+    public bool isPause = false;
+
+    public Toggle pauseToggle;
+
+    protected TimeFlow() { }
 
     private void Awake()
     {
-        TextComponent = GetComponent<Text>();
+        TextComponent = GetComponentInChildren<Text>();
     }
 
     // Use this for initialization
@@ -56,7 +60,7 @@ public class TimeFlow : MonoBehaviour {
     public void Pause()
     {
         isPause = !isPause;
-        foreach (Character item in GameController.CharList)
+        foreach (Character item in GameController.Instance.CharList)
         {
             if (item.gameObject.activeSelf)
             {

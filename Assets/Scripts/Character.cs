@@ -11,6 +11,11 @@ public class Character : MonoBehaviour {
 
     public float WalkSpeed;
 
+    private void Awake()
+    {
+        Debug.Log("Character is Awake");
+    }
+
 
     public void MoveTo(Vector3 ObjectPosition)
     {
