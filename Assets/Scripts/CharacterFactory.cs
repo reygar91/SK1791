@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class CharacterFactory : Singleton<CharacterFactory>
 {
-    public Character CustomerOriginal;
+    public Customer CustomerOriginal;
     public GameObject CustomerContainer;
-    public List<Character> CustList = new List<Character>();
+    public List<Customer> CustList = new List<Customer>();
 
     protected CharacterFactory() { }    
 
@@ -23,8 +23,7 @@ public class CharacterFactory : Singleton<CharacterFactory>
     }
 
     private IEnumerator SpawnCustomer()
-    {
-        //Customer[] CustomerList = new Customer[1];       
+    {    
         CustList.Add(Instantiate(CustomerOriginal, CustomerContainer.transform));
         GameController.Instance.CharList.Add(CustList[CustList.Count-1]);
         int CountDown = 0;
@@ -39,23 +38,39 @@ public class CharacterFactory : Singleton<CharacterFactory>
                 CountDown -= GameController.Instance.Reputation;
                 if (CountDown <= 0)
                 {
-                    for (int i = 0; i < CustList.Count; i++)
-                    {
-                        if (CustList[i].gameObject.activeSelf == false)
-                        {
-                            CustList[i].gameObject.SetActive(true);
-                            break;
-                        }
-                        else if (i == (CustList.Count - 1))
-                        {
-                            CustList.Add(Instantiate(CustomerOriginal, CustomerContainer.transform));
-                            GameController.Instance.CharList.Add(CustList[CustList.Count - 1]);
-                        }
-                    }
+                    SpawnCust(0);
                     CountDown = 35;
                 }
                 yield return new WaitForSeconds(1 / TimeFlow.Instance.timeSpeed);
             }
         }
     }
+
+    //public Customer SpawnCust(int prototypeID)
+    //{
+    //    Customer cust = Instantiate(CustomerOriginal, CustomerContainer.transform) as Customer;
+    //    CustList.Add(cust);
+    //    GameController.Instance.CharList.Add(cust);
+    //    cust.prototypeID = prototypeID;
+    //    return cust;
+    //}
+
+    public void SpawnCust(int prototypeID)
+    {
+        for (int i = 0; i < CustList.Count; i++)
+        {
+            if (CustList[i].gameObject.activeSelf == false)
+            {
+                CustList[i].prototypeID = prototypeID;
+                CustList[i].gameObject.SetActive(true);
+                break;
+            }
+            else if (i == (CustList.Count - 1))
+            {
+                CustList.Add(Instantiate(CustomerOriginal, CustomerContainer.transform));
+                GameController.Instance.CharList.Add(CustList[CustList.Count - 1]);
+            }
+        }
+    }
+
 }

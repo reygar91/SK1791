@@ -25,6 +25,8 @@ public class Customer : Character {
 
     public bool Wait;
     public float AnimationTime;
+    public int prototypeID;
+    public Outfit outfit;
     //delegate bool TaskFuncDelegate(Vector3 target);
     //TaskFuncDelegate TaskCompleted;
 
@@ -35,22 +37,16 @@ public class Customer : Character {
         AnimatorComponent = GetComponentInChildren<Animator>();
         reception = FindObjectOfType<Reception>();
         //GameController.Instance.CharList.Add(this);
+        outfit = GetComponentInChildren<Outfit>();
     }
 
     private void OnEnable()
     {
-        TargetVector = reception.EntrancePoint.transform.position;
-        Behaviour = null;
-        Patience = 25;
-        Wait = false;
-        int RandomNumber = UnityEngine.Random.Range(0, 1000);
-        name = "Customer_" + RandomNumber;
-        AnimatorComponent.enabled = true;
-        StartCoroutine("CountDown");
-        StartCoroutine("Relax");
+        Prototype(prototypeID);
     }
     private void OnDisable()
     {
+        prototypeID = 0; //Debug.Log("CustDisabled");
         AnimatorComponent.enabled = false;
     }
 
@@ -129,6 +125,28 @@ public class Customer : Character {
 
             }            
         }        
+    }
+
+    public void Prototype(int prototypeID)
+    {
+        switch (prototypeID)
+        {
+            case 0:
+                TargetVector = reception.EntrancePoint.transform.position;
+                Behaviour = null;
+                Patience = 25;
+                Wait = false;
+                int RandomNumber = UnityEngine.Random.Range(0, 1000);
+                name = "Customer_" + RandomNumber;
+                AnimatorComponent.enabled = true;
+                StartCoroutine("CountDown");
+                StartCoroutine("Relax");
+
+                outfit.SetOutfit();
+                break;
+            case 1:
+                break;
+        }
     }
 
 }
