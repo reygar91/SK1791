@@ -87,6 +87,7 @@
     <Compile Include="Assets\Scripts\RoomTypes\Bar.cs" />
     <Compile Include="Assets\Scripts\RoomTypes\Reception.cs" />
     <Compile Include="Assets\Scripts\RoomTypes\Room.cs" />
+    <Compile Include="Assets\Scripts\Save.cs" />
     <Compile Include="Assets\Scripts\Singleton.cs" />
     <Compile Include="Assets\Scripts\Strategy\Customer\CustBar.cs" />
     <Compile Include="Assets\Scripts\Strategy\Customer\CustReception.cs" />
@@ -100,6 +101,10 @@
     <Compile Include="Assets\Scripts\UI\SceneMGMT.cs" />
     <Compile Include="Assets\Scripts\UI\TimeFlow.cs" />
     <Compile Include="Assets\Scripts\UI\UI_helper.cs" />
+    <Compile Include="Assets\Scripts\ver2\CharacterManager.cs" />
+    <Compile Include="Assets\Scripts\ver2\CharacterVer2.cs" />
+    <Compile Include="Assets\Scripts\ver2\CustomerVer2.cs" />
+    <Compile Include="Assets\Scripts\ver2\MonoCharacter.cs" />
     <None Include="Assets\Resources\Wood texture floor_01\readme.txt" />
     <None Include="Assets\Resources\0000_Tutorial.txt" />
     <None Include="Assets\Resources\example2.txt" />

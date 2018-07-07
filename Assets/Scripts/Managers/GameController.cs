@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 public class GameController : Singleton<GameController> {
 
@@ -78,5 +80,44 @@ public class GameController : Singleton<GameController> {
     //        }            
     //    }
     //}
-    
+
+
+    private Save CreateSaveGameObject()
+    {
+        Save save = new Save();
+        int i = 0;
+        foreach (Character character in CharList)
+        {
+            //Target target = targetGameObject.GetComponent<Target>();
+            if (character.gameObject.activeSelf)
+            {
+                save.Characters.Add(character);
+                //save.livingTargetsTypes.Add((int)target.activeRobot.GetComponent<Robot>().type);
+                i++;
+            }
+        }
+
+        save.gold = GoldManager.Instance.Gold;
+        //save.time = TimeFlow.Instance;
+
+        return save;
+    }
+
+
+    public void SaveGame()
+    {
+        // 1
+        Save save = CreateSaveGameObject();
+
+        // 2
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Create(Application.persistentDataPath + "/gamesave.save");
+        bf.Serialize(file, save);
+        file.Close();
+
+        // 3 here original script made reset of the scene
+
+        Debug.Log("Game Saved");
+    }
+
 }
