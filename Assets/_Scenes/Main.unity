@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3735,7 +3735,6 @@ MonoBehaviour:
   - {fileID: 1834028017}
   - {fileID: 757477638}
   - {fileID: 757477637}
-  custAtBar: []
 --- !u!54 &220469340
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -7586,7 +7585,6 @@ MonoBehaviour:
   Panels:
   - {fileID: 548445298}
   - {fileID: 140973887}
-  CharList: []
   Reputation: 1
 --- !u!4 &418579157
 Transform:
@@ -10615,7 +10613,6 @@ MonoBehaviour:
   - {fileID: 1584447341}
   - {fileID: 1354813658}
   - {fileID: 1354813657}
-  custAtBar: []
 --- !u!54 &780331653
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -11047,12 +11044,6 @@ Mesh:
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 
   m_MeshOptimized: 0
---- !u!114 &846867621 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114159311984368460, guid: 2abc4ee886d14fc48854bef6a3a06810,
-    type: 2}
-  m_PrefabInternal: {fileID: 649387308}
-  m_Script: {fileID: 11500000, guid: ff382afccd5f0754eb98f23590e5529e, type: 3}
 --- !u!4 &846867623 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4580921707078348, guid: 2abc4ee886d14fc48854bef6a3a06810,
@@ -14065,12 +14056,6 @@ RectTransform:
   m_AnchoredPosition: {x: -150, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1200647547 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114159311984368460, guid: 2abc4ee886d14fc48854bef6a3a06810,
-    type: 2}
-  m_PrefabInternal: {fileID: 856144338}
-  m_Script: {fileID: 11500000, guid: ff382afccd5f0754eb98f23590e5529e, type: 3}
 --- !u!43 &1208140436
 Mesh:
   m_ObjectHideFlags: 0
@@ -14863,10 +14848,6 @@ MonoBehaviour:
   - {fileID: 727379383}
   - {fileID: 1142606645}
   - {fileID: 1485170222}
-  AvailableCandidat:
-  - {fileID: 846867621}
-  - {fileID: 1200647547}
-  - {fileID: 1755371781}
 --- !u!43 &1334252767
 Mesh:
   m_ObjectHideFlags: 0
@@ -16418,7 +16399,6 @@ MonoBehaviour:
   Panels:
   - {fileID: 548445298}
   - {fileID: 140973887}
-  CharList: []
   Reputation: 7
 --- !u!114 &1411274723
 MonoBehaviour:
@@ -16457,13 +16437,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1411274720}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a74d4e46d9423ea46b0382bd7df7c92f, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c063c3f347728c499edc6c0dded4167, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CustomerOriginal: {fileID: 114721902563087814, guid: 9da5ba80bba803c49bab101e62bceb7b,
+  HumanoidPrefab: {fileID: 114203851234499346, guid: 9da5ba80bba803c49bab101e62bceb7b,
     type: 2}
   CustomerContainer: {fileID: 1244811761}
-  CustList: []
+  charList: []
 --- !u!1 &1412591866
 GameObject:
   m_ObjectHideFlags: 0
@@ -19928,12 +19908,6 @@ MonoBehaviour:
   - {fileID: 780331652}
   - {fileID: 2067825906}
   RoomContainer: {fileID: 1426048386}
---- !u!114 &1755371781 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114159311984368460, guid: 2abc4ee886d14fc48854bef6a3a06810,
-    type: 2}
-  m_PrefabInternal: {fileID: 1598802582}
-  m_Script: {fileID: 11500000, guid: ff382afccd5f0754eb98f23590e5529e, type: 3}
 --- !u!1 &1788164490
 GameObject:
   m_ObjectHideFlags: 0
@@ -23368,7 +23342,6 @@ MonoBehaviour:
   - {fileID: 13224407}
   - {fileID: 1721651539}
   - {fileID: 1721651538}
-  custAtBar: []
 --- !u!54 &2067825907
 Rigidbody:
   m_ObjectHideFlags: 0

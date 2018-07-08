@@ -6,25 +6,25 @@ using UnityEngine.UI;
 public class Market : MonoBehaviour {
 
     public Toggle[] Option;
-    public Personel[] AvailableCandidat;
-    private Personel SelectedCandidat;
+    //public Personel[] AvailableCandidat;
+    //private Personel SelectedCandidat;
 
 
     public void SelectCandidat(int i)
     {
         if (Option[i].isOn)
         {
-            SelectedCandidat = AvailableCandidat[i];
+            //SelectedCandidat = AvailableCandidat[i];
         }
     }
 
     public void HireCandidat()
     {
-        if (SelectedCandidat != null)
-        {
-            SelectedCandidat.gameObject.SetActive(true);
-        }
-        else Debug.Log("NoOne Selected");        
+        //if (SelectedCandidat != null)
+        //{
+        //    SelectedCandidat.gameObject.SetActive(true);
+        //}
+        //else Debug.Log("NoOne Selected");        
     }
 
 }

@@ -2,9 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CustomerVer2 : CharacterVer2 {
+public class Customer : Character {
 
-    
+    public Customer(MonoCharacter instance) : base(instance)
+    {
+        WalkSpeed = 3;
+    }
+
+
     public override void EnterTriggerBehaviour(Collider other, Transform transform)
     {
         GameObject another = other.transform.parent.gameObject;
@@ -16,15 +21,15 @@ public class CustomerVer2 : CharacterVer2 {
                 {
                     Behaviour.SwitchRoom(); //Debug.Log("leave room onTirggerEnter switch");
                 }
-                Behaviour = new CustReception(this, reception);
-                Target = transform.position; //make itself a target so hasReachedTarged evaluates to true
+                Behaviour = new CustReception(this, Reception.instance);
+                monoCharacter.Target = transform.position; //make itself a target so hasReachedTarged evaluates to true
             }
             if (another.name.Contains("Bar"))
             {
                 Behaviour.SwitchRoom();
                 Bar RoomType = another.GetComponent<Bar>();
                 Behaviour = new CustBar(this, RoomType);
-                Target = transform.position; //make itself a target so hasReachedTarged evaluates to true
+                monoCharacter.Target = transform.position; //make itself a target so hasReachedTarged evaluates to true
 
             }
         }

@@ -165,12 +165,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4214288733571428}
   - component: {fileID: 136282944728358302}
-  - component: {fileID: 114721902563087814}
+  - component: {fileID: 114203851234499346}
   - component: {fileID: 114678107833958852}
   - component: {fileID: 114309151253826490}
   - component: {fileID: 114007661681852664}
   m_Layer: 0
-  m_Name: Customer
+  m_Name: Humanoid
   m_TagString: Customer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -780,6 +780,18 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 21300000, guid: ea78dd4cac1680c49a343ffa4bc6f941, type: 3}
   - {fileID: 21300000, guid: 0bcbe88d8330fa043a837cb103d96c6a, type: 3}
+--- !u!114 &114203851234499346
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1504658182625422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b797195fbc6b5c49955b548af0807b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WalkSpeed: 3
 --- !u!114 &114309151253826490
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -802,22 +814,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf90fdf11d521594487eecc3519219ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114721902563087814
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1504658182625422}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a56c297f4da92c542a97c63a5ab1de8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  WalkSpeed: 4
-  Wait: 0
-  AnimationTime: 0
-  prototypeID: 0
-  outfit: {fileID: 0}
 --- !u!136 &136282944728358302
 CapsuleCollider:
   m_ObjectHideFlags: 1

@@ -60,12 +60,29 @@ public class TimeFlow : Singleton<TimeFlow> {
     public void Pause()
     {
         isPause = !isPause;
-        foreach (Character item in GameController.Instance.CharList)
+        if (isPause)
         {
-            if (item.gameObject.activeSelf)
+            foreach (Character character in CharacterManager.Instance.charList)
             {
-                item.AnimatorComponent.enabled = !item.AnimatorComponent.enabled;
+                if (character.monoCharacter.gameObject.activeSelf)
+                {
+                    character.prevState = character.state;
+                    character.state = Character.State.Pause;
+                    character.monoCharacter.AnimatorComponent.enabled = false;
+                }
             }
         }
+        else
+        {
+            foreach (Character character in CharacterManager.Instance.charList)
+            {
+                if (character.monoCharacter.gameObject.activeSelf)
+                {
+                    character.state = character.prevState;
+                    character.monoCharacter.AnimatorComponent.enabled = true;
+                }
+            }
+        }
+        
     }
 }

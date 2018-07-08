@@ -7,18 +7,26 @@ public class CustBar : ICustBehaviour
     Customer cust;
     Bar bar;
     Animator animator;
-    GameObject Seat;
+    GameObject Seat, gameObject;
     Vector3 targetVector;
+    Transform transform;
     int StatusID;
 
     //int counter = 0;
 
     public CustBar(Customer customer, Bar RoomType)
     {
-        cust = customer;
-        bar = RoomType;
+        cust = customer; 
+        bar = RoomType; 
         StatusID = 0;
-    }   
+        transform = cust.monoCharacter.transform;
+        gameObject = cust.monoCharacter.gameObject;
+    }
+
+    public int GetStatusID()
+    {
+        return StatusID;
+    }
 
     public Vector3 LeaveRoom()
     {
@@ -33,15 +41,15 @@ public class CustBar : ICustBehaviour
                 StatusID = 103;
                 break;
             case 103:
-                cust.transform.position = cust.reception.InternalDoor.transform.position;
-                targetVector = new Vector3(cust.transform.position.x, cust.transform.position.y, cust.reception.EntrancePoint.transform.position.z);
+                transform.position = Reception.instance.InternalDoor.transform.position;
+                targetVector = new Vector3(transform.position.x, transform.position.y, Reception.instance.EntrancePoint.transform.position.z);
                 StatusID = 104;
                 break;
             case 104:
-                targetVector = new Vector3(cust.transform.position.x, cust.transform.position.y, cust.reception.EntrancePoint.transform.position.z);
+                targetVector = new Vector3(transform.position.x, transform.position.y, Reception.instance.EntrancePoint.transform.position.z);
                 break;
             default://move to the center of the room
-                targetVector = new Vector3(cust.transform.position.x, cust.transform.position.y, bar.MiddleOfTheRoom.transform.position.z);
+                targetVector = new Vector3(transform.position.x, transform.position.y, bar.MiddleOfTheRoom.transform.position.z);
                 StatusID = 101;
                 break;
         }
@@ -69,28 +77,26 @@ public class CustBar : ICustBehaviour
                     switch (orientation)
                     {
                         case "Right":
-                            cust.transform.rotation = new Quaternion(0, -1, 0, 0);//facing from right to left
+                            cust.monoCharacter.transform.rotation = new Quaternion(0, -1, 0, 0);//facing from right to left
                             break;
                         case "Left":
-                            cust.transform.rotation = new Quaternion(0, 0, 0, 1);//facing from left to right
+                            cust.monoCharacter.transform.rotation = new Quaternion(0, 0, 0, 1);//facing from left to right
                             break;
                     }
                     StatusID = 3;
                 break;
             case 3://here we play animation for cust.AnimationTime duration
-                cust.AnimationTime = 5f; //Debug.Log(StatusID);
-                cust.Wait = true;                
+                cust.AnimationWaitTime = 5f; //Debug.Log(StatusID);
+                cust.state = Character.State.Animation;             
                 StatusID = 4;
                 break;
             case 4://after main action finished playing idle animation till the rest of patience
-                cust.AnimationTime = cust.Patience; //Debug.Log(StatusID);
-                cust.Wait = true; 
+                cust.AnimationWaitTime = cust.CountDown; //Debug.Log(StatusID);
+                //cust.Wait = true; 
                 break;
             default: // move to center of the room
-                targetVector = new Vector3(cust.transform.position.x, 
-                    cust.transform.position.y, 
-                    bar.MiddleOfTheRoom.transform.position.z);
-                    StatusID = 1;
+                targetVector = new Vector3(transform.position.x, transform.position.y, bar.MiddleOfTheRoom.transform.position.z);
+                StatusID = 1;
                 break;
         }
         return targetVector;

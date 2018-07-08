@@ -1,76 +1,63 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿//using System.Collections;
+//using System.Collections.Generic;
+//using UnityEngine;
 
-public class CharacterFactory : Singleton<CharacterFactory>
-{
-    public Customer CustomerOriginal;
-    public GameObject CustomerContainer;
-    public List<Customer> CustList = new List<Customer>();
+//public class CharacterFactory : Singleton<CharacterFactory>
+//{
+//    public MonoCharacter HumanoidPrefab;
+//    public GameObject CustomerContainer;
+//    public List<Character> CustList = new List<Character>();
 
-    protected CharacterFactory() { }    
+//    protected CharacterFactory() { }
 
-    // Use this for initialization
-    void Start()
-    {
-        StartCoroutine("SpawnCustomer");
-    }
+//    // Use this for initialization
+//    void Start()
+//    {
+//        StartCoroutine("SpawnCustomer");
+//    }
 
-    // Update is called once per frame
-    void Update()
-    {
+//    private IEnumerator SpawnCustomer()
+//    {
+//        MonoCharacter charInstane = Instantiate(HumanoidPrefab, CustomerContainer.transform);
+//        charInstane.character = new Customer(charInstane);
+//        CustList.Add(charInstane.character);
+//        int CountDown = 0;
+//        while (true)
+//        {
+//            if (TimeFlow.Instance.isPause)
+//            {
+//                yield return new WaitWhile(() => TimeFlow.Instance.isPause);
+//            }
+//            else
+//            {
+//                CountDown -= GameController.Instance.Reputation;
+//                if (CountDown <= 0)
+//                {
+//                    SpawnCust(0);
+//                    CountDown = 35;
+//                }
+//                yield return new WaitForSeconds(1 / TimeFlow.Instance.timeSpeed);
+//            }
+//        }
+//    }
 
-    }
+//    public void SpawnCust(int prototypeID)
+//    {
+//        for (int i = 0; i < CustList.Count; i++)
+//        {
+//            if (CustList[i].monoCharacter.gameObject.activeSelf == false)
+//            {
+//                CustList[i].monoCharacter.character.prototypeID = prototypeID;
+//                CustList[i].monoCharacter.gameObject.SetActive(true);
+//                break;
+//            }
+//            else if (i == (CustList.Count - 1))
+//            {
+//                MonoCharacter charInstane = Instantiate(HumanoidPrefab, CustomerContainer.transform);
+//                charInstane.character = new Customer(charInstane);
+//                CustList.Add(charInstane.character);
+//            }
+//        }
+//    }
 
-    private IEnumerator SpawnCustomer()
-    {    
-        CustList.Add(Instantiate(CustomerOriginal, CustomerContainer.transform));
-        GameController.Instance.CharList.Add(CustList[CustList.Count-1]);
-        int CountDown = 0;
-        while (true)
-        {
-            if (TimeFlow.Instance.isPause)
-            {
-                yield return new WaitWhile(() => TimeFlow.Instance.isPause);
-            }
-            else
-            {
-                CountDown -= GameController.Instance.Reputation;
-                if (CountDown <= 0)
-                {
-                    SpawnCust(0);
-                    CountDown = 35;
-                }
-                yield return new WaitForSeconds(1 / TimeFlow.Instance.timeSpeed);
-            }
-        }
-    }
-
-    //public Customer SpawnCust(int prototypeID)
-    //{
-    //    Customer cust = Instantiate(CustomerOriginal, CustomerContainer.transform) as Customer;
-    //    CustList.Add(cust);
-    //    GameController.Instance.CharList.Add(cust);
-    //    cust.prototypeID = prototypeID;
-    //    return cust;
-    //}
-
-    public void SpawnCust(int prototypeID)
-    {
-        for (int i = 0; i < CustList.Count; i++)
-        {
-            if (CustList[i].gameObject.activeSelf == false)
-            {
-                CustList[i].prototypeID = prototypeID;
-                CustList[i].gameObject.SetActive(true);
-                break;
-            }
-            else if (i == (CustList.Count - 1))
-            {
-                CustList.Add(Instantiate(CustomerOriginal, CustomerContainer.transform));
-                GameController.Instance.CharList.Add(CustList[CustList.Count - 1]);
-            }
-        }
-    }
-
-}
+//}

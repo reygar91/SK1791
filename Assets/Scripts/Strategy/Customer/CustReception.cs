@@ -7,17 +7,25 @@ public class CustReception : ICustBehaviour
     Customer cust;
     Reception reception;
     Animator animator;
-    GameObject Target;
+    GameObject Target, gameObject;
     Vector3 targetVector;
+    Transform transform;
     int targetIndex, StatusID;
 
 
     public CustReception(Customer customer, Reception RoomType)
     {
         cust = customer;
-        reception = RoomType;
+        reception = Reception.instance;
         //animator = AnimatorComponent;
         StatusID = 0;
+        transform = cust.monoCharacter.transform;
+        gameObject = cust.monoCharacter.gameObject;
+    }
+
+    public int GetStatusID()
+    {
+        return StatusID;
     }
 
     public Vector3 LeaveRoom()
@@ -25,18 +33,18 @@ public class CustReception : ICustBehaviour
         switch (StatusID)
         {
             case 1:
-                targetVector = cust.reception.EntrancePoint.transform.position;
+                targetVector = reception.EntrancePoint.transform.position;
                 StatusID = 2;
                 break;
             case 2:
-                targetVector = cust.reception.SpawnPoint.transform.position;
+                targetVector = reception.SpawnPoint.transform.position;
                 StatusID = 3;
                 break;
             case 3:
-                cust.gameObject.SetActive(false);
+                gameObject.SetActive(false);
                 break;
             default:
-                targetVector = new Vector3(cust.transform.position.x, cust.transform.position.y, reception.EntrancePoint.transform.position.z);
+                targetVector = new Vector3(transform.position.x, transform.position.y, reception.EntrancePoint.transform.position.z);
                 StatusID = 1;
                 SwitchRoom(); //Debug.Log("leave room default switch");
                 break;

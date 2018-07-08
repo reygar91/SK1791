@@ -7,4 +7,5 @@ public interface ICustBehaviour
     Vector3 LeaveRoom();
     Vector3 RoomBehaviour();    
     void SwitchRoom();
+    int GetStatusID();
 }

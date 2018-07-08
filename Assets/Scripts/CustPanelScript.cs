@@ -24,7 +24,7 @@ public class CustPanelScript : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {     
-        transform.position = Camera.main.WorldToScreenPoint(cust.transform.position) + offset;
+        transform.position = Camera.main.WorldToScreenPoint(cust.monoCharacter.transform.position) + offset;
     }
 
     private void OnDisable()
@@ -36,7 +36,7 @@ public class CustPanelScript : MonoBehaviour {
     {
         while (true)
         {
-            patience = cust.Patience;
+            patience = Mathf.RoundToInt(cust.CountDown);
             text.text = "Patience: " + patience.ToString();
             yield return new WaitForSeconds(0.25f);
         }

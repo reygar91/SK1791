@@ -18,7 +18,7 @@ public class GameController : Singleton<GameController> {
 
     //public Toggle PauseToggle;
  
-    public List<Character> CharList = new List<Character>();
+    //public List<Character> CharList = new List<Character>();
 
     public int Reputation = 1;//at 0 there will be only 1 cust spawned initially, at 7 - cust spawns every 5 sec
 
@@ -86,12 +86,26 @@ public class GameController : Singleton<GameController> {
     {
         Save save = new Save();
         int i = 0;
-        foreach (Character character in CharList)
+        foreach (Character character in CharacterManager.Instance.charList)
         {
             //Target target = targetGameObject.GetComponent<Target>();
-            if (character.gameObject.activeSelf)
+            if (character.monoCharacter.gameObject.activeSelf)
             {
-                save.Characters.Add(character);
+                CharData data = new CharData
+                {
+                    state = character.state,
+                    prevState = character.prevState,
+                    Behaviour = character.Behaviour.GetType().ToString(),
+                    BehaviourStateID = character.Behaviour.GetStatusID(),
+                    X = character.monoCharacter.transform.position.x,
+                    Y = character.monoCharacter.transform.position.y,
+                    Z = character.monoCharacter.transform.position.z,
+                    TargetX = character.monoCharacter.Target.x,
+                    TargetY = character.monoCharacter.Target.y,
+                    AnimationWaitTime = character.AnimationWaitTime,
+                    CountDown = character.CountDown
+                };
+                save.Characters.Add(data);
                 //save.livingTargetsTypes.Add((int)target.activeRobot.GetComponent<Robot>().type);
                 i++;
             }

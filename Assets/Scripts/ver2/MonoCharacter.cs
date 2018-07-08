@@ -4,39 +4,44 @@ using UnityEngine;
 
 public class MonoCharacter : MonoBehaviour {
 
-    private Animator AnimatorComponent
+    public Animator AnimatorComponent
     {
         get; set;
-    }
+    }    
 
-    public float WalkSpeed;
-
-
-    public CharacterVer2 characterVer2;
+    public Character character;
+    public Vector3 Target;
 
     private void Awake()
     {
-        AnimatorComponent = GetComponent<Animator>();
-        Reception reception = FindObjectOfType<Reception>();
-        characterVer2 = new CustomerVer2
-        {
-            reception = reception
-        };
-        Debug.Log("Character is Awake");
+        AnimatorComponent = GetComponentInChildren<Animator>();
+    }
+
+    private void OnEnable()
+    {
+        AnimatorComponent.enabled = true;
+        character.Prototype(character.prototypeID);
+    }
+    private void OnDisable()
+    {
+        AnimatorComponent.enabled = false;
     }
 
 
-    public void MoveTo()
+    public void Move()
     {
-        if (!hasReachedTarget(characterVer2.Target))
+        if (!hasReachedTarget(Target))
         {
-            Vector3 TargetVector = new Vector3(characterVer2.Target.x, transform.position.y, characterVer2.Target.z);
-            transform.position = Vector3.MoveTowards(transform.position, TargetVector, WalkSpeed * Time.deltaTime);
+            Vector3 TargetVector = new Vector3(Target.x, transform.position.y, Target.z);
+            transform.position = Vector3.MoveTowards(transform.position, TargetVector, character.WalkSpeed * Time.deltaTime);
             MovingDirection(TargetVector);
             if (AnimatorComponent.GetInteger("AnimationID") != 1)
             {
                 AnimatorComponent.SetInteger("AnimationID", 1);
             }
+        } else if (AnimatorComponent.GetInteger("AnimationID") != 0)
+        {
+            AnimatorComponent.SetInteger("AnimationID", 0);
         }
     }
 
@@ -63,16 +68,36 @@ public class MonoCharacter : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        characterVer2.EnterTriggerBehaviour(other, transform);
+        character.EnterTriggerBehaviour(other, transform);
     }
 
-    //public void Initialize(CharacterVer2 newChar)
-    //{
-    //    switch (newChar.GetType().ToString())
-    //    {
-    //        case "CustomerVer2":
-    //            //characterVer2 = newChar as newChar.GetType();
-    //            break;
-    //    }
-    //}
+    public void Tick()
+    {
+        if (gameObject.activeSelf)
+        {
+            character.CountDown -= Time.deltaTime * character.CountDownMultiplier;
+
+            switch (character.state)
+            {
+                case (Character.State.Animation):
+                    //Debug.Log(character.AnimationWaitTime);
+                    if (character.AnimationWaitTime < 0)
+                        character.state = Character.State.Move;
+                    else character.AnimationWaitTime -= Time.deltaTime;
+                    break;
+                case (Character.State.Move):
+                    if (character.Behaviour != null)
+                    {
+                        if (hasReachedTarget(Target) && character.CountDown < 0)
+                            Target = character.Behaviour.LeaveRoom();
+                        else if (hasReachedTarget(Target))
+                            Target = character.Behaviour.RoomBehaviour();
+                    }
+                    Move();
+                    break;
+                case (Character.State.Pause):
+                    break;
+            }
+        }        
+    }
 }
