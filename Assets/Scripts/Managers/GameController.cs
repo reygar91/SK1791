@@ -94,17 +94,24 @@ public class GameController : Singleton<GameController> {
                 CharData data = new CharData
                 {
                     state = character.state,
-                    prevState = character.prevState,
-                    Behaviour = character.Behaviour.GetType().ToString(),
-                    BehaviourStateID = character.Behaviour.GetStatusID(),
+                    prevState = character.prevState,                    
                     X = character.monoCharacter.transform.position.x,
                     Y = character.monoCharacter.transform.position.y,
                     Z = character.monoCharacter.transform.position.z,
                     TargetX = character.monoCharacter.Target.x,
-                    TargetY = character.monoCharacter.Target.y,
+                    TargetZ = character.monoCharacter.Target.z,
                     AnimationWaitTime = character.AnimationWaitTime,
                     CountDown = character.CountDown
                 };
+                if (character.Behaviour != null)
+                {
+                    data.Behaviour = character.Behaviour.GetType().ToString();
+                    data.BehaviourStateID = character.Behaviour.GetStatusID();
+                } else
+                {
+                    data.Behaviour = "null";
+                    data.BehaviourStateID = 0;
+                }                    
                 save.Characters.Add(data);
                 //save.livingTargetsTypes.Add((int)target.activeRobot.GetComponent<Robot>().type);
                 i++;
@@ -122,7 +129,6 @@ public class GameController : Singleton<GameController> {
     {
         // 1
         Save save = CreateSaveGameObject();
-
         // 2
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/gamesave.save");
@@ -131,7 +137,56 @@ public class GameController : Singleton<GameController> {
 
         // 3 here original script made reset of the scene
 
-        Debug.Log("Game Saved");
+        Debug.Log("Game Saved to " + Application.persistentDataPath);
+    }
+
+    public void LoadGame()
+    {
+        // 1
+        if (File.Exists(Application.persistentDataPath + "/gamesave.save"))
+        {
+            //here scene has to be reloaded or reseted
+
+            // 2
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(Application.persistentDataPath + "/gamesave.save", FileMode.Open);
+            Save save = (Save)bf.Deserialize(file);
+            file.Close();
+
+            // 3
+            foreach (CharData data in save.Characters)
+            {
+                Character cust = CharacterManager.Instance.SpawnCust(0);
+                cust.state = data.state;
+                cust.prevState = data.prevState;
+                cust.monoCharacter.transform.position = new Vector3 (data.X, data.Y, data.Z);
+                cust.monoCharacter.Target = new Vector3(data.TargetX, data.Y, data.TargetZ);
+                cust.AnimationWaitTime = data.AnimationWaitTime;
+                cust.CountDown = data.CountDown;
+                switch (data.Behaviour)
+                {
+                    case "CustReception":
+                        cust.Behaviour = new CustReception(cust as Customer);
+                        cust.Behaviour.SetStatusID(data.BehaviourStateID);
+                        break;
+                    case "CustBar":
+                        break;
+                    default:
+                        break;
+                }
+            }
+            
+            // 4
+            GoldManager.Instance.AddGold(save.gold);
+
+            Debug.Log("Game Loaded");
+
+            //Unpause();
+        }
+        else
+        {
+            Debug.Log("No game saved!");
+        }
     }
 
 }

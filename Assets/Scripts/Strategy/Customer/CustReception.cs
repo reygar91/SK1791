@@ -13,7 +13,7 @@ public class CustReception : ICustBehaviour
     int targetIndex, StatusID;
 
 
-    public CustReception(Customer customer, Reception RoomType)
+    public CustReception(Customer customer)
     {
         cust = customer;
         reception = Reception.instance;
@@ -74,6 +74,11 @@ public class CustReception : ICustBehaviour
             targetIndex--;
         }
         return Target.transform.position;
+    }
+
+    public void SetStatusID(int ID)
+    {
+        StatusID = ID;
     }
 
     public void SwitchRoom()

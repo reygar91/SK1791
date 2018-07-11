@@ -102,6 +102,11 @@ public class CustBar : ICustBehaviour
         return targetVector;
     }
 
+    public void SetStatusID(int ID)
+    {
+        StatusID = ID;
+    }
+
     public void SwitchRoom()
     {
         if (Seat)

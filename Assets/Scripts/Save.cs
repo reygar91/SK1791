@@ -20,6 +20,6 @@ public class CharData
     public Character.State state, prevState;
     public string Behaviour;
     public int BehaviourStateID;
-    public float X, Y, Z, TargetX, TargetY, AnimationWaitTime, CountDown;
+    public float X, Y, Z, TargetX, TargetZ, AnimationWaitTime, CountDown;
 
 }
