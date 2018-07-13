@@ -11,6 +11,7 @@ public class MonoCharacter : MonoBehaviour {
 
     public Character character;
     public Vector3 Target;
+    public Room CurrentRoom, TargetRoom;
 
     private void Awake()
     {
@@ -68,7 +69,13 @@ public class MonoCharacter : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log(name + " OnTriggerEnter " + other.gameObject.name);
         character.EnterTriggerBehaviour(other, transform);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        //Debug.Log(name + " OnTriggerExit");
     }
 
     public void Tick()
@@ -88,10 +95,16 @@ public class MonoCharacter : MonoBehaviour {
                 case (Character.State.Move):
                     if (character.Behaviour != null)
                     {
-                        if (hasReachedTarget(Target) && character.CountDown < 0)
-                            Target = character.Behaviour.LeaveRoom();
-                        else if (hasReachedTarget(Target))
-                            Target = character.Behaviour.RoomBehaviour();
+                        if (hasReachedTarget(Target))
+                        {
+                            //Debug.Log(name + " " + CurrentRoom + "=>" + TargetRoom + "=>" + character.CountDown);
+                            if (character.CountDown < 0)
+                                Target = character.Behaviour.LeaveRoom();
+                            else if (CurrentRoom != TargetRoom)
+                                Target = character.Behaviour.ChangeRoom(TargetRoom);
+                            else
+                                Target = character.Behaviour.RoomBehaviour();
+                        }                        
                     }
                     Move();
                     break;

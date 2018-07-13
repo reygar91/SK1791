@@ -7,6 +7,7 @@ public class Room : MonoBehaviour {
     public static List<Room> roomsList = new List<Room>();
     public BoxCollider boxCollider;
     public SpriteRenderer spriteRenderer;
+    public GameObject Doors, MiddleOfTheRoom;
     // Use this for initialization
     void Start () {
 		
@@ -28,10 +29,19 @@ public class Room : MonoBehaviour {
     private void OnMouseEnter()
     {
         spriteRenderer.gameObject.SetActive(true);
+
+        if (CharDragSelect.DraggedMC != null)
+        {
+            CharDragSelect.DraggedMC.TargetRoom = this; //Debug.Log(this);
+        }
     }
 
     private void OnMouseExit()
     {
         spriteRenderer.gameObject.SetActive(false);
+        if (CharDragSelect.DraggedMC != null)
+        {
+            CharDragSelect.DraggedMC.TargetRoom = CharDragSelect.DraggedMC.CurrentRoom;
+        }
     }
 }

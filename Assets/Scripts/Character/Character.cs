@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Character {
     
-    public ICustBehaviour Behaviour;
+    public ICharBehaviour Behaviour;
     public MonoCharacter monoCharacter;
     public float WalkSpeed;
 
@@ -44,7 +44,7 @@ public class Character {
                 int RandomNumber = UnityEngine.Random.Range(0, 1000);
                 monoCharacter.name = "Customer_" + RandomNumber;
                 monoCharacter.AnimatorComponent.enabled = true;
-
+                monoCharacter.TargetRoom = Reception.instance;
                 //outfit.SetOutfit();
                 break;
             case 1:

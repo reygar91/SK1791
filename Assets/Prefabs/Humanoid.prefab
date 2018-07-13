@@ -167,8 +167,8 @@ GameObject:
   - component: {fileID: 136282944728358302}
   - component: {fileID: 114203851234499346}
   - component: {fileID: 114678107833958852}
-  - component: {fileID: 114309151253826490}
   - component: {fileID: 114007661681852664}
+  - component: {fileID: 114799911978280748}
   m_Layer: 0
   m_Name: Humanoid
   m_TagString: Customer
@@ -791,18 +791,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b797195fbc6b5c49955b548af0807b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WalkSpeed: 3
---- !u!114 &114309151253826490
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1504658182625422}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd0e7a38c4153c44285265d3d911bd94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  Target: {x: 0, y: 0, z: 0}
+  CurrentRoom: {fileID: 0}
+  TargetRoom: {fileID: 0}
 --- !u!114 &114678107833958852
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -814,6 +805,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf90fdf11d521594487eecc3519219ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114799911978280748
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1504658182625422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eeecc42f66ab93c408c16d31af662aba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsSelectable: 0
+  IsDragable: 0
 --- !u!136 &136282944728358302
 CapsuleCollider:
   m_ObjectHideFlags: 1

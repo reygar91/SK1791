@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CustBar : ICustBehaviour
+public class CustBar : ICharBehaviour
 {
     Customer cust;
     Bar bar;
-    Animator animator;
-    GameObject Seat, gameObject;
+    MonoCharacter MC;
+    GameObject Seat;
     Vector3 targetVector;
-    Transform transform;
     int StatusID;
 
     //int counter = 0;
@@ -19,8 +18,12 @@ public class CustBar : ICustBehaviour
         cust = customer; 
         bar = RoomType; 
         StatusID = 0;
-        transform = cust.monoCharacter.transform;
-        gameObject = cust.monoCharacter.gameObject;
+        MC = cust.monoCharacter;
+    }
+
+    public Vector3 ChangeRoom(Room targetRoom)
+    {
+        throw new System.NotImplementedException();
     }
 
     public int GetStatusID()
@@ -30,26 +33,30 @@ public class CustBar : ICustBehaviour
 
     public Vector3 LeaveRoom()
     {
+        Transform Doors, Middle, Char;
+        Doors = bar.Doors.transform;
+        Middle = bar.MiddleOfTheRoom.transform;
+        Char = MC.transform;
         switch (StatusID)
         {
             case 101:
-                targetVector = new Vector3(bar.Doors.transform.position.x, bar.Doors.transform.position.y, bar.MiddleOfTheRoom.transform.position.z);
+                targetVector = new Vector3(Doors.position.x, Doors.position.y, Middle.position.z);
                 StatusID = 102;
                 break;
             case 102:
-                targetVector = bar.Doors.transform.position;
+                targetVector = Doors.position;
                 StatusID = 103;
                 break;
             case 103:
-                transform.position = Reception.instance.InternalDoor.transform.position;
-                targetVector = new Vector3(transform.position.x, transform.position.y, Reception.instance.EntrancePoint.transform.position.z);
+                Char.position = Reception.instance.Doors.transform.position;
+                targetVector = new Vector3(Char.position.x, Char.position.y, Reception.instance.EntrancePoint.transform.position.z);
                 StatusID = 104;
                 break;
             case 104:
-                targetVector = new Vector3(transform.position.x, transform.position.y, Reception.instance.EntrancePoint.transform.position.z);
+                targetVector = new Vector3(Char.position.x, Char.position.y, Reception.instance.EntrancePoint.transform.position.z);
                 break;
             default://move to the center of the room
-                targetVector = new Vector3(transform.position.x, transform.position.y, bar.MiddleOfTheRoom.transform.position.z);
+                targetVector = new Vector3(Char.position.x, Char.position.y, Middle.position.z);
                 StatusID = 101;
                 break;
         }
@@ -77,10 +84,10 @@ public class CustBar : ICustBehaviour
                     switch (orientation)
                     {
                         case "Right":
-                            cust.monoCharacter.transform.rotation = new Quaternion(0, -1, 0, 0);//facing from right to left
+                            MC.transform.rotation = new Quaternion(0, -1, 0, 0);//facing from right to left
                             break;
                         case "Left":
-                            cust.monoCharacter.transform.rotation = new Quaternion(0, 0, 0, 1);//facing from left to right
+                            MC.transform.rotation = new Quaternion(0, 0, 0, 1);//facing from left to right
                             break;
                     }
                     StatusID = 3;
@@ -95,7 +102,7 @@ public class CustBar : ICustBehaviour
                 //cust.Wait = true; 
                 break;
             default: // move to center of the room
-                targetVector = new Vector3(transform.position.x, transform.position.y, bar.MiddleOfTheRoom.transform.position.z);
+                targetVector = new Vector3(MC.transform.position.x, MC.transform.position.y, bar.MiddleOfTheRoom.transform.position.z);
                 StatusID = 1;
                 break;
         }

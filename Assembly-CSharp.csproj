@@ -69,13 +69,14 @@
     <Compile Include="Assets\Scripts\Build.cs" />
     <Compile Include="Assets\Scripts\BuildPreview.cs" />
     <Compile Include="Assets\Scripts\Character\Character.cs" />
-    <Compile Include="Assets\Scripts\Character\CharacterManager.cs" />
     <Compile Include="Assets\Scripts\Character\Customer.cs" />
     <Compile Include="Assets\Scripts\Character\MonoCharacter.cs" />
+    <Compile Include="Assets\Scripts\CharDragSelect.cs" />
     <Compile Include="Assets\Scripts\Command\CommandPattern.cs" />
     <Compile Include="Assets\Scripts\CustPanelScript.cs" />
     <Compile Include="Assets\Scripts\isDragable.cs" />
     <Compile Include="Assets\Scripts\isSelectable.cs" />
+    <Compile Include="Assets\Scripts\Managers\CharacterManager.cs" />
     <Compile Include="Assets\Scripts\Managers\DialougeManager.cs" />
     <Compile Include="Assets\Scripts\Managers\GameController.cs" />
     <Compile Include="Assets\Scripts\Managers\GoldManager.cs" />
@@ -95,7 +96,7 @@
     <Compile Include="Assets\Scripts\Singleton.cs" />
     <Compile Include="Assets\Scripts\Strategy\Customer\CustBar.cs" />
     <Compile Include="Assets\Scripts\Strategy\Customer\CustReception.cs" />
-    <Compile Include="Assets\Scripts\Strategy\Customer\ICustBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Strategy\Customer\ICharBehaviour.cs" />
     <Compile Include="Assets\Scripts\Strategy\Personel\IPersBehaviour.cs" />
     <Compile Include="Assets\Scripts\Strategy\Personel\PersBar.cs" />
     <Compile Include="Assets\Scripts\UI\CameraMovement.cs" />

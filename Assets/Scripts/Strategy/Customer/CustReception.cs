@@ -2,25 +2,52 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CustReception : ICustBehaviour
+public class CustReception : ICharBehaviour
 {
     Customer cust;
-    Reception reception;
-    Animator animator;
-    GameObject Target, gameObject;
+    //Reception reception;
+    MonoCharacter MC;
+    GameObject Target;
     Vector3 targetVector;
-    Transform transform;
     int targetIndex, StatusID;
 
 
     public CustReception(Customer customer)
     {
         cust = customer;
-        reception = Reception.instance;
+        //reception = Reception.instance;
         //animator = AnimatorComponent;
         StatusID = 0;
-        transform = cust.monoCharacter.transform;
-        gameObject = cust.monoCharacter.gameObject;
+        MC = cust.monoCharacter;
+    }
+
+    public Vector3 ChangeRoom(Room targetRoom)
+    {
+        switch (StatusID)
+        {
+            case 10:
+                targetVector = new Vector3(Reception.instance.Doors.transform.position.x, MC.transform.position.y, MC.transform.position.z);
+                StatusID = 11;
+                break;
+            case 11:
+                targetVector = Reception.instance.Doors.transform.position;
+                StatusID = 12;
+                break;
+            case 12:
+                MC.transform.position = targetRoom.Doors.transform.position;
+                targetVector = targetRoom.Doors.transform.position;
+                targetVector.z -= 1.5f;
+                StatusID = 13;
+                break;
+            case 13:
+                break;
+            default:
+                targetVector = new Vector3(MC.transform.position.x, MC.transform.position.y, Reception.instance.EntrancePoint.transform.position.z);
+                StatusID = 10;
+                SwitchRoom(); //Debug.Log("leave room default switch");
+                break;
+        }
+        return targetVector;
     }
 
     public int GetStatusID()
@@ -33,18 +60,18 @@ public class CustReception : ICustBehaviour
         switch (StatusID)
         {
             case 1:
-                targetVector = reception.EntrancePoint.transform.position;
+                targetVector = Reception.instance.EntrancePoint.transform.position;
                 StatusID = 2;
                 break;
             case 2:
-                targetVector = reception.SpawnPoint.transform.position;
+                targetVector = Reception.instance.SpawnPoint.transform.position;
                 StatusID = 3;
                 break;
             case 3:
-                gameObject.SetActive(false);
+                MC.gameObject.SetActive(false);
                 break;
             default:
-                targetVector = new Vector3(transform.position.x, transform.position.y, reception.EntrancePoint.transform.position.z);
+                targetVector = new Vector3(MC.transform.position.x, MC.transform.position.y, Reception.instance.EntrancePoint.transform.position.z);
                 StatusID = 1;
                 SwitchRoom(); //Debug.Log("leave room default switch");
                 break;
@@ -58,19 +85,19 @@ public class CustReception : ICustBehaviour
         {
             for (int i=0; i < 5; i++)
             {
-                if(reception.OccupiedSpot[i] == false)
+                if(Reception.instance.OccupiedSpot[i] == false)
                 {
-                    Target = reception.WaitInLinePoints[i];
-                    reception.OccupiedSpot[i] = true;
+                    Target = Reception.instance.WaitInLinePoints[i];
+                    Reception.instance.OccupiedSpot[i] = true;
                     targetIndex = i;
                     i = 5;
                 }
             }
-        } else if (targetIndex !=0 && reception.OccupiedSpot[targetIndex-1] == false)
+        } else if (targetIndex !=0 && Reception.instance.OccupiedSpot[targetIndex-1] == false)
         {
-            Target = reception.WaitInLinePoints[targetIndex-1]; 
-            reception.OccupiedSpot[targetIndex-1] = true;
-            reception.OccupiedSpot[targetIndex] = false;
+            Target = Reception.instance.WaitInLinePoints[targetIndex-1];
+            Reception.instance.OccupiedSpot[targetIndex-1] = true;
+            Reception.instance.OccupiedSpot[targetIndex] = false;
             targetIndex--;
         }
         return Target.transform.position;
@@ -85,7 +112,7 @@ public class CustReception : ICustBehaviour
     {
         if (Target)
         {
-            reception.OccupiedSpot[targetIndex] = false; //Debug.Log(cust.name + "_triggers");
+            Reception.instance.OccupiedSpot[targetIndex] = false; //Debug.Log(cust.name + "_triggers");
             Target = null;
         }
     }

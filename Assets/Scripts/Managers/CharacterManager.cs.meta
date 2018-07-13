@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 2c063c3f347728c499edc6c0dded4167
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - HumanoidPrefab: {fileID: 114203851234499346, guid: 9da5ba80bba803c49bab101e62bceb7b,
+      type: 2}
+  - CustomerContainer: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

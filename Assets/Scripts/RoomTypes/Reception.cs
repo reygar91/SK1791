@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Reception : Room {
 
-    public GameObject SpawnPoint, EntrancePoint, InternalDoor;
+    public GameObject SpawnPoint, EntrancePoint;
 
     public static Reception instance;
 

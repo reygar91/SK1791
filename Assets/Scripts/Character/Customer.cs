@@ -13,11 +13,13 @@ public class Customer : Character {
     public override void EnterTriggerBehaviour(Collider other, Transform transform)
     {
         GameObject another = other.transform.parent.gameObject;
-        Debug.Log(monoCharacter.name + " enteredReception");
+        //Debug.Log(monoCharacter.name + " enteredReception");
         if (other.tag == "Room")
         {
             if (another.name.Contains("Reception"))
             {
+                monoCharacter.CurrentRoom = Reception.instance;
+                //monoCharacter.TargetRoom = monoCharacter.CurrentRoom; //Debug.Log(monoCharacter.TargetRoom);
                 if (Behaviour != null)
                 {
                     Behaviour.SwitchRoom(); //Debug.Log("leave room onTirggerEnter switch");
@@ -27,11 +29,11 @@ public class Customer : Character {
             }
             if (another.name.Contains("Bar"))
             {
+                monoCharacter.CurrentRoom = another.GetComponent<Bar>();
                 Behaviour.SwitchRoom();
-                Bar RoomType = another.GetComponent<Bar>();
-                Behaviour = new CustBar(this, RoomType);
+                //Bar RoomType = 
+                Behaviour = new CustBar(this, monoCharacter.CurrentRoom as Bar);
                 monoCharacter.Target = transform.position; //make itself a target so hasReachedTarged evaluates to true
-
             }
         }
     }
