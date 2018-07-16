@@ -7,6 +7,7 @@ public class Character {
     public ICharBehaviour Behaviour;
     public MonoCharacter monoCharacter;
     public float WalkSpeed;
+    public BehaviourData behaviourData;
 
     //CountDown will represent patience for customers and energy for personel, Multiplier is used to determine difficulty of performed activity
     public float AnimationWaitTime, CountDown, CountDownMultiplier;

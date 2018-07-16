@@ -197,9 +197,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4580921707078348}
   - component: {fileID: 136290270770478488}
-  - component: {fileID: 114159311984368460}
-  - component: {fileID: 114255458115226904}
-  - component: {fileID: 114610899508436540}
   m_Layer: 0
   m_Name: Personel
   m_TagString: Personel
@@ -392,42 +389,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114159311984368460
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1996430751516624}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff382afccd5f0754eb98f23590e5529e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  WalkSpeed: 3
-  Wait: 0
-  AnimationTime: 0
---- !u!114 &114255458115226904
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1996430751516624}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf90fdf11d521594487eecc3519219ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114610899508436540
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1996430751516624}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd0e7a38c4153c44285265d3d911bd94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!136 &136290270770478488
 CapsuleCollider:
   m_ObjectHideFlags: 1

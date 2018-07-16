@@ -16,10 +16,17 @@ public class Save {
 [System.Serializable]
 public class CharData
 {
-
     public Character.State state, prevState;
-    public string Behaviour;
-    public int BehaviourStateID;
+    public BehaviourData behaviour;
     public float X, Y, Z, TargetX, TargetZ, AnimationWaitTime, CountDown;
-
 }
+
+[System.Serializable]
+public class BehaviourData
+{
+    //public string name;
+    public int StateID;
+    public GameObject ObjectOfInterest; // GO can not be serialized, need to change bar to look like reception, 2 arrays 1 with GO another with availability index
+}
+
+

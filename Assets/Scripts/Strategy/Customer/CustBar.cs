@@ -5,80 +5,89 @@ using UnityEngine;
 public class CustBar : ICharBehaviour
 {
     Customer cust;
-    Bar bar;
     MonoCharacter MC;
-    GameObject Seat;
+    Bar room;
     Vector3 targetVector;
     int StatusID;
+    GameObject Seat;
 
-    //int counter = 0;
-
-    public CustBar(Customer customer, Bar RoomType)
+    public CustBar(Customer customer)
     {
-        cust = customer; 
-        bar = RoomType; 
-        StatusID = 0;
+        cust = customer;
         MC = cust.monoCharacter;
+        room = MC.CurrentRoom as Bar;
+        if (cust.behaviourData != null)
+        {
+            Seat = cust.behaviourData.ObjectOfInterest;
+            StatusID = cust.behaviourData.StateID;
+            cust.behaviourData = null;
+        }
+        Debug.Log("new CustBar => StatusID = " + StatusID);
     }
 
     public Vector3 ChangeRoom(Room targetRoom)
     {
-        throw new System.NotImplementedException();
-    }
-
-    public int GetStatusID()
-    {
-        return StatusID;
-    }
-
-    public Vector3 LeaveRoom()
-    {
         Transform Doors, Middle, Char;
-        Doors = bar.Doors.transform;
-        Middle = bar.MiddleOfTheRoom.transform;
+        Doors = room.Doors.transform;
+        Middle = room.MiddleOfTheRoom.transform;
         Char = MC.transform;
         switch (StatusID)
         {
-            case 101:
+            case 1:
                 targetVector = new Vector3(Doors.position.x, Doors.position.y, Middle.position.z);
-                StatusID = 102;
+                StatusID = 2;
                 break;
-            case 102:
+            case 2:
                 targetVector = Doors.position;
-                StatusID = 103;
+                StatusID = 3;
                 break;
-            case 103:
-                Char.position = Reception.instance.Doors.transform.position;
-                targetVector = new Vector3(Char.position.x, Char.position.y, Reception.instance.EntrancePoint.transform.position.z);
-                StatusID = 104;
+            case 3:
+                Char.position = targetRoom.Doors.transform.position;
+                targetVector = targetRoom.Doors.transform.position;
+                targetVector.z -= 1.5f;
+                StatusID = 4;
                 break;
-            case 104:
-                targetVector = new Vector3(Char.position.x, Char.position.y, Reception.instance.EntrancePoint.transform.position.z);
+            case 4:
+                //empty, so to do nothing untill he enters to a new room
                 break;
             default://move to the center of the room
                 targetVector = new Vector3(Char.position.x, Char.position.y, Middle.position.z);
-                StatusID = 101;
+                StatusID = 1;
+                SwitchRoom();
                 break;
         }
         return targetVector;
+    }
+
+    public BehaviourData BehaviourData
+    {
+        get
+        {
+            BehaviourData data = new BehaviourData
+            {
+                ObjectOfInterest = Seat,
+                StateID = StatusID
+            };
+            return data;
+        }
     }
 
     public Vector3 RoomBehaviour()
     {
         switch (StatusID)
         {
-            case 1: //find a seat and select it as new target
-                if (bar.Seats.Count != 0 && !Seat)
+            case 10: //find a seat and select it as new target
+                if (room.Seats.Count != 0 && !Seat)
                 {
-                    int RandomSeat = Random.Range(0, bar.Seats.Count);
-                    Seat = bar.Seats[RandomSeat];
-                    bar.Seats.Remove(Seat);
+                    int RandomSeat = Random.Range(0, room.Seats.Count);
+                    Seat = room.Seats[RandomSeat];
+                    room.Seats.Remove(Seat);
                     targetVector = Seat.transform.position;
-                    StatusID = 2;
+                    StatusID = 11;
                 }
                 break;
-            case 2: //adding cust to custAtBar list + setting his orientation to correct side
-                    bar.custAtBar.Add(cust);
+            case 11: //adding cust to custAtBar list + setting his orientation to correct side
+                    room.custAtBar.Add(cust);
                     int startIndex = Seat.name.IndexOf("_");
                     string orientation = Seat.name.Substring(startIndex + 1);
                     switch (orientation)
@@ -90,36 +99,31 @@ public class CustBar : ICharBehaviour
                             MC.transform.rotation = new Quaternion(0, 0, 0, 1);//facing from left to right
                             break;
                     }
-                    StatusID = 3;
+                    StatusID = 12;
                 break;
-            case 3://here we play animation for cust.AnimationTime duration
+            case 12://here we play animation for cust.AnimationTime duration
                 cust.AnimationWaitTime = 5f; //Debug.Log(StatusID);
                 cust.state = Character.State.Animation;             
-                StatusID = 4;
+                StatusID = 13;
                 break;
-            case 4://after main action finished playing idle animation till the rest of patience
+            case 13://after main action finished playing idle animation till the rest of patience
                 cust.AnimationWaitTime = cust.CountDown; //Debug.Log(StatusID);
                 //cust.Wait = true; 
                 break;
             default: // move to center of the room
-                targetVector = new Vector3(MC.transform.position.x, MC.transform.position.y, bar.MiddleOfTheRoom.transform.position.z);
-                StatusID = 1;
+                targetVector = new Vector3(MC.transform.position.x, MC.transform.position.y, room.MiddleOfTheRoom.transform.position.z);
+                StatusID = 10;
                 break;
         }
         return targetVector;
     }
 
-    public void SetStatusID(int ID)
-    {
-        StatusID = ID;
-    }
-
-    public void SwitchRoom()
+    private void SwitchRoom()
     {
         if (Seat)
         {
-            bar.Seats.Add(Seat);
-            bar.custAtBar.Remove(cust);
+            room.Seats.Add(Seat);
+            room.custAtBar.Remove(cust);
         }        
     }
 }

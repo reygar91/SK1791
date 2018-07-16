@@ -6,7 +6,7 @@ public class MonoCharacter : MonoBehaviour {
 
     public Animator AnimatorComponent
     {
-        get; set;
+        get; private set;
     }    
 
     public Character character;
@@ -69,7 +69,7 @@ public class MonoCharacter : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(name + " OnTriggerEnter " + other.gameObject.name);
+        //Debug.Log(name + " OnTriggerEnter " + other.gameObject.name);
         character.EnterTriggerBehaviour(other, transform);
     }
 
@@ -98,8 +98,8 @@ public class MonoCharacter : MonoBehaviour {
                         if (hasReachedTarget(Target))
                         {
                             //Debug.Log(name + " " + CurrentRoom + "=>" + TargetRoom + "=>" + character.CountDown);
-                            if (character.CountDown < 0)
-                                Target = character.Behaviour.LeaveRoom();
+                            if (character.CountDown < 0 && TargetRoom != Reception.instance)
+                                TargetRoom = Reception.instance;
                             else if (CurrentRoom != TargetRoom)
                                 Target = character.Behaviour.ChangeRoom(TargetRoom);
                             else
