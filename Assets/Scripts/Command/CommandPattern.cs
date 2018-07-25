@@ -16,7 +16,7 @@ public class Pause : CommandPattern
 {
     public override void Execute()
     {
-        TimeFlow.Instance.pauseToggle.isOn = !TimeFlow.Instance.pauseToggle.isOn;
+        TimeMNGR.Instance.pauseToggle.isOn = !TimeMNGR.Instance.pauseToggle.isOn;
     }
 }
 
@@ -24,7 +24,7 @@ public class DialogNext : CommandPattern
 {
     public override void Execute()
     {
-        DialougeManager.Instance.NextPhrase();
+        DialougeMNGR.Instance.NextPhrase();
     }
 }
 

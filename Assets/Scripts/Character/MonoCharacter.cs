@@ -11,7 +11,7 @@ public class MonoCharacter : MonoBehaviour {
 
     public Character character;
     public Vector3 Target;
-    public Room CurrentRoom, TargetRoom;
+    public Room CurrentRoom, TargetRoom; //need to find a way to save and load Target room
 
     private void Awake()
     {

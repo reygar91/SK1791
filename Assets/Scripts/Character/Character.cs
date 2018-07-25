@@ -33,8 +33,9 @@ public class Character {
     {
     }
 
-    public void Prototype(int prototypeID)
+    public void Prototype(int prototypeID) //this is called in MonoCharacter onEnable
     {
+        //Debug.Log(monoCharacter.name + "=> Prototype called");
         switch (prototypeID)
         {
             case 0:
@@ -44,8 +45,9 @@ public class Character {
                 //Wait = false;
                 int RandomNumber = UnityEngine.Random.Range(0, 1000);
                 monoCharacter.name = "Customer_" + RandomNumber;
-                monoCharacter.AnimatorComponent.enabled = true;
-                monoCharacter.TargetRoom = Reception.instance;
+                monoCharacter.AnimatorComponent.enabled = true; //Debug.Log(behaviourData);
+                if (Time.timeScale != 0) //temporary solution, timescale = 0 only on pause; 
+                    monoCharacter.TargetRoom = Reception.instance;
                 //outfit.SetOutfit();
                 break;
             case 1:

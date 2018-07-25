@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterManager : Singleton<CharacterManager> {
+public class CharacterMNGR : Singleton<CharacterMNGR> {
 
-    protected CharacterManager() { }
+    protected CharacterMNGR() { }
 
     public MonoCharacter HumanoidPrefab;
     public GameObject CustomerContainer;
@@ -33,19 +33,19 @@ public class CharacterManager : Singleton<CharacterManager> {
         int CountDown = 0;
         while (true)
         {
-            if (TimeFlow.Instance.isPause)
+            if (TimeMNGR.Instance.isPause)
             {
-                yield return new WaitWhile(() => TimeFlow.Instance.isPause);
+                yield return new WaitWhile(() => TimeMNGR.Instance.isPause);
             }
             else
             {
-                CountDown -= GameController.Instance.Reputation;
+                CountDown -= GameMNGR.Instance.Reputation;
                 if (CountDown <= 0)
                 {
                     SpawnCust(0);
                     CountDown = 35;
                 }
-                yield return new WaitForSeconds(1 / TimeFlow.Instance.timeSpeed);
+                yield return new WaitForSeconds(1 / TimeMNGR.Instance.timeSpeed);
             }
         }
     }

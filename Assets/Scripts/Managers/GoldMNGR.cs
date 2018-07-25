@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GoldManager : Singleton<GoldManager> {
+public class GoldMNGR : Singleton<GoldMNGR> {
 
     private Text TextComponent;
     public int Gold
@@ -11,7 +11,7 @@ public class GoldManager : Singleton<GoldManager> {
         get;    private set;        
     } 
     
-    protected GoldManager() { }
+    protected GoldMNGR() { }
 
 private void Awake()
     {

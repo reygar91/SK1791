@@ -15,12 +15,12 @@ public class GoldCheck : myEvents
 
     public override bool Condition()
     {
-        return (GoldManager.Instance.Gold > Gold);
+        return (GoldMNGR.Instance.Gold > Gold);
     }
 
     public override void Result()
     {
-        DialougeManager.Instance.DialogEvent(1);
+        DialougeMNGR.Instance.DialogEvent(1);
     }
 }
 
@@ -28,12 +28,12 @@ public class StartGameTutorial : myEvents
 {
     public override bool Condition()
     {
-        return myEventManager.Instance.ActiveEvents.Contains(this);
+        return myEventMNGR.Instance.ActiveEvents.Contains(this);
     }
 
     public override void Result()
     {
-        DialougeManager.Instance.DialogEvent(0);
-        myEventManager.Instance.ActiveEvents.Add(new GoldCheck(100));//this is adds new event: 100 gold needed
+        DialougeMNGR.Instance.DialogEvent(0);
+        myEventMNGR.Instance.ActiveEvents.Add(new GoldCheck(100));//this is adds new event: 100 gold needed
     }
 }

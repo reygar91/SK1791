@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class myEventManager : Singleton<myEventManager> {
+public class myEventMNGR : Singleton<myEventMNGR> {
 
     //public delegate void MethodContainer(int dialogID);
     //public static event MethodContainer GoldAmmount, GameTutorial;
@@ -11,7 +11,7 @@ public class myEventManager : Singleton<myEventManager> {
     public List<myEvents> InActiveEvents = new List<myEvents>();
     public List<myEvents> CompletedEvents = new List<myEvents>();
 
-    protected myEventManager() { }
+    protected myEventMNGR() { }
 
     // Use this for initialization
     void Start () {

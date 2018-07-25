@@ -8,21 +8,25 @@ public class CustBar : ICharBehaviour
     MonoCharacter MC;
     Bar room;
     Vector3 targetVector;
-    int StatusID;
+    int StatusID, targetIndex;
     GameObject Seat;
 
     public CustBar(Customer customer)
-    {
+    {        
         cust = customer;
         MC = cust.monoCharacter;
         room = MC.CurrentRoom as Bar;
+        //Debug.Log(MC.name + "=> CustBar called");
         if (cust.behaviourData != null)
         {
-            Seat = cust.behaviourData.ObjectOfInterest;
+            targetIndex = cust.behaviourData.OOI_Index;
+            Seat = room.FindSeat(targetIndex);
             StatusID = cust.behaviourData.StateID;
+            targetVector = new Vector3(cust.behaviourData.TargetX, MC.transform.position.y, cust.behaviourData.TargetZ);
             cust.behaviourData = null;
+            //Debug.Log(MC.name + "=> CustBar with behaviourData called");
         }
-        Debug.Log("new CustBar => StatusID = " + StatusID);
+        //Debug.Log("new CustBar => StatusID = " + StatusID);
     }
 
     public Vector3 ChangeRoom(Room targetRoom)
@@ -65,8 +69,10 @@ public class CustBar : ICharBehaviour
         {
             BehaviourData data = new BehaviourData
             {
-                ObjectOfInterest = Seat,
-                StateID = StatusID
+                OOI_Index = targetIndex,
+                StateID = StatusID,
+                TargetX = targetVector.x,
+                TargetZ = targetVector.z
             };
             return data;
         }
@@ -77,12 +83,13 @@ public class CustBar : ICharBehaviour
         switch (StatusID)
         {
             case 10: //find a seat and select it as new target
-                if (room.Seats.Count != 0 && !Seat)
+                if (room.AvailableSeats.Count != 0 && !Seat)
                 {
-                    int RandomSeat = Random.Range(0, room.Seats.Count);
-                    Seat = room.Seats[RandomSeat];
-                    room.Seats.Remove(Seat);
+                    int RandomSeat = Random.Range(0, room.AvailableSeats.Count);
+                    Seat = room.AvailableSeats[RandomSeat];
+                    room.AvailableSeats.Remove(Seat);
                     targetVector = Seat.transform.position;
+                    targetIndex = room.SeatIndex(Seat);
                     StatusID = 11;
                 }
                 break;
@@ -122,7 +129,7 @@ public class CustBar : ICharBehaviour
     {
         if (Seat)
         {
-            room.Seats.Add(Seat);
+            room.AvailableSeats.Add(Seat);
             room.custAtBar.Remove(cust);
         }        
     }

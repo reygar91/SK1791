@@ -8,15 +8,7 @@ public class Room : MonoBehaviour {
     public BoxCollider boxCollider;
     public SpriteRenderer spriteRenderer;
     public GameObject Doors, MiddleOfTheRoom;
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public RoomSaveData saveData = new RoomSaveData();
 
     private void OnMouseDown()
     {
@@ -43,5 +35,13 @@ public class Room : MonoBehaviour {
         {
             CharDragSelect.DraggedMC.TargetRoom = CharDragSelect.DraggedMC.CurrentRoom;
         }
+    }
+
+    public void SaveRoomPosition()
+    {
+        saveData.X = transform.position.x;
+        saveData.Y = transform.position.y;
+        saveData.Z = transform.position.z;
+        //Debug.Log("room position Saved: " + new Vector3(saveData.X,saveData.Y,saveData.Z));
     }
 }

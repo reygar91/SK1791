@@ -16,14 +16,17 @@ public class CustReception : ICharBehaviour
         cust = customer;
         MC = cust.monoCharacter;
         room = Reception.instance;
+        //Debug.Log(MC.name + "=> CustReception called/ behaviour data = " + cust.behaviourData);
         if (cust.behaviourData != null)
         {
-            Target = cust.behaviourData.ObjectOfInterest;
-            targetIndex = System.Array.IndexOf(room.OccupiedSpot, Target);
+            targetIndex = cust.behaviourData.OOI_Index;
+            Target = room.WaitInLinePoints[targetIndex];
+            room.OccupiedSpot[targetIndex] = true;
             StatusID = cust.behaviourData.StateID;
+            targetVector = new Vector3(cust.behaviourData.TargetX, MC.transform.position.y, cust.behaviourData.TargetZ);
             cust.behaviourData = null;
         }
-        Debug.Log("new CustReception => StatusID = " + StatusID); 
+        //Debug.Log("new CustReception => StatusID = " + StatusID); 
     }
 
     public Vector3 ChangeRoom(Room targetRoom)
@@ -62,8 +65,10 @@ public class CustReception : ICharBehaviour
         {
             BehaviourData data = new BehaviourData
             {
-                ObjectOfInterest = Target,
-                StateID = StatusID
+                OOI_Index = targetIndex,
+                StateID = StatusID,
+                TargetX = targetVector.x,
+                TargetZ = targetVector.z
             };
             return data;
         }

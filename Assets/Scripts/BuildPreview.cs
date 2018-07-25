@@ -83,10 +83,10 @@ public class BuildPreview : MonoBehaviour {
                 gameObject.transform.position = newPosition;
                 if (Input.GetMouseButtonDown(0) && !UI_helper.isPointerOverUI2())
                 {
-                    Room newRoom = Instantiate(child, RoomContainer.transform);
-                    newRoom.transform.position = newPosition;
+                    InstantiateRoom(child, newPosition);
+                    
                     resetPreview();
-                    Room.roomsList.Add(newRoom);
+                    //add new room to roomlist was here
                     //setting allowed to build spots in array
                     if (GridY == 0)
                     {
@@ -135,5 +135,13 @@ public class BuildPreview : MonoBehaviour {
         gameObject.SetActive(false);
     }
 
+    public Room InstantiateRoom(Room room, Vector3 position)
+    {
+        Room newRoom = Instantiate(room, RoomContainer.transform);
+        newRoom.transform.position = position;
+        newRoom.SaveRoomPosition();
+        Room.roomsList.Add(newRoom);
+        return newRoom;
+    }
 
 }

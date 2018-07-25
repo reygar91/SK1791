@@ -3,7 +3,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TimeFlow : Singleton<TimeFlow> {
+public class TimeMNGR : Singleton<TimeMNGR> {
 
     private Text TextComponent;
     private int timePassed = 1980; // day 1, 09:00
@@ -12,7 +12,7 @@ public class TimeFlow : Singleton<TimeFlow> {
 
     public Toggle pauseToggle;
 
-    protected TimeFlow() { }
+    protected TimeMNGR() { }
 
     private void Awake()
     {
@@ -62,7 +62,7 @@ public class TimeFlow : Singleton<TimeFlow> {
         isPause = !isPause;
         if (isPause)
         {
-            foreach (Character character in CharacterManager.Instance.charList)
+            foreach (Character character in CharacterMNGR.Instance.charList)
             {
                 if (character.monoCharacter.gameObject.activeSelf)
                 {
@@ -74,7 +74,7 @@ public class TimeFlow : Singleton<TimeFlow> {
         }
         else
         {
-            foreach (Character character in CharacterManager.Instance.charList)
+            foreach (Character character in CharacterMNGR.Instance.charList)
             {
                 if (character.monoCharacter.gameObject.activeSelf)
                 {

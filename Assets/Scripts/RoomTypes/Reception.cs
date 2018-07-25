@@ -14,7 +14,7 @@ public class Reception : Room {
 
     private void Awake()
     {
-        roomsList.Add(this); // later this should be removed, cuz reception will be added after every load
+        //roomsList.Add(this); // later this should be removed, cuz reception will be added after every load
         instance = this;
     }
 }

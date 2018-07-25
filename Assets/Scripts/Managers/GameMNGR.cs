@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-public class GameController : Singleton<GameController> {
+public class GameMNGR : Singleton<GameMNGR> {
 
     public GameObject MenuPanel;
     public GameObject CustomerOriginal, CustomerContainer; //IMPORTANT CustOrig must be not active, or in coroutine it lead to endless Instantiations
@@ -20,7 +20,9 @@ public class GameController : Singleton<GameController> {
 
     public CommandPattern CancelButton, JumpButton;
 
-    protected GameController() { }
+    public BuildPreview buildPreview;
+
+    protected GameMNGR() { }
 
     // Use this for initialization
     void Start () {
@@ -44,36 +46,54 @@ public class GameController : Singleton<GameController> {
     private Save CreateSaveGameObject()
     {
         Save save = new Save();
-        int i = 0;
-        foreach (Character character in CharacterManager.Instance.charList)
+
+        foreach (Room room in Room.roomsList)
+        {
+            RoomSaveData data = new RoomSaveData
+            {
+                typeAndSizeID = room.saveData.typeAndSizeID,
+                X = room.saveData.X,
+                Y = room.saveData.Y,
+                Z = room.saveData.Z
+            };
+            save.Rooms.Add(data);
+        }
+
+        foreach (Character character in CharacterMNGR.Instance.charList)
         {
             if (character.monoCharacter.gameObject.activeSelf)
             {
-                CharData data = new CharData
-                {
-                    state = character.state,
-                    prevState = character.prevState,                    
-                    X = character.monoCharacter.transform.position.x,
-                    Y = character.monoCharacter.transform.position.y,
-                    Z = character.monoCharacter.transform.position.z,
-                    TargetX = character.monoCharacter.Target.x,
-                    TargetZ = character.monoCharacter.Target.z,
-                    AnimationWaitTime = character.AnimationWaitTime,
-                    CountDown = character.CountDown
-                };
-                if (character.Behaviour != null)
-                {
-                    data.behaviour = character.Behaviour.BehaviourData;
-                }                
+                CharSaveData data = GatherCharacterSaveData(character);
                 save.Characters.Add(data);
-                i++;//?????
             }
         }
 
-        save.gold = GoldManager.Instance.Gold;
+        save.gold = GoldMNGR.Instance.Gold;
         //save.time = TimeFlow.Instance;
 
         return save;
+    }
+
+    private CharSaveData GatherCharacterSaveData(Character character)
+    {
+        CharSaveData data = new CharSaveData
+        {
+            state = character.state,
+            prevState = character.prevState,
+            X = character.monoCharacter.transform.position.x,
+            Y = character.monoCharacter.transform.position.y,
+            Z = character.monoCharacter.transform.position.z,
+            //TargetX = character.monoCharacter.Target.x,
+            //TargetZ = character.monoCharacter.Target.z,
+            AnimationWaitTime = character.AnimationWaitTime,
+            CountDown = character.CountDown,
+            TargetRoomIndex = Room.roomsList.IndexOf(character.monoCharacter.TargetRoom)
+        }; Debug.Log("TargetRoomIndex = " + data.TargetRoomIndex);
+        if (character.Behaviour != null)
+        {
+            data.behaviour = character.Behaviour.BehaviourData;
+        }
+        return data;
     }
 
 
@@ -106,21 +126,34 @@ public class GameController : Singleton<GameController> {
             file.Close();
 
             // 3
-            foreach (CharData data in save.Characters)
+            foreach (RoomSaveData data in save.Rooms)
             {
-                Character cust = CharacterManager.Instance.SpawnCust(0);
+                Room newRoom = buildPreview.InstantiateRoom(buildPreview.Rooms[data.typeAndSizeID], new Vector3(data.X, data.Y, data.Z));
+                //Debug.Log(newRoom.transform.position);
+                newRoom.gameObject.SetActive(true);
+            }
+
+            foreach (CharSaveData data in save.Characters)
+            {
+                Character cust = CharacterMNGR.Instance.SpawnCust(0);
                 cust.state = data.state;
                 cust.prevState = data.prevState;
                 cust.monoCharacter.transform.position = new Vector3 (data.X, data.Y, data.Z);
-                cust.monoCharacter.Target = new Vector3(data.TargetX, data.Y, data.TargetZ);
+                //cust.monoCharacter.Target = new Vector3(data.TargetX, data.Y, data.TargetZ);
                 cust.AnimationWaitTime = data.AnimationWaitTime;
                 cust.CountDown = data.CountDown;
-                cust.behaviourData = new BehaviourData();
-                cust.behaviourData = data.behaviour;
+                if (data.TargetRoomIndex == -1)
+                    cust.monoCharacter.TargetRoom = Reception.instance;
+                else
+                    cust.monoCharacter.TargetRoom = Room.roomsList[data.TargetRoomIndex];
+                //cust.behaviourData = new BehaviourData();
+                if (data.behaviour != null)
+                    cust.behaviourData = data.behaviour;
+                //Debug.Log(cust.behaviourData + "loaded");
             }
-            
+
             // 4
-            GoldManager.Instance.AddGold(save.gold);
+            GoldMNGR.Instance.AddGold(save.gold);
 
             Debug.Log("Game Loaded");
 
