@@ -17,4 +17,13 @@ public class Reception : Room {
         //roomsList.Add(this); // later this should be removed, cuz reception will be added after every load
         instance = this;
     }
+
+    public void ResetOccupiedSpots()
+    {
+        for (int i=0; i < OccupiedSpot.Length; i++)
+        {
+            OccupiedSpot[i] = false;
+        }
+    }
+
 }

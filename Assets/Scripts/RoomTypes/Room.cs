@@ -44,4 +44,13 @@ public class Room : MonoBehaviour {
         saveData.Z = transform.position.z;
         //Debug.Log("room position Saved: " + new Vector3(saveData.X,saveData.Y,saveData.Z));
     }
+
+    public static void DestroyRoomsAndResetRoomList()
+    {
+        foreach (Room room in Room.roomsList)
+        {
+            Destroy(room.gameObject);
+        }
+        roomsList = new List<Room>();
+    }
 }

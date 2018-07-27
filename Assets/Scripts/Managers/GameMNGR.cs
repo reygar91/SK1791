@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using UnityEngine.SceneManagement;
 
 public class GameMNGR : Singleton<GameMNGR> {
 
@@ -68,6 +69,8 @@ public class GameMNGR : Singleton<GameMNGR> {
             }
         }
 
+        save.ActiveEvents = myEventMNGR.Instance.GetActiveEventsSignatures();
+
         save.gold = GoldMNGR.Instance.Gold;
         //save.time = TimeFlow.Instance;
 
@@ -83,8 +86,6 @@ public class GameMNGR : Singleton<GameMNGR> {
             X = character.monoCharacter.transform.position.x,
             Y = character.monoCharacter.transform.position.y,
             Z = character.monoCharacter.transform.position.z,
-            //TargetX = character.monoCharacter.Target.x,
-            //TargetZ = character.monoCharacter.Target.z,
             AnimationWaitTime = character.AnimationWaitTime,
             CountDown = character.CountDown,
             TargetRoomIndex = Room.roomsList.IndexOf(character.monoCharacter.TargetRoom)
@@ -118,6 +119,10 @@ public class GameMNGR : Singleton<GameMNGR> {
         if (File.Exists(Application.persistentDataPath + "/gamesave.save"))
         {
             //here scene has to be reloaded or reseted
+            CharacterMNGR.Instance.DestroyCharactersAndResetCharList();
+            Room.DestroyRoomsAndResetRoomList();
+            Reception.instance.ResetOccupiedSpots();
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
             // 2
             BinaryFormatter bf = new BinaryFormatter();
@@ -129,28 +134,26 @@ public class GameMNGR : Singleton<GameMNGR> {
             foreach (RoomSaveData data in save.Rooms)
             {
                 Room newRoom = buildPreview.InstantiateRoom(buildPreview.Rooms[data.typeAndSizeID], new Vector3(data.X, data.Y, data.Z));
-                //Debug.Log(newRoom.transform.position);
                 newRoom.gameObject.SetActive(true);
             }
 
             foreach (CharSaveData data in save.Characters)
             {
-                Character cust = CharacterMNGR.Instance.SpawnCust(0);
-                cust.state = data.state;
-                cust.prevState = data.prevState;
-                cust.monoCharacter.transform.position = new Vector3 (data.X, data.Y, data.Z);
-                //cust.monoCharacter.Target = new Vector3(data.TargetX, data.Y, data.TargetZ);
-                cust.AnimationWaitTime = data.AnimationWaitTime;
-                cust.CountDown = data.CountDown;
+                Character character = CharacterMNGR.Instance.SpawnAndActivateCharacter(0);
+                character.state = data.state;
+                character.prevState = data.prevState;
+                character.monoCharacter.transform.position = new Vector3 (data.X, data.Y, data.Z);
+                character.AnimationWaitTime = data.AnimationWaitTime;
+                character.CountDown = data.CountDown;
                 if (data.TargetRoomIndex == -1)
-                    cust.monoCharacter.TargetRoom = Reception.instance;
+                    character.monoCharacter.TargetRoom = Reception.instance;
                 else
-                    cust.monoCharacter.TargetRoom = Room.roomsList[data.TargetRoomIndex];
-                //cust.behaviourData = new BehaviourData();
+                    character.monoCharacter.TargetRoom = Room.roomsList[data.TargetRoomIndex];
                 if (data.behaviour != null)
-                    cust.behaviourData = data.behaviour;
-                //Debug.Log(cust.behaviourData + "loaded");
+                    character.behaviourData = data.behaviour;
             }
+
+            myEventMNGR.Instance.LoadEventsFromSignatures(save.ActiveEvents);
 
             // 4
             GoldMNGR.Instance.AddGold(save.gold);

@@ -2,6 +2,19 @@
 {
     public abstract bool Condition();
     public abstract void Result();
+    public IntegerData extraData = new IntegerData();
+}
+
+public class IntegerData
+{
+    public bool exists = false;
+    public int value = -1;
+
+    public void SetDataValue(int incomingValue)
+    {
+        exists = true;
+        value = incomingValue;
+    }
 }
 
 public class GoldCheck : myEvents
@@ -11,6 +24,7 @@ public class GoldCheck : myEvents
     public GoldCheck(int value)
     {
         Gold = value;
+        extraData.SetDataValue(Gold);
     }
 
     public override bool Condition()

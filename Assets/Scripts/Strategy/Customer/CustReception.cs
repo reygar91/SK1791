@@ -53,7 +53,7 @@ public class CustReception : ICharBehaviour
             default:
                 targetVector = new Vector3(MC.transform.position.x, MC.transform.position.y, room.EntrancePoint.transform.position.z);
                 StatusID = 1;
-                SwitchRoom(); Debug.Log("Change Room");
+                SwitchRoom(); //Debug.Log("Change Room");
                 break;
         }
         return targetVector;

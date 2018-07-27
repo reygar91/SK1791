@@ -27,9 +27,6 @@ public class CharacterMNGR : Singleton<CharacterMNGR> {
 
     private IEnumerator SpawnCustomer()
     {
-        MonoCharacter charInstane = Instantiate(HumanoidPrefab, CustomerContainer.transform);
-        charInstane.character = new Customer(charInstane);
-        charList.Add(charInstane.character);
         int CountDown = 0;
         while (true)
         {
@@ -42,7 +39,7 @@ public class CharacterMNGR : Singleton<CharacterMNGR> {
                 CountDown -= GameMNGR.Instance.Reputation;
                 if (CountDown <= 0)
                 {
-                    SpawnCust(0);
+                    SpawnAndActivateCharacter(0);
                     CountDown = 35;
                 }
                 yield return new WaitForSeconds(1 / TimeMNGR.Instance.timeSpeed);
@@ -50,25 +47,43 @@ public class CharacterMNGR : Singleton<CharacterMNGR> {
         }
     }
 
-    public Character SpawnCust(int prototypeID)
+    public Character SpawnAndActivateCharacter(int prototypeID)
     {
-        Character cust = null;
+        Character character = null;
+        if (charList.Count == 0)
+        {
+            InstantiateAndRegisterCharacter();
+        }
         for (int i = 0; i < charList.Count; i++)
         {
             if (charList[i].monoCharacter.gameObject.activeSelf == false)
             {
                 charList[i].monoCharacter.character.prototypeID = prototypeID;
                 charList[i].monoCharacter.gameObject.SetActive(true);
-                cust = charList[i];
+                character = charList[i];
                 break;
             }
             else if (i == (charList.Count - 1))
             {
-                MonoCharacter charInstane = Instantiate(HumanoidPrefab, CustomerContainer.transform);
-                charInstane.character = new Customer(charInstane);
-                charList.Add(charInstane.character);
+                InstantiateAndRegisterCharacter();
             }
         }
-        return cust;
+        return character;
+    }
+
+    private void InstantiateAndRegisterCharacter()
+    {
+        MonoCharacter charInstane = Instantiate(HumanoidPrefab, CustomerContainer.transform);
+        charInstane.character = new Customer(charInstane);
+        charList.Add(charInstane.character);
+    }
+
+    public void DestroyCharactersAndResetCharList()
+    {
+        foreach (Character character in charList)
+        {
+            Destroy(character.monoCharacter.gameObject);
+        }
+        charList = new List<Character>();
     }
 }

@@ -7,6 +7,7 @@ public class Save {
 
     public List<CharSaveData> Characters = new List<CharSaveData>();
     public List<RoomSaveData> Rooms = new List<RoomSaveData>();
+    public List<string> ActiveEvents = new List<string>();
 
     public int gold = 0;
     public int time = 0;

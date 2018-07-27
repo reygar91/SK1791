@@ -64,6 +64,9 @@
     <Compile Include="Assets\Scripts\_NotInUse\MyRaycaster.cs" />
     <Compile Include="Assets\Scripts\_NotInUse\Observer\IObserver.cs" />
     <Compile Include="Assets\Scripts\_NotInUse\Observer\IObserverSubject.cs" />
+    <Compile Include="Assets\Scripts\_NotInUse\old_Character.cs" />
+    <Compile Include="Assets\Scripts\_NotInUse\old_Customer.cs" />
+    <Compile Include="Assets\Scripts\_NotInUse\old_Personel.cs" />
     <Compile Include="Assets\Scripts\_NotInUse\State\GameFSM.cs" />
     <Compile Include="Assets\Scripts\_NotInUse\State\GameStates.cs" />
     <Compile Include="Assets\Scripts\Build.cs" />
@@ -84,9 +87,6 @@
     <Compile Include="Assets\Scripts\Managers\TimeMNGR.cs" />
     <Compile Include="Assets\Scripts\Market.cs" />
     <Compile Include="Assets\Scripts\myEvents.cs" />
-    <Compile Include="Assets\Scripts\old_Character.cs" />
-    <Compile Include="Assets\Scripts\old_Customer.cs" />
-    <Compile Include="Assets\Scripts\old_Personel.cs" />
     <Compile Include="Assets\Scripts\Outfit.cs" />
     <Compile Include="Assets\Scripts\PersPanelScript.cs" />
     <Compile Include="Assets\Scripts\RoomTypes\Bar.cs" />

@@ -21,6 +21,7 @@ public class CustBar : ICharBehaviour
         {
             targetIndex = cust.behaviourData.OOI_Index;
             Seat = room.FindSeat(targetIndex);
+            room.AvailableSeats.Remove(Seat);
             StatusID = cust.behaviourData.StateID;
             targetVector = new Vector3(cust.behaviourData.TargetX, MC.transform.position.y, cust.behaviourData.TargetZ);
             cust.behaviourData = null;
