@@ -77,12 +77,16 @@
     <Compile Include="Assets\Scripts\CharDragSelect.cs" />
     <Compile Include="Assets\Scripts\Command\CommandPattern.cs" />
     <Compile Include="Assets\Scripts\CustPanelScript.cs" />
+    <Compile Include="Assets\Scripts\DontDestroyOnLoad.cs" />
     <Compile Include="Assets\Scripts\isDragable.cs" />
     <Compile Include="Assets\Scripts\isSelectable.cs" />
+    <Compile Include="Assets\Scripts\MainMenu.cs" />
+    <Compile Include="Assets\Scripts\MainMenuSceneReferences.cs" />
+    <Compile Include="Assets\Scripts\MainSceneReferences.cs" />
     <Compile Include="Assets\Scripts\Managers\CharacterMNGR.cs" />
     <Compile Include="Assets\Scripts\Managers\DialougeMNGR.cs" />
-    <Compile Include="Assets\Scripts\Managers\GameMNGR.cs" />
     <Compile Include="Assets\Scripts\Managers\GoldMNGR.cs" />
+    <Compile Include="Assets\Scripts\Managers\InputMNGR.cs" />
     <Compile Include="Assets\Scripts\Managers\myEventMNGR.cs" />
     <Compile Include="Assets\Scripts\Managers\TimeMNGR.cs" />
     <Compile Include="Assets\Scripts\Market.cs" />

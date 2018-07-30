@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class EscMenu : MonoBehaviour {
 
+    public Button Save, Load;
     
     private void OnEnable()
     {

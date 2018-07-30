@@ -16,7 +16,7 @@ public class myEventMNGR : Singleton<myEventMNGR> {
     protected myEventMNGR() { }
 
     void Start () {
-        ActiveEvents.Add(new StartGameTutorial());
+        
         //GoldAmmount += DialougeManager.Instance.DialogEvent;//test event fires wnen some ammount of gold reached
         StartCoroutine("ConditionsChecks");
     }

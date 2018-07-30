@@ -12,9 +12,8 @@ public class isSelectable : MonoBehaviour {
 
     private void Awake()
     {
-        //Controller = GameController.Instance;
-        CustPanel = GameMNGR.Instance.Panels[0].GetComponent<CustPanelScript>(); //Debug.Log(CustPanel);
-        PersPanel = GameMNGR.Instance.Panels[1].GetComponent<PersPanelScript>(); //Debug.Log(PersPanel);
+        CustPanel = MainSceneReferences.Instance.Windows.CustPanel.GetComponent<CustPanelScript>();
+        PersPanel = MainSceneReferences.Instance.Windows.PersonelPanel.GetComponent<PersPanelScript>();
     }
 
     private void OnMouseOver() //OnMouseDown() could be used for left click, but for right click OnMouseOver + Input.GetMouseButtonDown(1)
@@ -26,13 +25,13 @@ public class isSelectable : MonoBehaviour {
             switch (tag)
             {
                 case "Customer":
-                    if (!GameMNGR.Instance.Panels[0].activeSelf)
+                    if (!CustPanel.gameObject.activeSelf)
                     {
-                        GameMNGR.Instance.Panels[0].SetActive(true);
+                        CustPanel.gameObject.SetActive(true);
                     }
                     else if (previousObject == selectedObject)
                     {
-                        GameMNGR.Instance.Panels[0].SetActive(false);
+                        CustPanel.gameObject.SetActive(false);
                     }
                     else
                     {
@@ -40,9 +39,9 @@ public class isSelectable : MonoBehaviour {
                     }
                     break;
                 case "Personel":
-                    if (!GameMNGR.Instance.Panels[1].activeSelf)
+                    if (!PersPanel.gameObject.activeSelf)
                     {
-                        GameMNGR.Instance.Panels[1].SetActive(true);
+                        PersPanel.gameObject.SetActive(true);
                     }
                     else
                     {

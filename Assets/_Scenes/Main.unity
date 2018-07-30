@@ -4339,7 +4339,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1411274722}
+      - m_Target: {fileID: 0}
         m_MethodName: LoadGame
         m_Mode: 1
         m_Arguments:
@@ -4729,7 +4729,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1477723851}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &330707184
 GameObject:
@@ -9699,7 +9699,7 @@ Transform:
   m_Children:
   - {fileID: 1370716062}
   m_Father: {fileID: 1477723851}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &638111166
 GameObject:
@@ -13816,18 +13816,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 178373169}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1411274724}
-        m_MethodName: NextPhrase
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &1089157834
@@ -15143,7 +15132,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1244811762}
   m_Layer: 0
-  m_Name: Customers
+  m_Name: Characters
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15160,7 +15149,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1477723851}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1251829365
 GameObject:
@@ -15321,7 +15310,7 @@ GameObject:
   - component: {fileID: 1286800032}
   - component: {fileID: 1286800031}
   m_Layer: 5
-  m_Name: Text
+  m_Name: DialogPhrase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15757,7 +15746,7 @@ GameObject:
   - component: {fileID: 1343450598}
   - component: {fileID: 1343450599}
   m_Layer: 8
-  m_Name: GameMenu
+  m_Name: EscMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15829,6 +15818,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 470c5ef0f6d072b4cb99f18c195644b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Save: {fileID: 1748712687}
+  Load: {fileID: 291924965}
 --- !u!114 &1343450599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17017,12 +17008,12 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1411274721}
-  - component: {fileID: 1411274722}
-  - component: {fileID: 1411274723}
-  - component: {fileID: 1411274724}
+  - component: {fileID: 1411274726}
   - component: {fileID: 1411274725}
+  - component: {fileID: 1411274724}
+  - component: {fileID: 1411274723}
   m_Layer: 5
-  m_Name: GameController
+  m_Name: MNGRs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17046,26 +17037,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1411274722
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1411274720}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96f09641b88639c43be2157de352177e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MenuPanel: {fileID: 1343450594}
-  CustomerOriginal: {fileID: 1504658182625422, guid: 9da5ba80bba803c49bab101e62bceb7b,
-    type: 2}
-  CustomerContainer: {fileID: 1244811761}
-  Panels:
-  - {fileID: 548445298}
-  - {fileID: 140973887}
-  Reputation: 4
-  buildPreview: {fileID: 1750033507}
 --- !u!114 &1411274723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17088,13 +17059,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e004e74bb12ebdf459e1e6b90ea14e80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DialogPhrase: {fileID: 1286800031}
-  textAssets:
-  - {fileID: 4900000, guid: 05adb3b8b5dc11849b4922a1dcd30cea, type: 3}
-  - {fileID: 4900000, guid: 8de573cc5a41bce499a83b07cccbdd55, type: 3}
-  - {fileID: 4900000, guid: bac1e4bcc29a9ed49b1b7b8ae6ff182e, type: 3}
-  GameUI: {fileID: 549933577}
-  DialogUI: {fileID: 1081157202}
 --- !u!114 &1411274725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17106,9 +17070,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c063c3f347728c499edc6c0dded4167, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HumanoidPrefab: {fileID: 114203851234499346, guid: 9da5ba80bba803c49bab101e62bceb7b,
-    type: 2}
-  CustomerContainer: {fileID: 1244811761}
+--- !u!114 &1411274726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1411274720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96f09641b88639c43be2157de352177e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Reputation: 4
 --- !u!1 &1412591866
 GameObject:
   m_ObjectHideFlags: 0
@@ -17240,7 +17213,7 @@ Transform:
   m_Children:
   - {fileID: 814434065}
   m_Father: {fileID: 1477723851}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1427299068
 GameObject:
@@ -17732,6 +17705,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 2126016158}
   - {fileID: 624689243}
   - {fileID: 1244811762}
   - {fileID: 1426048387}
@@ -20423,7 +20397,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1411274722}
+      - m_Target: {fileID: 0}
         m_MethodName: SaveGame
         m_Mode: 1
         m_Arguments:
@@ -24218,6 +24192,66 @@ BoxCollider:
   m_PrefabParentObject: {fileID: 65753325979351902, guid: 3a1b623e051011845a354d0a8638095d,
     type: 2}
   m_PrefabInternal: {fileID: 1860514527}
+--- !u!1 &2126016156
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 2126016158}
+  - component: {fileID: 2126016157}
+  m_Layer: 0
+  m_Name: References
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2126016157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2126016156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1ea8acc51d3bf44fbd1078c6ea5c200, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Windows:
+    BuildPanel: {fileID: 1680181563}
+    MarketPanel: {fileID: 1327582600}
+    CustPanel: {fileID: 548445298}
+    PersonelPanel: {fileID: 140973887}
+    TimePanel: {fileID: 1450096307}
+    EscMenu: {fileID: 1343450598}
+  Containers:
+    Characters: {fileID: 1244811761}
+    Rooms: {fileID: 1426048386}
+  buildPreview: {fileID: 1750033507}
+  HumanoidPrefab: {fileID: 114203851234499346, guid: 9da5ba80bba803c49bab101e62bceb7b,
+    type: 2}
+  GameUI: {fileID: 549933577}
+  DialogUI: {fileID: 1081157202}
+  DialogPhrase: {fileID: 1286800031}
+  textAssets:
+  - {fileID: 4900000, guid: 05adb3b8b5dc11849b4922a1dcd30cea, type: 3}
+  - {fileID: 4900000, guid: 8de573cc5a41bce499a83b07cccbdd55, type: 3}
+  - {fileID: 4900000, guid: bac1e4bcc29a9ed49b1b7b8ae6ff182e, type: 3}
+--- !u!4 &2126016158
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2126016156}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1477723851}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &2126238897
 Mesh:
   m_ObjectHideFlags: 0
@@ -24375,7 +24409,7 @@ GameObject:
   - component: {fileID: 2145259316}
   - component: {fileID: 2145259315}
   m_Layer: 5
-  m_Name: TextPanel
+  m_Name: DialogPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

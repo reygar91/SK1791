@@ -6,26 +6,26 @@ using System;
 
 public class DialougeMNGR : Singleton<DialougeMNGR> {
 
-    public Text DialogPhrase;
+    private Text DialogPhrase;
 
-    public TextAsset[] textAssets;
-    public CanvasGroup GameUI, DialogUI;
+    private TextAsset[] textAssets;
+    private CanvasGroup GameUI, DialogUI;
 
-    //public GameController gameController;
-
-    string[] Phrases;
-    int PhraseCounter;
+    private string[] Phrases;
+    private int PhraseCounter;
 
     protected DialougeMNGR() { }
 
-    //private void OnEnable()
-    //{
+    private void Awake()
+    {
+        GameUI = MainSceneReferences.Instance.GameUI;
+        DialogUI = MainSceneReferences.Instance.DialogUI;
+        Button button = DialogUI.gameObject.GetComponent<Button>();
+        button.onClick.AddListener(NextPhrase);
 
-    //}
-    //private void OnDisable()
-    //{
-
-    //}
+        DialogPhrase = MainSceneReferences.Instance.DialogPhrase;
+        textAssets = MainSceneReferences.Instance.textAssets;
+    }
 
     public void NextPhrase() //this is assigned to JumpButton with this line: gameController.JumpButton = new DialogNext(this);
     {
@@ -51,8 +51,8 @@ public class DialougeMNGR : Singleton<DialougeMNGR> {
     private void EnableDialogUI()
     {
         DialogUI.gameObject.SetActive(true);
-        GameMNGR.Instance.JumpButton.Execute();
-        GameMNGR.Instance.JumpButton = new DialogNext();
+        InputMNGR.Instance.JumpButton.Execute();
+        InputMNGR.Instance.JumpButton = new DialogNext();
         GameUI.alpha = 0;//GameUI.interactable = false;//as long as DialogUI is over GameUI this is not needed
         PhraseCounter = 1;
     }
@@ -60,8 +60,8 @@ public class DialougeMNGR : Singleton<DialougeMNGR> {
     private void DisableDialogUI()
     {
         DialogUI.gameObject.SetActive(false);
-        GameMNGR.Instance.JumpButton = new Pause();
-        GameMNGR.Instance.JumpButton.Execute();
+        InputMNGR.Instance.JumpButton = new Pause();
+        InputMNGR.Instance.JumpButton.Execute();
         GameUI.alpha = 1;//GameUI.interactable = true;
     }
 

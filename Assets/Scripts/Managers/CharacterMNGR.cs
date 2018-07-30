@@ -6,11 +6,16 @@ public class CharacterMNGR : Singleton<CharacterMNGR> {
 
     protected CharacterMNGR() { }
 
-    public MonoCharacter HumanoidPrefab;
-    public GameObject CustomerContainer;
-    //private List<Character> CustList = new List<Character>();
+    private MonoCharacter HumanoidPrefab;
+    private GameObject Container;
 
     public List<Character> charList = new List<Character>();
+
+    private void Awake()
+    {
+        HumanoidPrefab = MainSceneReferences.Instance.HumanoidPrefab;
+        Container = MainSceneReferences.Instance.Containers.Characters;
+    }
 
     private void Start()
     {
@@ -36,7 +41,7 @@ public class CharacterMNGR : Singleton<CharacterMNGR> {
             }
             else
             {
-                CountDown -= GameMNGR.Instance.Reputation;
+                CountDown -= InputMNGR.Instance.Reputation;
                 if (CountDown <= 0)
                 {
                     SpawnAndActivateCharacter(0);
@@ -73,7 +78,7 @@ public class CharacterMNGR : Singleton<CharacterMNGR> {
 
     private void InstantiateAndRegisterCharacter()
     {
-        MonoCharacter charInstane = Instantiate(HumanoidPrefab, CustomerContainer.transform);
+        MonoCharacter charInstane = Instantiate(HumanoidPrefab, Container.transform);
         charInstane.character = new Customer(charInstane);
         charList.Add(charInstane.character);
     }
