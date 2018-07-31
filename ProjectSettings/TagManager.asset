@@ -4,11 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Customer
-  - Personel
   - Seat
   - Room
-  - RoomNearby
+  - buildPreview
   layers:
   - Default
   - TransparentFX

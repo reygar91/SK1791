@@ -4,12 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public class DialougeMNGR : Singleton<DialougeMNGR> {
+public class DialougeMNGR : MonoBehaviour {
 
-    private Text DialogPhrase;
+    public static DialougeMNGR Instance;
 
-    private TextAsset[] textAssets;
-    private CanvasGroup GameUI, DialogUI;
+    public Text DialogPhrase;
+    public TextAsset[] textAssets;
+    public CanvasGroup GameUI, DialogUI;
 
     private string[] Phrases;
     private int PhraseCounter;
@@ -18,13 +19,9 @@ public class DialougeMNGR : Singleton<DialougeMNGR> {
 
     private void Awake()
     {
-        GameUI = MainSceneReferences.Instance.GameUI;
-        DialogUI = MainSceneReferences.Instance.DialogUI;
+        Instance = this;
         Button button = DialogUI.gameObject.GetComponent<Button>();
         button.onClick.AddListener(NextPhrase);
-
-        DialogPhrase = MainSceneReferences.Instance.DialogPhrase;
-        textAssets = MainSceneReferences.Instance.textAssets;
     }
 
     public void NextPhrase() //this is assigned to JumpButton with this line: gameController.JumpButton = new DialogNext(this);

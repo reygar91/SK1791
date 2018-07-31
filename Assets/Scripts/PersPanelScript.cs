@@ -24,7 +24,7 @@ public class PersPanelScript : MonoBehaviour {
     public void Initialize()
     {
         //pers = isSelectable.selectedObject.GetComponent<Personel>();
-        TextComponent.text = isSelectable.selectedObject.name;
+        //TextComponent.text = isSelectable.selectedObject.name;
     }
 
     public void JobSelector()

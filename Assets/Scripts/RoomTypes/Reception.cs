@@ -6,7 +6,7 @@ public class Reception : Room {
 
     public GameObject SpawnPoint, EntrancePoint;
 
-    public static Reception instance;
+    public static Reception Instance;
 
     public GameObject[] WaitInLinePoints;
     public bool[] OccupiedSpot;
@@ -15,7 +15,7 @@ public class Reception : Room {
     private void Awake()
     {
         //roomsList.Add(this); // later this should be removed, cuz reception will be added after every load
-        instance = this;
+        Instance = this;
     }
 
     public void ResetOccupiedSpots()

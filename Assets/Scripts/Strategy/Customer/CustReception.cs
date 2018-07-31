@@ -15,7 +15,7 @@ public class CustReception : ICharBehaviour
     {
         cust = customer;
         MC = cust.monoCharacter;
-        room = Reception.instance;
+        room = Reception.Instance;
         //Debug.Log(MC.name + "=> CustReception called/ behaviour data = " + cust.behaviourData);
         if (cust.behaviourData != null)
         {

@@ -98,8 +98,8 @@ public class MonoCharacter : MonoBehaviour {
                         if (hasReachedTarget(Target))
                         {
                             //Debug.Log(name + " " + CurrentRoom + "=>" + TargetRoom + "=>" + character.CountDown);
-                            if (character.CountDown < 0 && TargetRoom != Reception.instance)
-                                TargetRoom = Reception.instance;
+                            if (character.CountDown < 0 && TargetRoom != Reception.Instance)
+                                TargetRoom = Reception.Instance;
                             else if (CurrentRoom != TargetRoom)
                                 Target = character.Behaviour.ChangeRoom(TargetRoom);
                             else

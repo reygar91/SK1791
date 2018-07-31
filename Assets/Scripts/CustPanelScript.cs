@@ -44,6 +44,6 @@ public class CustPanelScript : MonoBehaviour {
 
     public void CustInitialize()
     {
-        cust = isSelectable.selectedObject.GetComponent<Customer>();
+        //cust = isSelectable.selectedObject.GetComponent<Customer>();
     }
 }

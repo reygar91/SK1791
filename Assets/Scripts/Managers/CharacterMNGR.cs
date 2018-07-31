@@ -2,19 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterMNGR : Singleton<CharacterMNGR> {
+public class CharacterMNGR : MonoBehaviour {
 
     protected CharacterMNGR() { }
-
+    [SerializeField]
     private MonoCharacter HumanoidPrefab;
-    private GameObject Container;
+    [SerializeField]
+    private GameObject CharacterContainer;
 
     public List<Character> charList = new List<Character>();
 
+    public static CharacterMNGR Instance;
+
     private void Awake()
     {
-        HumanoidPrefab = MainSceneReferences.Instance.HumanoidPrefab;
-        Container = MainSceneReferences.Instance.Containers.Characters;
+        Instance = this;        
     }
 
     private void Start()
@@ -78,7 +80,7 @@ public class CharacterMNGR : Singleton<CharacterMNGR> {
 
     private void InstantiateAndRegisterCharacter()
     {
-        MonoCharacter charInstane = Instantiate(HumanoidPrefab, Container.transform);
+        MonoCharacter charInstane = Instantiate(HumanoidPrefab, CharacterContainer.transform);
         charInstane.character = new Customer(charInstane);
         charList.Add(charInstane.character);
     }

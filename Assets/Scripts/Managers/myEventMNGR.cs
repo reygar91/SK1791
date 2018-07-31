@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
-public class myEventMNGR : Singleton<myEventMNGR> {
+public class myEventMNGR : MonoBehaviour {
+
+    public static myEventMNGR Instance;
 
     //public delegate void MethodContainer(int dialogID);
     //public static event MethodContainer GoldAmmount, GameTutorial;
@@ -15,15 +17,17 @@ public class myEventMNGR : Singleton<myEventMNGR> {
 
     protected myEventMNGR() { }
 
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     void Start () {
         
         //GoldAmmount += DialougeManager.Instance.DialogEvent;//test event fires wnen some ammount of gold reached
         StartCoroutine("ConditionsChecks");
     }
 	
-	// Update is called once per frame
-	void Update () {
-	}
 
     private IEnumerator ConditionsChecks()
     {

@@ -39,7 +39,7 @@ public class Character {
         switch (prototypeID)
         {
             case 0:
-                monoCharacter.Target = Reception.instance.EntrancePoint.transform.position;
+                monoCharacter.Target = Reception.Instance.EntrancePoint.transform.position;
                 Behaviour = null;
                 CountDown = 25;
                 //Wait = false;
@@ -47,7 +47,7 @@ public class Character {
                 monoCharacter.name = "Customer_" + RandomNumber;
                 monoCharacter.AnimatorComponent.enabled = true; //Debug.Log(behaviourData);
                 if (Time.timeScale != 0) //temporary solution, timescale = 0 only on pause; 
-                    monoCharacter.TargetRoom = Reception.instance;
+                    monoCharacter.TargetRoom = Reception.Instance;
                 //outfit.SetOutfit();
                 break;
             case 1:

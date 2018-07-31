@@ -3,7 +3,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TimeMNGR : Singleton<TimeMNGR> {
+public class TimeMNGR : MonoBehaviour {
+
+    public static TimeMNGR Instance;
 
     private Text TextComponent;
     private int timePassed = 1980; // day 1, 09:00
@@ -16,6 +18,7 @@ public class TimeMNGR : Singleton<TimeMNGR> {
 
     private void Awake()
     {
+        Instance = this;
         TextComponent = GetComponentInChildren<Text>();
     }
 

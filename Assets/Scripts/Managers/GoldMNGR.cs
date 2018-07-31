@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GoldMNGR : Singleton<GoldMNGR> {
+public class GoldMNGR : MonoBehaviour {
+
+    public static GoldMNGR Instance;
 
     private Text TextComponent;
     public int Gold
@@ -15,6 +17,7 @@ public class GoldMNGR : Singleton<GoldMNGR> {
 
 private void Awake()
     {
+        Instance = this;
         TextComponent = GetComponent<Text>();
         //Gold = 0;
     }

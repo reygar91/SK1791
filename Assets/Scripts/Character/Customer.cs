@@ -18,7 +18,7 @@ public class Customer : Character {
         {
             if (another.name.Contains("Reception"))
             {
-                monoCharacter.CurrentRoom = Reception.instance;
+                monoCharacter.CurrentRoom = Reception.Instance;
                 Behaviour = new CustReception(this);
                 monoCharacter.Target = transform.position; //make itself a target so hasReachedTarged evaluates to true
             }
