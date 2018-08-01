@@ -61,6 +61,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\_NotInUse\isDragable.cs" />
+    <Compile Include="Assets\Scripts\_NotInUse\isSelectable.cs" />
     <Compile Include="Assets\Scripts\_NotInUse\MyRaycaster.cs" />
     <Compile Include="Assets\Scripts\_NotInUse\Observer\IObserver.cs" />
     <Compile Include="Assets\Scripts\_NotInUse\Observer\IObserverSubject.cs" />
@@ -78,10 +80,9 @@
     <Compile Include="Assets\Scripts\Command\CommandPattern.cs" />
     <Compile Include="Assets\Scripts\CustPanelScript.cs" />
     <Compile Include="Assets\Scripts\DontDestroyOnLoad.cs" />
-    <Compile Include="Assets\Scripts\isDragable.cs" />
-    <Compile Include="Assets\Scripts\isSelectable.cs" />
     <Compile Include="Assets\Scripts\MainMenuButtons.cs" />
     <Compile Include="Assets\Scripts\MainSceneReferences.cs" />
+    <Compile Include="Assets\Scripts\Managers\BuildMNGR.cs" />
     <Compile Include="Assets\Scripts\Managers\CharacterMNGR.cs" />
     <Compile Include="Assets\Scripts\Managers\DialougeMNGR.cs" />
     <Compile Include="Assets\Scripts\Managers\GoldMNGR.cs" />
@@ -116,11 +117,11 @@
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>C:/Users/Public/Documents/Unity Projects/SK1791/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>C:/Users/Public/Documents/Unity Projects/SK1791/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/Public/Documents/Unity Projects/SK1791/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.PackageManagerUI.Editor">
+      <HintPath>C:/Users/Public/Documents/Unity Projects/SK1791/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>C:/Users/Public/Documents/Unity Projects/SK1791/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>

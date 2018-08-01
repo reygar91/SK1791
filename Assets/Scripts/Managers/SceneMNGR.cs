@@ -60,8 +60,6 @@ public class SceneMNGR : MonoBehaviour {
         bf.Serialize(file, save);
         file.Close();
 
-        // 3 here original script made reset of the scene
-
         Debug.Log("Game Saved to " + Application.persistentDataPath);
     }
 
@@ -69,7 +67,7 @@ public class SceneMNGR : MonoBehaviour {
     {
         Save save = new Save();
 
-        foreach (Room room in Room.roomsList)
+        foreach (Room room in BuildMNGR.Instance.roomsList)
         {
             RoomSaveData data = new RoomSaveData
             {
@@ -93,7 +91,7 @@ public class SceneMNGR : MonoBehaviour {
         save.ActiveEvents = myEventMNGR.Instance.GetActiveEventsSignatures();
 
         save.gold = GoldMNGR.Instance.Gold;
-        //save.time = TimeFlow.Instance;
+        save.time = TimeMNGR.Instance.timePassed;
 
         return save;
     }
@@ -109,8 +107,8 @@ public class SceneMNGR : MonoBehaviour {
             Z = character.monoCharacter.transform.position.z,
             AnimationWaitTime = character.AnimationWaitTime,
             CountDown = character.CountDown,
-            TargetRoomIndex = Room.roomsList.IndexOf(character.monoCharacter.TargetRoom)
-        }; Debug.Log("TargetRoomIndex = " + data.TargetRoomIndex);
+            TargetRoomIndex = BuildMNGR.Instance.roomsList.IndexOf(character.monoCharacter.TargetRoom)
+        };
         if (character.Behaviour != null)
         {
             data.behaviour = character.Behaviour.BehaviourData;
@@ -126,13 +124,8 @@ public class SceneMNGR : MonoBehaviour {
         // 1
         if (File.Exists(Application.persistentDataPath + "/gamesave.save"))
         {
-            //here scene has to be reloaded or reseted
-            //CharacterMNGR.Instance.DestroyCharactersAndResetCharList();
-            //Room.DestroyRoomsAndResetRoomList();
-            //Reception.instance.ResetOccupiedSpots();
             SceneManager.LoadScene("Main");
             SceneManager.sceneLoaded += LoadGameEvent;
-
         }
         else
         {
@@ -168,7 +161,7 @@ public class SceneMNGR : MonoBehaviour {
             if (data.TargetRoomIndex == -1)
                 character.monoCharacter.TargetRoom = Reception.Instance;
             else
-                character.monoCharacter.TargetRoom = Room.roomsList[data.TargetRoomIndex];
+                character.monoCharacter.TargetRoom = BuildMNGR.Instance.roomsList[data.TargetRoomIndex];
             if (data.behaviour != null)
                 character.behaviourData = data.behaviour;
         }
@@ -177,6 +170,7 @@ public class SceneMNGR : MonoBehaviour {
 
         // 4
         GoldMNGR.Instance.AddGold(save.gold);
+        TimeMNGR.Instance.timePassed = save.time;
 
         Debug.Log("Game Loaded");
 

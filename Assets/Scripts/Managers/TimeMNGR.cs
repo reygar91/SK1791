@@ -6,15 +6,12 @@ using UnityEngine.UI;
 public class TimeMNGR : MonoBehaviour {
 
     public static TimeMNGR Instance;
-
     private Text TextComponent;
-    private int timePassed = 1980; // day 1, 09:00
+    public int timePassed = 1980; // day 1, 09:00 (in minutes); with speed =1 : 1 real time sec = 1 game time minute 
     public float timeSpeed = 1.0f;
     public bool isPause = false;
 
-    public Toggle pauseToggle;
-
-    protected TimeMNGR() { }
+    public Toggle pauseToggle;    
 
     private void Awake()
     {

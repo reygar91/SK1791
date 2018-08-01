@@ -34,7 +34,7 @@ public class CharDragSelect : MonoBehaviour {
 
             colider.enabled = true;
 
-            foreach (Room item in Room.roomsList)
+            foreach (Room item in BuildMNGR.Instance.roomsList)
             {
                 item.boxCollider.gameObject.layer = 2;
             }
@@ -76,7 +76,7 @@ public class CharDragSelect : MonoBehaviour {
                 StartPosition = MC.transform.position;
                 MC.character.state = Character.State.Animation;
                 MC.character.AnimationWaitTime = 2 * Time.deltaTime;
-                foreach (Room item in Room.roomsList)
+                foreach (Room item in BuildMNGR.Instance.roomsList)
                 {
                     item.boxCollider.gameObject.layer = 0;
                 }

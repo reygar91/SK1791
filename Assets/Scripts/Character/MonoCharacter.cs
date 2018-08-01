@@ -101,7 +101,11 @@ public class MonoCharacter : MonoBehaviour {
                             if (character.CountDown < 0 && TargetRoom != Reception.Instance)
                                 TargetRoom = Reception.Instance;
                             else if (CurrentRoom != TargetRoom)
+                            {
+                                //Debug.Log(name + "_room_" + TargetRoom.name);
                                 Target = character.Behaviour.ChangeRoom(TargetRoom);
+                            }
+                                
                             else
                                 Target = character.Behaviour.RoomBehaviour();
                         }                        

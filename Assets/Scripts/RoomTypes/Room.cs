@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Room : MonoBehaviour {
 
-    public static List<Room> roomsList = new List<Room>();
+    //public static List<Room> roomsList = new List<Room>();
     public BoxCollider boxCollider;
     public SpriteRenderer spriteRenderer;
     public GameObject Doors, MiddleOfTheRoom;
@@ -42,15 +42,6 @@ public class Room : MonoBehaviour {
         saveData.X = transform.position.x;
         saveData.Y = transform.position.y;
         saveData.Z = transform.position.z;
-        //Debug.Log("room position Saved: " + new Vector3(saveData.X,saveData.Y,saveData.Z));
     }
 
-    public static void DestroyRoomsAndResetRoomList()
-    {
-        foreach (Room room in Room.roomsList)
-        {
-            Destroy(room.gameObject);
-        }
-        roomsList = new List<Room>();
-    }
 }

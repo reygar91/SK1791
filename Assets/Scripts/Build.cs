@@ -12,7 +12,7 @@ public class Build : MonoBehaviour {
 
     private void OnEnable()
     {
-        foreach (Room item in Room.roomsList)
+        foreach (Room item in BuildMNGR.Instance.roomsList)
         {
             item.boxCollider.gameObject.layer = 0;
         }
@@ -20,7 +20,7 @@ public class Build : MonoBehaviour {
 
     private void OnDisable()
     {
-        foreach (Room item in Room.roomsList)
+        foreach (Room item in BuildMNGR.Instance.roomsList)
         {
             item.boxCollider.gameObject.layer = 2;
         }

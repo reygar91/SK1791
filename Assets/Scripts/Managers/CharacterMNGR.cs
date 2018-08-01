@@ -85,12 +85,4 @@ public class CharacterMNGR : MonoBehaviour {
         charList.Add(charInstane.character);
     }
 
-    public void DestroyCharactersAndResetCharList()
-    {
-        foreach (Character character in charList)
-        {
-            Destroy(character.monoCharacter.gameObject);
-        }
-        charList = new List<Character>();
-    }
 }
