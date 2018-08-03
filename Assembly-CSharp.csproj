@@ -72,6 +72,7 @@
     <Compile Include="Assets\Scripts\_NotInUse\State\GameFSM.cs" />
     <Compile Include="Assets\Scripts\_NotInUse\State\GameStates.cs" />
     <Compile Include="Assets\Scripts\Build.cs" />
+    <Compile Include="Assets\Scripts\BuildPermissionGrid.cs" />
     <Compile Include="Assets\Scripts\BuildPreview.cs" />
     <Compile Include="Assets\Scripts\Character\Character.cs" />
     <Compile Include="Assets\Scripts\Character\Customer.cs" />

@@ -76,6 +76,7 @@ public class SceneMNGR : MonoBehaviour {
                 Y = room.saveData.Y,
                 Z = room.saveData.Z
             };
+            //Debug.Log(data.typeAndSizeID);
             save.Rooms.Add(data);
         }
 
@@ -147,7 +148,7 @@ public class SceneMNGR : MonoBehaviour {
         foreach (RoomSaveData data in save.Rooms)
         {
             Room newRoom = buildPreview.InstantiateRoom(buildPreview.Rooms[data.typeAndSizeID], new Vector3(data.X, data.Y, data.Z));
-            newRoom.gameObject.SetActive(true);
+            //newRoom.gameObject.SetActive(true);
         }
 
         foreach (CharSaveData data in save.Characters)
