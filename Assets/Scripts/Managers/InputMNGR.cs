@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
 
 public class InputMNGR : MonoBehaviour {
 
@@ -6,15 +8,22 @@ public class InputMNGR : MonoBehaviour {
 
     public int Reputation = 1;//at 0 there will be only 1 cust spawned initially, at 7 - cust spawns every 5 sec
 
-    public CommandPattern CancelButton, JumpButton;
-    public GameObject EscMenu;
+    private InputCommands CancelButton, JumpButton;
+    //public GameObject EscMenu;
+    public GameObject[] Panels;
+    public CanvasGroup GameUI, DialogUI;
+
+    private Text CustPanelText;
+    private MonoCharacter MC;
+    public Vector3 CustPanelOffset;
 
 
     protected InputMNGR() { }
 
     void Awake () {
         Instance = this; //Debug.Log("InputMNGR" + Instance);
-        CancelButton = new DisablePanel(EscMenu);
+        CustPanelText = Panels[3].GetComponentInChildren<Text>();
+        CancelButton = new DisablePanel(Panels);
         JumpButton = new Pause();
     }
 
@@ -29,7 +38,57 @@ public class InputMNGR : MonoBehaviour {
         }
     }
 
+    public void EnableDialogUI()
+    {
+        if (!DialogUI.gameObject.activeSelf)
+        {
+            DialogUI.gameObject.SetActive(true);
+            JumpButton.Execute();
+            JumpButton = new DialogNext();
+            GameUI.alpha = 0;//GameUI.interactable = false;//as long as DialogUI is over GameUI this is not needed
+            DialougeMNGR.Instance.ResetPhraseCounter();
+        }        
+    }
 
-   
+    public void DisableDialogUI()
+    {
+        DialogUI.gameObject.SetActive(false);
+        JumpButton = new Pause();
+        JumpButton.Execute();
+        GameUI.alpha = 1;//GameUI.interactable = true;
+    }
+
+    public void CustomerClicked(MonoCharacter monoCharacter)
+    {
+        if (!Panels[3].activeSelf)
+        {            
+            Panels[3].SetActive(true);
+            MC = monoCharacter; //needed for couritine, to avoid null reference
+            StartCoroutine("DetailedInfo");
+            StartCoroutine("CustPanelPosition");
+        } else if (MC == monoCharacter)
+            Panels[3].SetActive(false);
+        MC = monoCharacter;
+    }
+
+    private IEnumerator DetailedInfo()
+    {
+        while (Panels[3].activeSelf)
+        {
+            int patience = Mathf.RoundToInt(MC.character.CountDown);
+            CustPanelText.text = "Patience: " + patience.ToString();
+            yield return new WaitForSeconds(0.25f);
+        }
+    }
+
+    private IEnumerator CustPanelPosition()
+    {
+        while (Panels[3].activeSelf)
+        {
+            Panels[3].transform.position = Camera.main.WorldToScreenPoint(MC.transform.position + CustPanelOffset) ;
+            yield return null;
+        }
+    }
+
 
 }

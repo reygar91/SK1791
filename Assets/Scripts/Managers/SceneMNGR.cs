@@ -147,7 +147,7 @@ public class SceneMNGR : MonoBehaviour {
 
         foreach (RoomSaveData data in save.Rooms)
         {
-            Room newRoom = buildPreview.InstantiateRoom(buildPreview.Rooms[data.typeAndSizeID], new Vector3(data.X, data.Y, data.Z));
+            buildPreview.InstantiateRoom(buildPreview.Rooms[data.typeAndSizeID], new Vector3(data.X, data.Y, data.Z));
             //newRoom.gameObject.SetActive(true);
         }
 
@@ -177,7 +177,7 @@ public class SceneMNGR : MonoBehaviour {
 
         SceneManager.sceneLoaded -= LoadGameEvent;
 
-        InputMNGR.Instance.JumpButton.Execute();
+        TimeMNGR.Instance.Pause();
     }
 
     public void Quit()

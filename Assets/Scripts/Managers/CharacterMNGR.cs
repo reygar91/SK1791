@@ -21,7 +21,7 @@ public class CharacterMNGR : MonoBehaviour {
 
     private void Start()
     {
-        StartCoroutine("SpawnCustomer");
+        StartCoroutine("SpawnCustomer"); //later this should start after some dialogue
     }
 
     private void Update()

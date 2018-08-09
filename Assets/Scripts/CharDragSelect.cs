@@ -8,7 +8,7 @@ public class CharDragSelect : MonoBehaviour {
     private Vector3 dist, StartPosition;
     private float posX, posY, countDown;
     private Collider colider;
-    public static MonoCharacter DraggedMC;
+    public static MonoCharacter DraggedMC; //or selected MC
     public bool IsSelectable, IsDragable;
 
     private void Awake()
@@ -20,12 +20,13 @@ public class CharDragSelect : MonoBehaviour {
     private void OnMouseDown()
     {       
         countDown = 0;
+        DraggedMC = MC;
         StartCoroutine("CountDown");
     }
 
     private void OnMouseUp()
     {
-        DraggedMC = null;
+        //DraggedMC = null;
         //int yCoor = 4 * Mathf.FloorToInt((transform.position.y) / 4);
         //transform.position = new Vector3(transform.position.x, yCoor, transform.position.z);
         if (countDown >= .5f)
@@ -39,9 +40,9 @@ public class CharDragSelect : MonoBehaviour {
                 item.boxCollider.gameObject.layer = 2;
             }
         } else
-        {
-            Debug.Log("Char panel open");
-        }        
+            InputMNGR.Instance.CustomerClicked(DraggedMC);
+
+        DraggedMC = null;
 
         StopCoroutine("CountDown");
     }
