@@ -24,7 +24,7 @@ public class Room : MonoBehaviour {
 
         if (CharDragSelect.DraggedMC != null)
         {
-            CharDragSelect.DraggedMC.TargetRoom = this; //Debug.Log(this);
+            CharDragSelect.DraggedMC.character.TargetRoom = this; //Debug.Log(this);
         }
     }
 
@@ -33,7 +33,7 @@ public class Room : MonoBehaviour {
         spriteRenderer.gameObject.SetActive(false);
         if (CharDragSelect.DraggedMC != null)
         {
-            CharDragSelect.DraggedMC.TargetRoom = CharDragSelect.DraggedMC.CurrentRoom;
+            CharDragSelect.DraggedMC.character.TargetRoom = CharDragSelect.DraggedMC.character.CurrentRoom;
         }
     }
 

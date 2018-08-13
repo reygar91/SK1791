@@ -4,31 +4,44 @@ using UnityEngine;
 
 public class Customer : Character {
 
-    public Customer(MonoCharacter instance) : base(instance)
+    public Customer()
     {
+        TargetRoom = Reception.Instance;
+        CountDown = 25;
         WalkSpeed = 3;
     }
 
 
-    public override void EnterTriggerBehaviour(Collider other, Transform transform)
+    public override void EnterTriggerBehaviour(Collider other, MonoCharacter monoCharacter)
     {
         GameObject another = other.transform.parent.gameObject;
-        
+
         if (other.tag == "Room")
         {
             if (another.name.Contains("Reception"))
             {
-                monoCharacter.CurrentRoom = Reception.Instance;
-                Behaviour = new CustReception(this);
-                monoCharacter.Target = transform.position; //make itself a target so hasReachedTarged evaluates to true
+                CurrentRoom = Reception.Instance;
+                Behaviour = new CustReception(monoCharacter);
+                Target = monoCharacter.transform.position; //make itself a target so hasReachedTarged evaluates to true
             }
             if (another.name.Contains("Bar"))
             {
-                monoCharacter.CurrentRoom = another.GetComponent<Bar>();
-                Behaviour = new CustBar(this);
-                monoCharacter.Target = transform.position; //make itself a target so hasReachedTarged evaluates to true
+                CurrentRoom = another.GetComponent<Bar>();
+                Behaviour = new CustBar(monoCharacter);
+                Target = monoCharacter.transform.position; //make itself a target so hasReachedTarged evaluates to true
             }
         }
+    }
+
+
+    private void SetAppearance()
+    {
+
+    }
+
+    private void SetCharacteristics()
+    {
+
     }
     
 

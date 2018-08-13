@@ -5,9 +5,12 @@ using UnityEngine;
 public class Character {
     
     public ICharBehaviour Behaviour;
-    public MonoCharacter monoCharacter;
+    //public MonoCharacter monoCharacter;
     public float WalkSpeed;
     public BehaviourData behaviourData;
+    public Vector3 Target;
+    public Room CurrentRoom, TargetRoom;
+    public string name;
 
     //CountDown will represent patience for customers and energy for personel, Multiplier is used to determine difficulty of performed activity
     public float AnimationWaitTime, CountDown, CountDownMultiplier;
@@ -20,16 +23,14 @@ public class Character {
 
     public State state, prevState;
 
-    public Character(MonoCharacter instance)
+    public Character()
     {
-        monoCharacter = instance;
+        Target = Reception.Instance.EntrancePoint.transform.position;
         state = State.Animation;
         CountDownMultiplier = 1;
-        //Prototype(prototypeID);
-        //Target = Reception.instance
     }
 
-    public virtual void EnterTriggerBehaviour(Collider other, Transform transform)
+    public virtual void EnterTriggerBehaviour(Collider other, MonoCharacter monoCharacter)
     {
     }
 
@@ -39,16 +40,13 @@ public class Character {
         switch (prototypeID)
         {
             case 0:
-                monoCharacter.Target = Reception.Instance.EntrancePoint.transform.position;
-                Behaviour = null;
-                CountDown = 25;
-                //Wait = false;
-                int RandomNumber = UnityEngine.Random.Range(0, 1000);
-                monoCharacter.name = "Customer_" + RandomNumber;
-                monoCharacter.AnimatorComponent.enabled = true; //Debug.Log(behaviourData);
-                if (Time.timeScale != 0) //temporary solution, timescale = 0 only on pause; 
-                    monoCharacter.TargetRoom = Reception.Instance;
+
+                int RandomNumber = Random.Range(0, 1000);
+                name = "Customer_" + RandomNumber;
+
                 //outfit.SetOutfit();
+                Debug.Log("Target => " + Target);
+                Debug.Log("TargetRoom => " + TargetRoom);
                 break;
             case 1:
                 break;

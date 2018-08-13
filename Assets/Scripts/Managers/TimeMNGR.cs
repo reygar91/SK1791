@@ -62,24 +62,24 @@ public class TimeMNGR : MonoBehaviour {
         isPause = !isPause;
         if (isPause)
         {
-            foreach (Character character in CharacterMNGR.Instance.charList)
+            foreach (MonoCharacter MC in CharacterMNGR.Instance.MCPool)
             {
-                if (character.monoCharacter.gameObject.activeSelf)
+                if (MC.gameObject.activeSelf)
                 {
-                    character.prevState = character.state;
-                    character.state = Character.State.Pause;
-                    character.monoCharacter.AnimatorComponent.enabled = false;
+                    MC.character.prevState = MC.character.state;
+                    MC.character.state = Character.State.Pause;
+                    MC.AnimatorComponent.enabled = false;
                 }
             }
         }
         else
         {
-            foreach (Character character in CharacterMNGR.Instance.charList)
+            foreach (MonoCharacter MC in CharacterMNGR.Instance.MCPool)
             {
-                if (character.monoCharacter.gameObject.activeSelf)
+                if (MC.gameObject.activeSelf)
                 {
-                    character.state = character.prevState;
-                    character.monoCharacter.AnimatorComponent.enabled = true;
+                    MC.character.state = MC.character.prevState;
+                    MC.AnimatorComponent.enabled = true;
                 }
             }
         }

@@ -9,19 +9,23 @@ public class MonoCharacter : MonoBehaviour {
         get; private set;
     }    
 
-    public Character character;
-    public Vector3 Target;
-    public Room CurrentRoom, TargetRoom; //need to find a way to save and load Target room
+    public Character character;    
 
     private void Awake()
     {
-        AnimatorComponent = GetComponentInChildren<Animator>();
+        AnimatorComponent = GetComponentInChildren<Animator>();        
     }
 
     private void OnEnable()
     {
         AnimatorComponent.enabled = true;
+        if (character == null)
+        {
+            Debug.Log("character is not defined: disabling");
+            gameObject.SetActive(false);
+        }
         character.Prototype(character.prototypeID);
+        name = character.name;        
     }
     private void OnDisable()
     {
@@ -31,9 +35,9 @@ public class MonoCharacter : MonoBehaviour {
 
     public void Move()
     {
-        if (!hasReachedTarget(Target))
+        if (!hasReachedTarget(character.Target))
         {
-            Vector3 TargetVector = new Vector3(Target.x, transform.position.y, Target.z);
+            Vector3 TargetVector = new Vector3(character.Target.x, transform.position.y, character.Target.z);
             transform.position = Vector3.MoveTowards(transform.position, TargetVector, character.WalkSpeed * Time.deltaTime);
             MovingDirection(TargetVector);
             if (AnimatorComponent.GetInteger("AnimationID") != 1)
@@ -70,7 +74,7 @@ public class MonoCharacter : MonoBehaviour {
     private void OnTriggerEnter(Collider other)
     {
         //Debug.Log(name + " OnTriggerEnter " + other.gameObject.name);
-        character.EnterTriggerBehaviour(other, transform);
+        character.EnterTriggerBehaviour(other, this);
     }
 
     private void OnTriggerExit(Collider other)
@@ -95,19 +99,19 @@ public class MonoCharacter : MonoBehaviour {
                 case (Character.State.Move):
                     if (character.Behaviour != null)
                     {
-                        if (hasReachedTarget(Target))
+                        if (hasReachedTarget(character.Target))
                         {
                             //Debug.Log(name + " " + CurrentRoom + "=>" + TargetRoom + "=>" + character.CountDown);
-                            if (character.CountDown < 0 && TargetRoom != Reception.Instance)
-                                TargetRoom = Reception.Instance;
-                            else if (CurrentRoom != TargetRoom)
+                            if (character.CountDown < 0 && character.TargetRoom != Reception.Instance)
+                                character.TargetRoom = Reception.Instance;
+                            else if (character.CurrentRoom != character.TargetRoom)
                             {
                                 //Debug.Log(name + "_room_" + TargetRoom.name);
-                                Target = character.Behaviour.ChangeRoom(TargetRoom);
+                                character.Target = character.Behaviour.ChangeRoom(character.TargetRoom);
                             }
                                 
                             else
-                                Target = character.Behaviour.RoomBehaviour();
+                                character.Target = character.Behaviour.RoomBehaviour();
                         }                        
                     }
                     Move();

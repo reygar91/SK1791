@@ -10,7 +10,7 @@ public class CharacterMNGR : MonoBehaviour {
     [SerializeField]
     private GameObject CharacterContainer;
 
-    public List<Character> charList = new List<Character>();
+    public List<MonoCharacter> MCPool = new List<MonoCharacter>();
 
     public static CharacterMNGR Instance;
 
@@ -26,9 +26,9 @@ public class CharacterMNGR : MonoBehaviour {
 
     private void Update()
     {
-        foreach (Character character in charList)
+        foreach (MonoCharacter MC in MCPool)
         {
-            character.monoCharacter.Tick();
+            MC.Tick();
         }
     }
 
@@ -46,7 +46,7 @@ public class CharacterMNGR : MonoBehaviour {
                 CountDown -= InputMNGR.Instance.Reputation;
                 if (CountDown <= 0)
                 {
-                    SpawnAndActivateCharacter(0);
+                    SpawnAndActivateCharacter(1);//1 for Customer
                     CountDown = 35;
                 }
                 yield return new WaitForSeconds(1 / TimeMNGR.Instance.timeSpeed);
@@ -54,35 +54,57 @@ public class CharacterMNGR : MonoBehaviour {
         }
     }
 
-    public Character SpawnAndActivateCharacter(int prototypeID)
+    public MonoCharacter SpawnAndActivateCharacter(int CharacterID)
     {
-        Character character = null;
-        if (charList.Count == 0)
+        MonoCharacter MC = null;
+        if (MCPool.Count == 0)
         {
             InstantiateAndRegisterCharacter();
         }
-        for (int i = 0; i < charList.Count; i++)
+        for (int i = 0; i < MCPool.Count; i++)
         {
-            if (charList[i].monoCharacter.gameObject.activeSelf == false)
+            if (MCPool[i].gameObject.activeSelf == false)
             {
-                charList[i].monoCharacter.character.prototypeID = prototypeID;
-                charList[i].monoCharacter.gameObject.SetActive(true);
-                character = charList[i];
+                MCPool[i].character = CreateCharacter(CharacterID);
+                MCPool[i].gameObject.SetActive(true);
+                MC = MCPool[i];
                 break;
             }
-            else if (i == (charList.Count - 1))
+            else if (i == (MCPool.Count - 1))
             {
                 InstantiateAndRegisterCharacter();
             }
         }
-        return character;
+        return MC;
     }
 
     private void InstantiateAndRegisterCharacter()
     {
         MonoCharacter charInstane = Instantiate(HumanoidPrefab, CharacterContainer.transform);
-        charInstane.character = new Customer(charInstane);
-        charList.Add(charInstane.character);
+        //charInstane.character = new Customer();
+        MCPool.Add(charInstane);
+    }
+
+
+    public Character CreateCharacter(int CharacterID)
+    {
+        Character character;
+        switch (CharacterID)
+        {
+            case 0:
+                character = new Character();
+                break;
+            case 1:
+                character = new Customer();
+                break;
+            case 2:
+                character = new Character();
+                break;
+            default:
+                character = null;
+                break;
+        }
+        return character;
     }
 
 }

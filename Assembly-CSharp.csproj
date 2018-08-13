@@ -28,6 +28,7 @@
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <LangVersion>default</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -37,6 +38,7 @@
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <LangVersion>default</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <NoConfig>true</NoConfig>
@@ -72,6 +74,7 @@
     <Compile Include="Assets\Scripts\_NotInUse\old_Character.cs" />
     <Compile Include="Assets\Scripts\_NotInUse\old_Customer.cs" />
     <Compile Include="Assets\Scripts\_NotInUse\old_Personel.cs" />
+    <Compile Include="Assets\Scripts\_NotInUse\SceneMGMT.cs" />
     <Compile Include="Assets\Scripts\_NotInUse\Singleton.cs" />
     <Compile Include="Assets\Scripts\_NotInUse\State\GameFSM.cs" />
     <Compile Include="Assets\Scripts\_NotInUse\State\GameStates.cs" />
@@ -108,7 +111,6 @@
     <Compile Include="Assets\Scripts\Strategy\Personel\PersBar.cs" />
     <Compile Include="Assets\Scripts\UI\CameraMovement.cs" />
     <Compile Include="Assets\Scripts\UI\EscMenu.cs" />
-    <Compile Include="Assets\Scripts\UI\SceneMGMT.cs" />
     <Compile Include="Assets\Scripts\UI\UI_helper.cs" />
     <None Include="Assets\Resources\Wood texture floor_01\readme.txt" />
     <None Include="Assets\Resources\0000_Tutorial.txt" />

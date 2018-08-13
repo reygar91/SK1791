@@ -80,11 +80,11 @@ public class SceneMNGR : MonoBehaviour {
             save.Rooms.Add(data);
         }
 
-        foreach (Character character in CharacterMNGR.Instance.charList)
+        foreach (MonoCharacter MC in CharacterMNGR.Instance.MCPool)
         {
-            if (character.monoCharacter.gameObject.activeSelf)
+            if (MC.gameObject.activeSelf)
             {
-                CharSaveData data = GatherCharacterSaveData(character);
+                CharSaveData data = GatherCharacterSaveData(MC);
                 save.Characters.Add(data);
             }
         }
@@ -97,22 +97,22 @@ public class SceneMNGR : MonoBehaviour {
         return save;
     }
 
-    private CharSaveData GatherCharacterSaveData(Character character)
+    private CharSaveData GatherCharacterSaveData(MonoCharacter MC)
     {
         CharSaveData data = new CharSaveData
         {
-            state = character.state,
-            prevState = character.prevState,
-            X = character.monoCharacter.transform.position.x,
-            Y = character.monoCharacter.transform.position.y,
-            Z = character.monoCharacter.transform.position.z,
-            AnimationWaitTime = character.AnimationWaitTime,
-            CountDown = character.CountDown,
-            TargetRoomIndex = BuildMNGR.Instance.roomsList.IndexOf(character.monoCharacter.TargetRoom)
+            state = MC.character.state,
+            prevState = MC.character.prevState,
+            X = MC.transform.position.x,
+            Y = MC.transform.position.y,
+            Z = MC.transform.position.z,
+            AnimationWaitTime = MC.character.AnimationWaitTime,
+            CountDown = MC.character.CountDown,
+            TargetRoomIndex = BuildMNGR.Instance.roomsList.IndexOf(MC.character.TargetRoom)
         };
-        if (character.Behaviour != null)
+        if (MC.character.Behaviour != null)
         {
-            data.behaviour = character.Behaviour.BehaviourData;
+            data.behaviour = MC.character.Behaviour.BehaviourData;
         }
         return data;
     }
@@ -153,18 +153,18 @@ public class SceneMNGR : MonoBehaviour {
 
         foreach (CharSaveData data in save.Characters)
         {
-            Character character = CharacterMNGR.Instance.SpawnAndActivateCharacter(0);
-            character.state = data.state;
-            character.prevState = data.prevState;
-            character.monoCharacter.transform.position = new Vector3(data.X, data.Y, data.Z);
-            character.AnimationWaitTime = data.AnimationWaitTime;
-            character.CountDown = data.CountDown;
+            MonoCharacter MC = CharacterMNGR.Instance.SpawnAndActivateCharacter(1);//number corresponds to CharacterID
+            MC.character.state = data.state;
+            MC.character.prevState = data.prevState;
+            MC.transform.position = new Vector3(data.X, data.Y, data.Z);
+            MC.character.AnimationWaitTime = data.AnimationWaitTime;
+            MC.character.CountDown = data.CountDown;
             if (data.TargetRoomIndex == -1)
-                character.monoCharacter.TargetRoom = Reception.Instance;
+                MC.character.TargetRoom = Reception.Instance;
             else
-                character.monoCharacter.TargetRoom = BuildMNGR.Instance.roomsList[data.TargetRoomIndex];
+                MC.character.TargetRoom = BuildMNGR.Instance.roomsList[data.TargetRoomIndex];
             if (data.behaviour != null)
-                character.behaviourData = data.behaviour;
+                MC.character.behaviourData = data.behaviour;
         }
 
         myEventMNGR.Instance.LoadEventsFromSignatures(save.ActiveEvents);

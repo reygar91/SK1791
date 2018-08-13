@@ -11,11 +11,11 @@ public class CustBar : ICharBehaviour
     int StatusID, targetIndex;
     GameObject Seat;
 
-    public CustBar(Customer customer)
-    {        
-        cust = customer;
-        MC = cust.monoCharacter;
-        room = MC.CurrentRoom as Bar;
+    public CustBar(MonoCharacter monoCharacter)
+    {
+        MC = monoCharacter;
+        cust = MC.character as Customer;        
+        room = MC.character.CurrentRoom as Bar;
         //Debug.Log(MC.name + "=> CustBar called");
         if (cust.behaviourData != null)
         {

@@ -11,10 +11,10 @@ public class CustReception : ICharBehaviour
     int StatusID, targetIndex;
     GameObject Target;
 
-    public CustReception(Customer customer)
+    public CustReception(MonoCharacter monoCharacter)
     {
-        cust = customer;
-        MC = cust.monoCharacter;
+        MC = monoCharacter;
+        cust = MC.character as Customer;        
         room = Reception.Instance;
         //Debug.Log(MC.name + "=> CustReception called/ behaviour data = " + cust.behaviourData);
         if (cust.behaviourData != null)
