@@ -7,13 +7,18 @@ public class MonoCharacter : MonoBehaviour {
     public Animator AnimatorComponent
     {
         get; private set;
-    }    
+    }
+    public HumanoidRenderer Renderer
+    {
+        get; private set;
+    }
 
     public Character character;    
 
     private void Awake()
     {
-        AnimatorComponent = GetComponentInChildren<Animator>();        
+        AnimatorComponent = GetComponentInChildren<Animator>();
+        Renderer = GetComponent<HumanoidRenderer>();
     }
 
     private void OnEnable()
@@ -24,8 +29,8 @@ public class MonoCharacter : MonoBehaviour {
             Debug.Log("character is not defined: disabling");
             gameObject.SetActive(false);
         }
-        character.Prototype(character.prototypeID);
-        name = character.name;        
+        character.ApplyCharacteristics(this);
+        character.ApplyAppearance(this);
     }
     private void OnDisable()
     {

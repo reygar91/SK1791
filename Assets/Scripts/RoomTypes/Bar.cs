@@ -8,7 +8,7 @@ public class Bar : Room {
     private GameObject[] Seats;
     public List<GameObject> AvailableSeats;
     
-    public List<Customer> custAtBar = new List<Customer>();
+    public List<MonoCharacter> custAtBar = new List<MonoCharacter>();
 
     private void Awake()
     {

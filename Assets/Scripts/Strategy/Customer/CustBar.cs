@@ -95,7 +95,7 @@ public class CustBar : ICharBehaviour
                 }
                 break;
             case 11: //adding cust to custAtBar list + setting his orientation to correct side
-                    room.custAtBar.Add(cust);
+                    room.custAtBar.Add(MC);
                     int startIndex = Seat.name.IndexOf("_");
                     string orientation = Seat.name.Substring(startIndex + 1);
                     switch (orientation)
@@ -131,7 +131,7 @@ public class CustBar : ICharBehaviour
         if (Seat)
         {
             room.AvailableSeats.Add(Seat);
-            room.custAtBar.Remove(cust);
+            room.custAtBar.Remove(MC);
         }        
     }
 }

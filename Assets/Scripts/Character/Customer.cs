@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class Customer : Character {
 
     public Customer()
@@ -9,6 +11,8 @@ public class Customer : Character {
         TargetRoom = Reception.Instance;
         CountDown = 25;
         WalkSpeed = 3;
+        SetCharacteristics();
+        SetAppearance();
     }
 
 
@@ -32,17 +36,29 @@ public class Customer : Character {
             }
         }
     }
-
-
-    private void SetAppearance()
-    {
-
-    }
-
-    private void SetCharacteristics()
-    {
-
-    }
     
+    protected override void SetCharacteristics()
+    {
+        int RandomNumber = Random.Range(0, 1000);
+        name = "Customer_" + RandomNumber;
+    }
+
+    public override void ApplyCharacteristics(MonoCharacter monoCharacter)
+    {
+        monoCharacter.name = name;
+    }
+
+    protected override void SetAppearance()
+    {
+        appearance = new CharacterAppearance();
+        int Index = Random.Range(0, AppearanceMNGR.Instance.Hat.Count);
+        appearance.Outfit.Head = AppearanceMNGR.Instance.Hat[Index];
+    }
+
+    public override void ApplyAppearance(MonoCharacter monoCharacter)
+    {
+        monoCharacter.Renderer.Outfit.Head.sprite = appearance.Outfit.Head;
+        monoCharacter.Renderer.Outfit.Head.color = Random.ColorHSV();        
+    }
 
 }

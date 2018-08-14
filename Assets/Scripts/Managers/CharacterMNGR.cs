@@ -98,7 +98,7 @@ public class CharacterMNGR : MonoBehaviour {
                 character = new Customer();
                 break;
             case 2:
-                character = new Character();
+                character = new Personnel();
                 break;
             default:
                 character = null;

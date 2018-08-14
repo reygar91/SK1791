@@ -763,22 +763,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51bf248f0726b3847b276a67150b87ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Head: {fileID: 212312147474021906}
-  Body: {fileID: 212802649310885168}
-  RightShoulderUp: {fileID: 212079743228338650}
-  RightShoulderLow: {fileID: 212017533845272928}
-  RightLegUp: {fileID: 212700607747256750}
-  RightLegLow: {fileID: 212929858145278340}
-  RightFeet: {fileID: 212026978346874720}
-  LeftShoulderUp: {fileID: 212500066832551860}
-  LeftShoulderLow: {fileID: 212331676213853120}
-  LeftLegUp: {fileID: 212558071219952904}
-  LeftLegLow: {fileID: 212721735327993106}
-  LeftFeet: {fileID: 212375327637614572}
-  Outfits:
-  - {fileID: 0}
-  - {fileID: 21300000, guid: ea78dd4cac1680c49a343ffa4bc6f941, type: 3}
-  - {fileID: 21300000, guid: 0bcbe88d8330fa043a837cb103d96c6a, type: 3}
+  Body:
+    Head: {fileID: 0}
+    Body: {fileID: 212212870219101562}
+    shoulderRight:
+      Upper: {fileID: 212816790964043424}
+      Lower: {fileID: 212769948019844926}
+    shoulderLeft:
+      Upper: {fileID: 212742061671145028}
+      Lower: {fileID: 212579758096503686}
+    legRight:
+      Upper: {fileID: 212996825081890690}
+      Lower: {fileID: 212242238980952794}
+      Feet: {fileID: 212580995826663332}
+    legLeft:
+      Upper: {fileID: 212243385111009020}
+      Lower: {fileID: 212348745904952786}
+      Feet: {fileID: 212839344551674106}
+  Outfit:
+    Head: {fileID: 212312147474021906}
+    Body: {fileID: 212802649310885168}
+    shoulderRight:
+      Upper: {fileID: 212079743228338650}
+      Lower: {fileID: 212017533845272928}
+    shoulderLeft:
+      Upper: {fileID: 212500066832551860}
+      Lower: {fileID: 212331676213853120}
+    legRight:
+      Upper: {fileID: 212700607747256750}
+      Lower: {fileID: 212929858145278340}
+      Feet: {fileID: 212026978346874720}
+    legLeft:
+      Upper: {fileID: 212558071219952904}
+      Lower: {fileID: 212721735327993106}
+      Feet: {fileID: 212375327637614572}
 --- !u!114 &114203851234499346
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -790,9 +808,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b797195fbc6b5c49955b548af0807b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {x: 0, y: 0, z: 0}
-  CurrentRoom: {fileID: 0}
-  TargetRoom: {fileID: 0}
 --- !u!114 &114799911978280748
 MonoBehaviour:
   m_ObjectHideFlags: 1

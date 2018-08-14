@@ -28,7 +28,6 @@
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
-    <LangVersion>default</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -38,7 +37,6 @@
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
-    <LangVersion>default</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <NoConfig>true</NoConfig>
@@ -84,10 +82,14 @@
     <Compile Include="Assets\Scripts\Character\Character.cs" />
     <Compile Include="Assets\Scripts\Character\Customer.cs" />
     <Compile Include="Assets\Scripts\Character\MonoCharacter.cs" />
+    <Compile Include="Assets\Scripts\Character\Personnel.cs" />
+    <Compile Include="Assets\Scripts\CharacterAppearance.cs" />
     <Compile Include="Assets\Scripts\CharDragSelect.cs" />
     <Compile Include="Assets\Scripts\Command\InputCommands.cs" />
     <Compile Include="Assets\Scripts\DontDestroyOnLoad.cs" />
+    <Compile Include="Assets\Scripts\HumanoidRenderer.cs" />
     <Compile Include="Assets\Scripts\MainMenuButtons.cs" />
+    <Compile Include="Assets\Scripts\Managers\AppearanceMNGR.cs" />
     <Compile Include="Assets\Scripts\Managers\BuildMNGR.cs" />
     <Compile Include="Assets\Scripts\Managers\CharacterMNGR.cs" />
     <Compile Include="Assets\Scripts\Managers\DialougeMNGR.cs" />
@@ -98,7 +100,6 @@
     <Compile Include="Assets\Scripts\Managers\TimeMNGR.cs" />
     <Compile Include="Assets\Scripts\Market.cs" />
     <Compile Include="Assets\Scripts\myEvents.cs" />
-    <Compile Include="Assets\Scripts\Outfit.cs" />
     <Compile Include="Assets\Scripts\PersPanelScript.cs" />
     <Compile Include="Assets\Scripts\RoomTypes\Bar.cs" />
     <Compile Include="Assets\Scripts\RoomTypes\Reception.cs" />
@@ -107,7 +108,6 @@
     <Compile Include="Assets\Scripts\Strategy\Customer\CustBar.cs" />
     <Compile Include="Assets\Scripts\Strategy\Customer\CustReception.cs" />
     <Compile Include="Assets\Scripts\Strategy\Customer\ICharBehaviour.cs" />
-    <Compile Include="Assets\Scripts\Strategy\Personel\IPersBehaviour.cs" />
     <Compile Include="Assets\Scripts\Strategy\Personel\PersBar.cs" />
     <Compile Include="Assets\Scripts\UI\CameraMovement.cs" />
     <Compile Include="Assets\Scripts\UI\EscMenu.cs" />
