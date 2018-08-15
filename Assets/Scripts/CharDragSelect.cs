@@ -73,7 +73,8 @@ public class CharDragSelect : MonoBehaviour {
 
                 DraggedMC = MC;
                 colider.enabled = false;
-                MC.character.behaviourData = MC.character.Behaviour.BehaviourData;//to reload correct behaviour after enabling collider
+                if (MC.character.Behaviour != null)
+                    MC.character.behaviourData = MC.character.Behaviour.BehaviourData;//to reload correct behaviour after enabling collider
                 StartPosition = MC.transform.position;
                 MC.character.state = Character.State.Animation;
                 MC.character.AnimationWaitTime = 2 * Time.deltaTime;

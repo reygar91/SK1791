@@ -29,6 +29,21 @@ public class CustReception : ICharBehaviour
         //Debug.Log("new CustReception => StatusID = " + StatusID); 
     }
 
+    public BehaviourData BehaviourData
+    {
+        get
+        {
+            BehaviourData data = new BehaviourData
+            {
+                OOI_Index = targetIndex,
+                StateID = StatusID,
+                TargetX = targetVector.x,
+                TargetZ = targetVector.z
+            };
+            return data;
+        }
+    }
+
     public Vector3 ChangeRoom(Room targetRoom)
     {
         switch (StatusID)
@@ -57,22 +72,7 @@ public class CustReception : ICharBehaviour
                 break;
         }
         return targetVector;
-    }
-
-    public BehaviourData BehaviourData
-    {
-        get
-        {
-            BehaviourData data = new BehaviourData
-            {
-                OOI_Index = targetIndex,
-                StateID = StatusID,
-                TargetX = targetVector.x,
-                TargetZ = targetVector.z
-            };
-            return data;
-        }
-    }
+    }    
 
     public Vector3 RoomBehaviour()
     {

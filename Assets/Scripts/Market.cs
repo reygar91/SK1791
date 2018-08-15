@@ -7,18 +7,18 @@ public class Market : MonoBehaviour {
 
     public Toggle[] Option;
     //public Personel[] AvailableCandidat;
-    //private Personel SelectedCandidat;
-    private Character[] Candidat;
+    private Personnel SelectedCandidat;
+    private Personnel[] Candidat;
     public int AvailableCandidatsN;
 
     private void OnEnable()
     {
         if (Candidat == null)
         {
-            Candidat = new Character[AvailableCandidatsN];
+            Candidat = new Personnel[AvailableCandidatsN];
             for (int i = 0; i < AvailableCandidatsN; i++)
             {
-                //Candidat[i] = CharacterMNGR.
+                Candidat[i] = new Personnel();
             }
         }
     }
@@ -28,17 +28,15 @@ public class Market : MonoBehaviour {
     {
         if (Option[i].isOn)
         {
-            //SelectedCandidat = AvailableCandidat[i];
+            SelectedCandidat = Candidat[i];
         }
     }
 
     public void HireCandidat()
     {
-        //if (SelectedCandidat != null)
-        //{
-        //    SelectedCandidat.gameObject.SetActive(true);
-        //}
-        //else Debug.Log("NoOne Selected");        
+        MonoCharacter MC = CharacterMNGR.Instance.GetMonoCharacter();
+        MC.character = SelectedCandidat;
+        MC.gameObject.SetActive(true);
     }
 
 }

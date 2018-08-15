@@ -108,7 +108,8 @@
     <Compile Include="Assets\Scripts\Strategy\Customer\CustBar.cs" />
     <Compile Include="Assets\Scripts\Strategy\Customer\CustReception.cs" />
     <Compile Include="Assets\Scripts\Strategy\Customer\ICharBehaviour.cs" />
-    <Compile Include="Assets\Scripts\Strategy\Personel\PersBar.cs" />
+    <Compile Include="Assets\Scripts\Strategy\Personel\AtBarPersonnel.cs" />
+    <Compile Include="Assets\Scripts\Strategy\Personel\AtReceptionPersonnel.cs" />
     <Compile Include="Assets\Scripts\UI\CameraMovement.cs" />
     <Compile Include="Assets\Scripts\UI\EscMenu.cs" />
     <Compile Include="Assets\Scripts\UI\UI_helper.cs" />

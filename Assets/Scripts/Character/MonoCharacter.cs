@@ -21,6 +21,7 @@ public class MonoCharacter : MonoBehaviour {
         Renderer = GetComponent<HumanoidRenderer>();
     }
 
+
     private void OnEnable()
     {
         AnimatorComponent.enabled = true;
@@ -31,10 +32,26 @@ public class MonoCharacter : MonoBehaviour {
         }
         character.ApplyCharacteristics(this);
         character.ApplyAppearance(this);
+        Register();
     }
+
+    private void Register()
+    {
+        if (CharacterMNGR.Instance.MCPool.Contains(this))
+            CharacterMNGR.Instance.MCPool.Remove(this);
+        CharacterMNGR.Instance.ActiveMC.Add(this);
+    }
+
     private void OnDisable()
     {
         AnimatorComponent.enabled = false;
+        UnRegister();
+    }
+
+    private void UnRegister()
+    {
+        CharacterMNGR.Instance.ActiveMC.Remove(this);
+        CharacterMNGR.Instance.MCPool.Add(this);
     }
 
 
@@ -89,41 +106,48 @@ public class MonoCharacter : MonoBehaviour {
 
     public void Tick()
     {
-        if (gameObject.activeSelf)
-        {
-            character.CountDown -= Time.deltaTime * character.CountDownMultiplier;
+        character.CountDown -= Time.deltaTime * character.CountDownMultiplier;
 
-            switch (character.state)
-            {
-                case (Character.State.Animation):
-                    //Debug.Log(character.AnimationWaitTime);
-                    if (character.AnimationWaitTime < 0)
-                        character.state = Character.State.Move;
-                    else character.AnimationWaitTime -= Time.deltaTime;
-                    break;
-                case (Character.State.Move):
-                    if (character.Behaviour != null)
+        switch (character.state)
+        {
+            case (Character.State.Animation):
+                //Debug.Log(character.AnimationWaitTime);
+                if (character.AnimationWaitTime < 0)
+                    character.state = Character.State.Move;
+                else character.AnimationWaitTime -= Time.deltaTime;
+                break;
+            case (Character.State.Move):
+                if (character.Behaviour != null)
+                {
+                    if (hasReachedTarget(character.Target))
                     {
-                        if (hasReachedTarget(character.Target))
+                        //Debug.Log(name + " " + CurrentRoom + "=>" + TargetRoom + "=>" + character.CountDown);
+                        if (character.CountDown < 0 && character.TargetRoom != Reception.Instance)
+                            character.TargetRoom = Reception.Instance;
+                        else if (character.CurrentRoom != character.TargetRoom)
                         {
-                            //Debug.Log(name + " " + CurrentRoom + "=>" + TargetRoom + "=>" + character.CountDown);
-                            if (character.CountDown < 0 && character.TargetRoom != Reception.Instance)
-                                character.TargetRoom = Reception.Instance;
-                            else if (character.CurrentRoom != character.TargetRoom)
-                            {
-                                //Debug.Log(name + "_room_" + TargetRoom.name);
-                                character.Target = character.Behaviour.ChangeRoom(character.TargetRoom);
-                            }
-                                
-                            else
-                                character.Target = character.Behaviour.RoomBehaviour();
-                        }                        
+                            //Debug.Log(name + "_room_" + TargetRoom.name);
+                            character.Target = character.Behaviour.ChangeRoom(character.TargetRoom);
+                        }
+
+                        else
+                            character.Target = character.Behaviour.RoomBehaviour();
                     }
-                    Move();
-                    break;
-                case (Character.State.Pause):
-                    break;
-            }
-        }        
+                }
+                Move();
+                break;
+            case (Character.State.Pause):
+                break;
+        }
+    }
+
+    public void CHARACTER_DEBUG()
+    {
+        Debug.Log("Name => " + name);
+        Debug.Log("Character type => " + character.GetType().ToString());
+        Debug.Log("Target => " + character.Target);
+        Debug.Log("Current&TargetRoom => " + character.CurrentRoom + " => " + character.TargetRoom);
+        Debug.Log("State => " + character.state);
+        Debug.Log("Behaviour => " + character.Behaviour);
     }
 }

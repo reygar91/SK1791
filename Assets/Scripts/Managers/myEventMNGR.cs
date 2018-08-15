@@ -51,7 +51,7 @@ public class myEventMNGR : MonoBehaviour {
         }
     }
 
-    public List<string> GetActiveEventsSignatures()
+    public string[] GetActiveEventsSignatures()
     {
         List<string> eventSignature = new List<string>();
         foreach (myEvents item in ActiveEvents)
@@ -64,10 +64,10 @@ public class myEventMNGR : MonoBehaviour {
             }
             eventSignature.Add(signature);
         }
-        return eventSignature;
+        return eventSignature.ToArray();
     }
 
-    public void LoadEventsFromSignatures(List<string> eventSignature)
+    public void LoadEventsFromSignatures(string[] eventSignature)
     {
         ActiveEvents = new List<myEvents>();
         foreach (string item in eventSignature)
@@ -102,7 +102,7 @@ public class myEventMNGR : MonoBehaviour {
 
     public void TestEventsSaveLoad()
     {
-        List<string> eventSignature = new List<string>();
+        string[] eventSignature;
         eventSignature = GetActiveEventsSignatures();
         foreach (string item in eventSignature)
         {

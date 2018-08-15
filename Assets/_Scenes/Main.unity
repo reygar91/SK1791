@@ -4258,6 +4258,7 @@ MonoBehaviour:
   - {fileID: 757477638}
   - {fileID: 757477637}
   AvailableSeats: []
+  custAtBar: []
 --- !u!54 &220469340
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -11728,6 +11729,7 @@ MonoBehaviour:
   - {fileID: 1354813658}
   - {fileID: 1354813657}
   AvailableSeats: []
+  custAtBar: []
 --- !u!54 &780331653
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -16348,7 +16350,7 @@ MonoBehaviour:
   - {fileID: 727379383}
   - {fileID: 1142606645}
   - {fileID: 1485170222}
-  AvailableCandidatsN: 0
+  AvailableCandidatsN: 3
 --- !u!43 &1334252767
 Mesh:
   m_ObjectHideFlags: 0
@@ -17846,6 +17848,7 @@ MonoBehaviour:
     type: 2}
   CharacterContainer: {fileID: 1244811761}
   MCPool: []
+  ActiveMC: []
 --- !u!114 &1411274726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19602,7 +19605,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh12438
+  m_Name: pb_Mesh16106
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -24933,6 +24936,7 @@ MonoBehaviour:
   - {fileID: 1721651539}
   - {fileID: 1721651538}
   AvailableSeats: []
+  custAtBar: []
 --- !u!54 &2067825907
 Rigidbody:
   m_ObjectHideFlags: 0

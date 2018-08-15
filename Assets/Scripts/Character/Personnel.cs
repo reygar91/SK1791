@@ -8,7 +8,7 @@ public class Personnel : Character
     public Personnel()
     {
         TargetRoom = Reception.Instance;
-        CountDown = 25;
+        CountDown = 600;
         WalkSpeed = 3;
         SetCharacteristics();
         SetAppearance();
@@ -24,13 +24,13 @@ public class Personnel : Character
             if (another.name.Contains("Reception"))
             {
                 CurrentRoom = Reception.Instance;
-                Behaviour = new CustReception(monoCharacter);
+                Behaviour = new AtReceptionPersonnel(monoCharacter);
                 Target = monoCharacter.transform.position; //make itself a target so hasReachedTarged evaluates to true
             }
             if (another.name.Contains("Bar"))
             {
                 CurrentRoom = another.GetComponent<Bar>();
-                Behaviour = new CustBar(monoCharacter);
+                Behaviour = new AtBarPersonnel(monoCharacter);
                 Target = monoCharacter.transform.position; //make itself a target so hasReachedTarged evaluates to true
             }
         }
@@ -39,7 +39,7 @@ public class Personnel : Character
     protected override void SetCharacteristics()
     {
         int RandomNumber = Random.Range(0, 1000);
-        name = "Customer_" + RandomNumber;
+        name = "Personnel" + RandomNumber;
     }
 
     public override void ApplyCharacteristics(MonoCharacter monoCharacter)

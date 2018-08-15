@@ -67,8 +67,11 @@ public class SceneMNGR : MonoBehaviour {
     {
         Save save = new Save();
 
-        foreach (Room room in BuildMNGR.Instance.roomsList)
+        Room[] rooms = BuildMNGR.Instance.roomsList.ToArray();
+        save.Rooms = new RoomSaveData[rooms.Length];
+        for (int i=0; i < save.Rooms.Length; i++)
         {
+            Room room = rooms[i];
             RoomSaveData data = new RoomSaveData
             {
                 typeAndSizeID = room.saveData.typeAndSizeID,
@@ -76,18 +79,36 @@ public class SceneMNGR : MonoBehaviour {
                 Y = room.saveData.Y,
                 Z = room.saveData.Z
             };
-            //Debug.Log(data.typeAndSizeID);
-            save.Rooms.Add(data);
+            save.Rooms[i] = data;
         }
 
-        foreach (MonoCharacter MC in CharacterMNGR.Instance.MCPool)
+        //foreach (Room room in BuildMNGR.Instance.roomsList)
+        //{
+        //    RoomSaveData data = new RoomSaveData
+        //    {
+        //        typeAndSizeID = room.saveData.typeAndSizeID,
+        //        X = room.saveData.X,
+        //        Y = room.saveData.Y,
+        //        Z = room.saveData.Z
+        //    };
+        //    //Debug.Log(data.typeAndSizeID);
+        //    save.Rooms.Add(data);
+        //}
+
+        
+        MonoCharacter[] ActiveMC = CharacterMNGR.Instance.ActiveMC.ToArray();
+        save.Characters = new CharSaveData[ActiveMC.Length];
+        for (int i = 0; i < save.Characters.Length; i++)
         {
-            if (MC.gameObject.activeSelf)
-            {
-                CharSaveData data = GatherCharacterSaveData(MC);
-                save.Characters.Add(data);
-            }
+            MonoCharacter MC = ActiveMC[i];
+            CharSaveData data = GatherCharacterSaveData(MC);
+            save.Characters[i] = data;
         }
+        //foreach (MonoCharacter MC in CharacterMNGR.Instance.ActiveMC.ToArray())
+        //{
+        //    CharSaveData data = GatherCharacterSaveData(MC);
+        //    save.Characters.Add(data);
+        //}
 
         save.ActiveEvents = myEventMNGR.Instance.GetActiveEventsSignatures();
 
@@ -153,7 +174,7 @@ public class SceneMNGR : MonoBehaviour {
 
         foreach (CharSaveData data in save.Characters)
         {
-            MonoCharacter MC = CharacterMNGR.Instance.SpawnAndActivateCharacter(1);//number corresponds to CharacterID
+            MonoCharacter MC = CharacterMNGR.Instance.SpawnCharacter(1);//number corresponds to CharacterID
             MC.character.state = data.state;
             MC.character.prevState = data.prevState;
             MC.transform.position = new Vector3(data.X, data.Y, data.Z);

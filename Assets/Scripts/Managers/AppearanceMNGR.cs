@@ -14,10 +14,11 @@ public class AppearanceMNGR : MonoBehaviour {
     private void Awake()
     {
         Instance = this;
+        Hat = LoadFiles("/Outfit/Hat/");
     }
 
     void Start () {
-        Hat = LoadFiles("/Outfit/Hat/");
+        
     }
 
     private List<Sprite> LoadFiles(string AdditionalPath)

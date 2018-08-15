@@ -50,7 +50,7 @@ public class Customer : Character {
 
     protected override void SetAppearance()
     {
-        appearance = new CharacterAppearance();
+        appearance = new CharacterAppearance(); //Debug.Log(AppearanceMNGR.Instance.Hat.Count);
         int Index = Random.Range(0, AppearanceMNGR.Instance.Hat.Count);
         appearance.Outfit.Head = AppearanceMNGR.Instance.Hat[Index];
     }
