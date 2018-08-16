@@ -44,35 +44,6 @@ public class AtReceptionPersonnel : ICharBehaviour
         }
     }
 
-    public Vector3 ChangeRoom(Room targetRoom)
-    {
-        switch (StatusID)
-        {
-            case 1:
-                targetVector = new Vector3(room.Doors.transform.position.x, MC.transform.position.y, MC.transform.position.z);
-                StatusID = 2;
-                break;
-            case 2:
-                targetVector = room.Doors.transform.position;
-                StatusID = 3;
-                break;
-            case 3:
-                MC.transform.position = targetRoom.Doors.transform.position;
-                targetVector = targetRoom.Doors.transform.position;
-                targetVector.z -= 1.5f;
-                StatusID = 4;
-                break;
-            case 4:
-                //empty, so to do nothing untill he enters to a new room
-                break;
-            default:
-                targetVector = new Vector3(MC.transform.position.x, MC.transform.position.y, room.EntrancePoint.transform.position.z);
-                StatusID = 1;
-                //SwitchRoom(); //Debug.Log("Change Room");
-                break;
-        }
-        return targetVector;
-    }
 
     public Vector3 RoomBehaviour()
     {

@@ -8,9 +8,6 @@ public class Save {
     public CharSaveData[] Characters;
     public RoomSaveData[] Rooms;
     public string[] ActiveEvents;
-    //public List<CharSaveData> Characters = new List<CharSaveData>();
-    //public List<RoomSaveData> Rooms = new List<RoomSaveData>();
-    //public List<string> ActiveEvents = new List<string>();
 
     public int gold = 0;
     public int time = 0;
@@ -23,6 +20,7 @@ public class CharSaveData
     public BehaviourData behaviour;
     public float X, Y, Z, AnimationWaitTime, CountDown;
     public int TargetRoomIndex;
+    public string CharacterType;
 }
 
 [System.Serializable]

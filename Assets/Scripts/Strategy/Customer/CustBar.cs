@@ -30,39 +30,6 @@ public class CustBar : ICharBehaviour
         //Debug.Log("new CustBar => StatusID = " + StatusID);
     }
 
-    public Vector3 ChangeRoom(Room targetRoom)
-    {
-        Transform Doors, Middle, Char;
-        Doors = room.Doors.transform;
-        Middle = room.MiddleOfTheRoom.transform;
-        Char = MC.transform;
-        switch (StatusID)
-        {
-            case 1:
-                targetVector = new Vector3(Doors.position.x, Doors.position.y, Middle.position.z);
-                StatusID = 2;
-                break;
-            case 2:
-                targetVector = Doors.position;
-                StatusID = 3;
-                break;
-            case 3:
-                Char.position = targetRoom.Doors.transform.position;
-                targetVector = targetRoom.Doors.transform.position;
-                targetVector.z -= 1.5f;
-                StatusID = 4;
-                break;
-            case 4:
-                //empty, so to do nothing untill he enters to a new room
-                break;
-            default://move to the center of the room
-                targetVector = new Vector3(Char.position.x, Char.position.y, Middle.position.z);
-                StatusID = 1;
-                SwitchRoom();
-                break;
-        }
-        return targetVector;
-    }
 
     public BehaviourData BehaviourData
     {

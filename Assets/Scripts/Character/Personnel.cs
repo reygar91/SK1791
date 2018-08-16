@@ -50,8 +50,8 @@ public class Personnel : Character
     protected override void SetAppearance()
     {
         appearance = new CharacterAppearance();
-        int Index = Random.Range(0, AppearanceMNGR.Instance.Hat.Count);
-        appearance.Outfit.Head = AppearanceMNGR.Instance.Hat[Index];
+        int Index = Random.Range(0, StreamingAssetsMNGR.Instance.Hat.Count);
+        appearance.Outfit.Head = StreamingAssetsMNGR.Instance.Hat[Index];
     }
 
     public override void ApplyAppearance(MonoCharacter monoCharacter)

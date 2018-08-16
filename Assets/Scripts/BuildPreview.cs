@@ -36,7 +36,8 @@ public class BuildPreview : MonoBehaviour {
             gameObject.transform.position = newPosition;
             if (Input.GetMouseButtonDown(0) && !UI_helper.isPointerOverUI2())
             {
-                InstantiateRoom(child, newPosition);                
+                Room newRoom = InstantiateRoom(child, newPosition);
+                newRoom.boxCollider.gameObject.layer = 0;
                 ResetPreview();
             }
         } else

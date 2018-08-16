@@ -13,6 +13,10 @@ public class Character {
     public string name;
     public CharacterAppearance appearance;
 
+    public int BehaviourStatusID, OOI_Index;
+    public GameObject ObjectOfInterest;
+
+
     //CountDown will represent patience for customers and energy for personel, Multiplier is used to determine difficulty of performed activity
     public float AnimationWaitTime, CountDown, CountDownMultiplier;
     public int prototypeID;

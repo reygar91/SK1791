@@ -9,18 +9,19 @@ public class TimeMNGR : MonoBehaviour {
     private Text TextComponent;
     public int timePassed = 1980; // day 1, 09:00 (in minutes); with speed =1 : 1 real time sec = 1 game time minute 
     public float timeSpeed = 1.0f;
-    public bool isPause = false;
+    //public bool isPause = false;
 
-    public Toggle pauseToggle;    
+    public Toggle Pause;
 
     private void Awake()
     {
         Instance = this;
         TextComponent = GetComponentInChildren<Text>();
+        Pause.onValueChanged.AddListener(PauseUnpause); //Debug.Log("PauseListenerAdded");
     }
 
     // Use this for initialization
-    void Start () {
+    void Start () {        
         StartCoroutine("PlayTime");
     }	
 
@@ -28,9 +29,9 @@ public class TimeMNGR : MonoBehaviour {
     {
         while (true)
         {
-            if (isPause)
+            if (Pause.isOn)
             {
-                yield return new WaitWhile(() => isPause);
+                yield return new WaitWhile(() => Pause.isOn);
             } else
             {
                 int minutes = (timePassed % 60);
@@ -57,10 +58,9 @@ public class TimeMNGR : MonoBehaviour {
         }
     }
 
-    public void Pause()
+    private void PauseUnpause(bool GamePaused)
     {
-        isPause = !isPause;
-        if (isPause)
+        if (GamePaused)
         {
             foreach (MonoCharacter MC in CharacterMNGR.Instance.ActiveMC.ToArray())
             {
@@ -77,6 +77,5 @@ public class TimeMNGR : MonoBehaviour {
                 MC.AnimatorComponent.enabled = true;
             }
         }
-        
     }
 }

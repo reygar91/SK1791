@@ -16,7 +16,7 @@ public class Pause : InputCommands
 {
     public override void Execute()
     {
-        TimeMNGR.Instance.pauseToggle.isOn = !TimeMNGR.Instance.pauseToggle.isOn;
+        TimeMNGR.Instance.Pause.isOn = !TimeMNGR.Instance.Pause.isOn;
     }
 }
 

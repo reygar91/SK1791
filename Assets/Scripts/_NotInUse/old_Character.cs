@@ -53,3 +53,30 @@
 //    }
 
 //}
+
+
+
+//From CHARACTER_MNGR script
+//public MonoCharacter SpawnAndActivateCharacter(int CharacterID)
+//{
+//    MonoCharacter MC = null;
+//    if (ActiveMC.Count == 0)
+//    {
+//        InstantiateAndRegisterCharacter();
+//    }
+//    for (int i = 0; i < ActiveMC.Count; i++)
+//    {
+//        if (ActiveMC[i].gameObject.activeSelf == false)
+//        {
+//            ActiveMC[i].character = CreateCharacter(CharacterID);
+//            ActiveMC[i].gameObject.SetActive(true);
+//            MC = ActiveMC[i];
+//            break;
+//        }
+//        else if (i == (ActiveMC.Count - 1))
+//        {
+//            InstantiateAndRegisterCharacter();
+//        }
+//    }
+//    return MC;
+//}

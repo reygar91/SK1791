@@ -13,7 +13,9 @@ public class MonoCharacter : MonoBehaviour {
         get; private set;
     }
 
-    public Character character;    
+    public Character character;
+    public delegate void BehaviourDelegate(MonoCharacter monoCharacter);
+    public BehaviourDelegate RoomBehaviour, ReleaseOOI;
 
     private void Awake()
     {
@@ -96,8 +98,12 @@ public class MonoCharacter : MonoBehaviour {
     private void OnTriggerEnter(Collider other)
     {
         //Debug.Log(name + " OnTriggerEnter " + other.gameObject.name);
-        character.EnterTriggerBehaviour(other, this);
+        //character.EnterTriggerBehaviour(other, this);
+        character.CurrentRoom = other.GetComponentInParent<Room>(); Debug.Log(character.CurrentRoom.name);
+        RoomBehaviour = BehaviourMNGR.GetBehaviour(this);
+        character.Target = transform.position;
     }
+
 
     private void OnTriggerExit(Collider other)
     {
@@ -117,8 +123,8 @@ public class MonoCharacter : MonoBehaviour {
                 else character.AnimationWaitTime -= Time.deltaTime;
                 break;
             case (Character.State.Move):
-                if (character.Behaviour != null)
-                {
+                //if (character.Behaviour != null)
+                //{
                     if (hasReachedTarget(character.Target))
                     {
                         //Debug.Log(name + " " + CurrentRoom + "=>" + TargetRoom + "=>" + character.CountDown);
@@ -127,16 +133,19 @@ public class MonoCharacter : MonoBehaviour {
                         else if (character.CurrentRoom != character.TargetRoom)
                         {
                             //Debug.Log(name + "_room_" + TargetRoom.name);
-                            character.Target = character.Behaviour.ChangeRoom(character.TargetRoom);
+                            //character.Target = character.Behaviour.ChangeRoom(character.TargetRoom);
+                            BehaviourMNGR.ChangeRoom(this);
                         }
 
                         else
-                            character.Target = character.Behaviour.RoomBehaviour();
+                            RoomBehaviour(this);
+                            //character.Target = character.Behaviour.RoomBehaviour();
                     }
-                }
+                //}
                 Move();
                 break;
             case (Character.State.Pause):
+                character.CountDown += Time.deltaTime * character.CountDownMultiplier;
                 break;
         }
     }

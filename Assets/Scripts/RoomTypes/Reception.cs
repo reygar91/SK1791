@@ -13,6 +13,7 @@ public class Reception : Room {
     private void Awake()
     {
         Instance = this;
+        MiddleOfTheRoom = EntrancePoint;
     }
 
 }

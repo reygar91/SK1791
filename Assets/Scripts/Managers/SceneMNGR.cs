@@ -82,18 +82,6 @@ public class SceneMNGR : MonoBehaviour {
             save.Rooms[i] = data;
         }
 
-        //foreach (Room room in BuildMNGR.Instance.roomsList)
-        //{
-        //    RoomSaveData data = new RoomSaveData
-        //    {
-        //        typeAndSizeID = room.saveData.typeAndSizeID,
-        //        X = room.saveData.X,
-        //        Y = room.saveData.Y,
-        //        Z = room.saveData.Z
-        //    };
-        //    //Debug.Log(data.typeAndSizeID);
-        //    save.Rooms.Add(data);
-        //}
 
         
         MonoCharacter[] ActiveMC = CharacterMNGR.Instance.ActiveMC.ToArray();
@@ -104,11 +92,7 @@ public class SceneMNGR : MonoBehaviour {
             CharSaveData data = GatherCharacterSaveData(MC);
             save.Characters[i] = data;
         }
-        //foreach (MonoCharacter MC in CharacterMNGR.Instance.ActiveMC.ToArray())
-        //{
-        //    CharSaveData data = GatherCharacterSaveData(MC);
-        //    save.Characters.Add(data);
-        //}
+        
 
         save.ActiveEvents = myEventMNGR.Instance.GetActiveEventsSignatures();
 
@@ -129,7 +113,8 @@ public class SceneMNGR : MonoBehaviour {
             Z = MC.transform.position.z,
             AnimationWaitTime = MC.character.AnimationWaitTime,
             CountDown = MC.character.CountDown,
-            TargetRoomIndex = BuildMNGR.Instance.roomsList.IndexOf(MC.character.TargetRoom)
+            TargetRoomIndex = BuildMNGR.Instance.roomsList.IndexOf(MC.character.TargetRoom),
+            CharacterType = MC.character.GetType().ToString()
         };
         if (MC.character.Behaviour != null)
         {
@@ -174,7 +159,7 @@ public class SceneMNGR : MonoBehaviour {
 
         foreach (CharSaveData data in save.Characters)
         {
-            MonoCharacter MC = CharacterMNGR.Instance.SpawnCharacter(1);//number corresponds to CharacterID
+            MonoCharacter MC = CharacterMNGR.Instance.SpawnCharacter(data.CharacterType);//number corresponds to CharacterID
             MC.character.state = data.state;
             MC.character.prevState = data.prevState;
             MC.transform.position = new Vector3(data.X, data.Y, data.Z);
@@ -198,7 +183,7 @@ public class SceneMNGR : MonoBehaviour {
 
         SceneManager.sceneLoaded -= LoadGameEvent;
 
-        TimeMNGR.Instance.Pause();
+        TimeMNGR.Instance.Pause.isOn = true; //Debug.Log("SetOnPause");
     }
 
     public void Quit()

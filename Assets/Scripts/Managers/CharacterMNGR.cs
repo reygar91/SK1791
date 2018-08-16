@@ -39,16 +39,16 @@ public class CharacterMNGR : MonoBehaviour {
         int CountDown = 0;
         while (true)
         {
-            if (TimeMNGR.Instance.isPause)
+            if (TimeMNGR.Instance.Pause.isOn)
             {
-                yield return new WaitWhile(() => TimeMNGR.Instance.isPause);
+                yield return new WaitWhile(() => TimeMNGR.Instance.Pause.isOn);
             }
             else
             {
                 CountDown -= InputMNGR.Instance.Reputation;
                 if (CountDown <= 0)
                 {
-                    SpawnCharacter(1);//1 for Customer
+                    SpawnCharacter("Customer");
                     CountDown = 35;
                 }
                 yield return new WaitForSeconds(1 / TimeMNGR.Instance.timeSpeed);
@@ -56,34 +56,12 @@ public class CharacterMNGR : MonoBehaviour {
         }
     }
 
-    //public MonoCharacter SpawnAndActivateCharacter(int CharacterID)
-    //{
-    //    MonoCharacter MC = null;
-    //    if (ActiveMC.Count == 0)
-    //    {
-    //        InstantiateAndRegisterCharacter();
-    //    }
-    //    for (int i = 0; i < ActiveMC.Count; i++)
-    //    {
-    //        if (ActiveMC[i].gameObject.activeSelf == false)
-    //        {
-    //            ActiveMC[i].character = CreateCharacter(CharacterID);
-    //            ActiveMC[i].gameObject.SetActive(true);
-    //            MC = ActiveMC[i];
-    //            break;
-    //        }
-    //        else if (i == (ActiveMC.Count - 1))
-    //        {
-    //            InstantiateAndRegisterCharacter();
-    //        }
-    //    }
-    //    return MC;
-    //}
+    
 
-    public MonoCharacter SpawnCharacter(int CharacterID)
+    public MonoCharacter SpawnCharacter(string CharacterType)
     {
         MonoCharacter MC = GetMonoCharacter();
-        MC.character = CreateCharacter(CharacterID);
+        MC.character = CreateCharacter(CharacterType);
         MC.gameObject.SetActive(true);
         return MC;
     }
@@ -99,18 +77,18 @@ public class CharacterMNGR : MonoBehaviour {
     }
 
 
-    public Character CreateCharacter(int CharacterID)
+    public Character CreateCharacter(string CharacterType)
     {
         Character character;
-        switch (CharacterID)
+        switch (CharacterType)
         {
-            case 0:
+            case "MainCharacter":
                 character = new Character();
                 break;
-            case 1:
+            case "Customer":
                 character = new Customer();
                 break;
-            case 2:
+            case "Personnel":
                 character = new Personnel();
                 break;
             default:
