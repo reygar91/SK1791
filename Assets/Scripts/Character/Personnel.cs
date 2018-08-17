@@ -14,50 +14,100 @@ public class Personnel : Character
         SetAppearance();
     }
 
-
-    public override void EnterTriggerBehaviour(Collider other, MonoCharacter monoCharacter)
-    {
-        GameObject another = other.transform.parent.gameObject;
-
-        if (other.tag == "Room")
-        {
-            if (another.name.Contains("Reception"))
-            {
-                CurrentRoom = Reception.Instance;
-                Behaviour = new AtReceptionPersonnel(monoCharacter);
-                Target = monoCharacter.transform.position; //make itself a target so hasReachedTarged evaluates to true
-            }
-            if (another.name.Contains("Bar"))
-            {
-                CurrentRoom = another.GetComponent<Bar>();
-                Behaviour = new AtBarPersonnel(monoCharacter);
-                Target = monoCharacter.transform.position; //make itself a target so hasReachedTarged evaluates to true
-            }
-        }
-    }
-
     protected override void SetCharacteristics()
     {
         int RandomNumber = Random.Range(0, 1000);
-        name = "Personnel" + RandomNumber;
+        Name = "Personnel" + RandomNumber;
     }
 
-    public override void ApplyCharacteristics(MonoCharacter monoCharacter)
+    public override void ApplyCharacteristics()
     {
-        monoCharacter.name = name;
+        MC.name = Name;
     }
 
     protected override void SetAppearance()
     {
-        appearance = new CharacterAppearance();
+        Appearance = new CharacterAppearance();
         int Index = Random.Range(0, StreamingAssetsMNGR.Instance.Hat.Count);
-        appearance.Outfit.Head = StreamingAssetsMNGR.Instance.Hat[Index];
+        Appearance.Outfit.Head = StreamingAssetsMNGR.Instance.Hat[Index];
     }
 
-    public override void ApplyAppearance(MonoCharacter monoCharacter)
+    public override void ApplyAppearance()
     {
-        monoCharacter.Renderer.Outfit.Head.sprite = appearance.Outfit.Head;
-        monoCharacter.Renderer.Outfit.Head.color = Random.ColorHSV();
+        MC.Renderer.Outfit.Head.sprite = Appearance.Outfit.Head;
+        MC.Renderer.Outfit.Head.color = Random.ColorHSV();
+    }
+
+    public override void SetFocus()
+    {
+        string RoomType = CurrentRoom.GetType().ToString();
+        switch (RoomType)
+        {
+            case "Reception":                
+                break;
+            case "Bar":
+                Focus.MC = CharacterMNGR.Instance.ActiveMC[Focus.Index]; 
+                break;
+        }        
+    }
+
+    protected override void AtReception()
+    {
+        Reception room = Reception.Instance;
+        switch (BehaviourStatusID)
+        {
+            case 10:
+                state = State.Animation;
+                AnimationWaitTime = 5.0f;
+                break;
+            default:
+                Target = new Vector3(room.Doors.transform.position.x, MC.transform.position.y, MC.transform.position.z);
+                BehaviourStatusID = 10;
+                break;
+        }
+    }
+
+    protected override void AtBar()
+    {
+        Vector3 Middle = CurrentRoom.MiddleOfTheRoom.transform.position;
+        Bar room = CurrentRoom as Bar;
+        switch (BehaviourStatusID)
+        {
+            case 11:// cheking if there are any custs to serve or reached previous random target
+                if (room.custAtBar.Count != 0)
+                    BehaviourStatusID = 13;
+                else
+                    BehaviourStatusID = 12;
+                break;
+            case 12://set random target to move along the room and change statusID so it was done only once 
+                float delta = room.Doors.transform.position.x - Middle.x;//distance from center of the room to the doors, considering doors located right to the center. doors.x > center.x
+                float minX = Middle.x - delta;
+                float maxX = Middle.x + delta;
+                Target.x = Random.Range(minX, maxX);
+                BehaviourStatusID = 11;
+                break;
+            case 13://setting target to guest X position and changing StatusID, so it is done only once
+                int index = Random.Range(0, room.custAtBar.Count);
+                Focus.MC = room.custAtBar[index];
+                Target.x = Focus.MC.transform.position.x;
+                room.custAtBar.Remove(Focus.MC);
+                Focus.MC.character.CountDown += 5;
+                BehaviourStatusID = 14;
+                break;
+            case 14://setting target to guest X,Z position & changing StatusID
+                Target.z = Focus.MC.transform.position.z;
+                BehaviourStatusID = 15;
+                break;
+            case 15:
+                GoldMNGR.Instance.AddGold(150);
+                Focus.MC = null;
+                BehaviourStatusID = 10;
+                break;
+            default://when just entered the room or just served cust
+                Target.z = Middle.z;
+                BehaviourStatusID = 11;
+                break;
+        }
     }
 
 }

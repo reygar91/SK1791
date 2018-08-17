@@ -17,18 +17,36 @@ public class Save {
 public class CharSaveData
 {
     public Character.State state, prevState;
-    public BehaviourData behaviour;
+    public FocusData Focus;
     public float X, Y, Z, AnimationWaitTime, CountDown;
-    public int TargetRoomIndex;
+    public int TargetRoomIndex, BehaviourStatusID;
     public string CharacterType;
 }
 
 [System.Serializable]
-public class BehaviourData
+public class FocusData
 {
-    //public string name;
-    public int StateID, OOI_Index;
-    public float TargetX, TargetZ;
+    public int Index;
+    public bool NotSet = false;
+    [System.NonSerialized]
+    public MonoCharacter MC;
+    [System.NonSerialized]
+    public GameObject Object;
+
+    public FocusData SaveFocusData()
+    {
+        if (Object)
+        {
+            NotSet = true;
+        }
+        if (MC)
+        {
+            NotSet = true;
+            Index = CharacterMNGR.Instance.ActiveMC.IndexOf(MC);
+            Debug.Log(MC.name + " with index " + Index + " saved");
+        }
+        return this;
+    }
     //public GameObject ObjectOfInterest; // GO can not be serialized, need to change bar to look like reception, 2 arrays 1 with GO another with availability index
 }
 

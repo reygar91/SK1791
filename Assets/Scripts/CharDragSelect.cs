@@ -26,12 +26,9 @@ public class CharDragSelect : MonoBehaviour {
 
     private void OnMouseUp()
     {
-        //DraggedMC = null;
-        //int yCoor = 4 * Mathf.FloorToInt((transform.position.y) / 4);
-        //transform.position = new Vector3(transform.position.x, yCoor, transform.position.z);
         if (countDown >= .5f)
         {
-            transform.position = StartPosition; //Debug.Log("!!!!" + MC.name +" "+ MC.CurrentRoom + "=>" + MC.TargetRoom);
+            transform.position = StartPosition;
 
             colider.enabled = true;
 
@@ -52,7 +49,6 @@ public class CharDragSelect : MonoBehaviour {
         bool roomMode = false;
         while (true)
         {
-            //Debug.Log(countDown); 
             if (roomMode)
             {
                 Vector3 curPos = new Vector3(Input.mousePosition.x - posX, Input.mousePosition.y - posY, dist.z);
@@ -73,8 +69,6 @@ public class CharDragSelect : MonoBehaviour {
 
                 DraggedMC = MC;
                 colider.enabled = false;
-                if (MC.character.Behaviour != null)
-                    MC.character.behaviourData = MC.character.Behaviour.BehaviourData;//to reload correct behaviour after enabling collider
                 StartPosition = MC.transform.position;
                 MC.character.state = Character.State.Animation;
                 MC.character.AnimationWaitTime = 2 * Time.deltaTime;

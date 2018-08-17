@@ -114,16 +114,12 @@ public class SceneMNGR : MonoBehaviour {
             AnimationWaitTime = MC.character.AnimationWaitTime,
             CountDown = MC.character.CountDown,
             TargetRoomIndex = BuildMNGR.Instance.roomsList.IndexOf(MC.character.TargetRoom),
-            CharacterType = MC.character.GetType().ToString()
-        };
-        if (MC.character.Behaviour != null)
-        {
-            data.behaviour = MC.character.Behaviour.BehaviourData;
-        }
+            CharacterType = MC.character.GetType().ToString(),
+            BehaviourStatusID = MC.character.BehaviourStatusID,
+            Focus = MC.character.Focus.SaveFocusData()
+        };                   
         return data;
     }
-
-
     
 
     public void LoadGame()
@@ -165,12 +161,13 @@ public class SceneMNGR : MonoBehaviour {
             MC.transform.position = new Vector3(data.X, data.Y, data.Z);
             MC.character.AnimationWaitTime = data.AnimationWaitTime;
             MC.character.CountDown = data.CountDown;
+            MC.character.BehaviourStatusID = data.BehaviourStatusID;
             if (data.TargetRoomIndex == -1)
                 MC.character.TargetRoom = Reception.Instance;
             else
                 MC.character.TargetRoom = BuildMNGR.Instance.roomsList[data.TargetRoomIndex];
-            if (data.behaviour != null)
-                MC.character.behaviourData = data.behaviour;
+            if (data.Focus.NotSet)
+                MC.character.Focus = data.Focus;
         }
 
         myEventMNGR.Instance.LoadEventsFromSignatures(save.ActiveEvents);

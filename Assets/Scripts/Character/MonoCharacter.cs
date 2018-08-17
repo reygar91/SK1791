@@ -14,8 +14,6 @@ public class MonoCharacter : MonoBehaviour {
     }
 
     public Character character;
-    public delegate void BehaviourDelegate(MonoCharacter monoCharacter);
-    public BehaviourDelegate RoomBehaviour, ReleaseOOI;
 
     private void Awake()
     {
@@ -32,8 +30,9 @@ public class MonoCharacter : MonoBehaviour {
             Debug.Log("character is not defined: disabling");
             gameObject.SetActive(false);
         }
-        character.ApplyCharacteristics(this);
-        character.ApplyAppearance(this);
+        character.MC = this;
+        character.ApplyCharacteristics();
+        character.ApplyAppearance();
         Register();
     }
 
@@ -97,18 +96,16 @@ public class MonoCharacter : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log(name + " OnTriggerEnter " + other.gameObject.name);
-        //character.EnterTriggerBehaviour(other, this);
-        character.CurrentRoom = other.GetComponentInParent<Room>(); Debug.Log(character.CurrentRoom.name);
-        RoomBehaviour = BehaviourMNGR.GetBehaviour(this);
+        character.CurrentRoom = other.GetComponentInParent<Room>(); 
+        character.GetBehaviour();
         character.Target = transform.position;
+        if (character.Focus.NotSet)
+        {
+            character.SetFocus();
+            character.Focus.NotSet = false;
+        }
     }
 
-
-    private void OnTriggerExit(Collider other)
-    {
-        //Debug.Log(name + " OnTriggerExit");
-    }
 
     public void Tick()
     {
@@ -123,25 +120,15 @@ public class MonoCharacter : MonoBehaviour {
                 else character.AnimationWaitTime -= Time.deltaTime;
                 break;
             case (Character.State.Move):
-                //if (character.Behaviour != null)
-                //{
-                    if (hasReachedTarget(character.Target))
-                    {
-                        //Debug.Log(name + " " + CurrentRoom + "=>" + TargetRoom + "=>" + character.CountDown);
-                        if (character.CountDown < 0 && character.TargetRoom != Reception.Instance)
-                            character.TargetRoom = Reception.Instance;
-                        else if (character.CurrentRoom != character.TargetRoom)
-                        {
-                            //Debug.Log(name + "_room_" + TargetRoom.name);
-                            //character.Target = character.Behaviour.ChangeRoom(character.TargetRoom);
-                            BehaviourMNGR.ChangeRoom(this);
-                        }
-
-                        else
-                            RoomBehaviour(this);
-                            //character.Target = character.Behaviour.RoomBehaviour();
-                    }
-                //}
+                if (hasReachedTarget(character.Target))
+                {
+                    if (character.CountDown < 0 && character.TargetRoom != Reception.Instance)
+                        character.TargetRoom = Reception.Instance;
+                    else if (character.CurrentRoom != character.TargetRoom)
+                        character.ChangeRoom();
+                    else
+                        character.RoomBehaviour();
+                }
                 Move();
                 break;
             case (Character.State.Pause):
@@ -157,6 +144,5 @@ public class MonoCharacter : MonoBehaviour {
         Debug.Log("Target => " + character.Target);
         Debug.Log("Current&TargetRoom => " + character.CurrentRoom + " => " + character.TargetRoom);
         Debug.Log("State => " + character.state);
-        Debug.Log("Behaviour => " + character.Behaviour);
     }
 }
