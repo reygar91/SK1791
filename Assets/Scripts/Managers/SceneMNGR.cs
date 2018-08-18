@@ -22,6 +22,8 @@ public class SceneMNGR : MonoBehaviour {
         Debug.Log("SceneMNGR_Loaded in " + sceneName);
         switch (sceneName)
         {
+            case "LogoPreloader":
+                break;
             case "MainMenu":
                 MainMenuButtons.Instance.NewGame.onClick.AddListener(NewGame);
                 MainMenuButtons.Instance.Load.onClick.AddListener(LoadGame);
@@ -31,6 +33,7 @@ public class SceneMNGR : MonoBehaviour {
             case "Main":
                 MainMenuButtons.Instance.Save.onClick.AddListener(SaveGame);
                 MainMenuButtons.Instance.Load.onClick.AddListener(LoadGame);
+                MainMenuButtons.Instance.ToMainMenu.onClick.AddListener(ToMainMenu);
                 break;
             default:
                 Debug.Log("Scene not Found");
@@ -145,12 +148,10 @@ public class SceneMNGR : MonoBehaviour {
         file.Close();
 
         // 3
-        BuildPreview buildPreview = MainMenuButtons.Instance.buildPreview;
 
         foreach (RoomSaveData data in save.Rooms)
         {
-            buildPreview.InstantiateRoom(buildPreview.Rooms[data.typeAndSizeID], new Vector3(data.X, data.Y, data.Z));
-            //newRoom.gameObject.SetActive(true);
+            BuildMNGR.Instance.InstantiateRoom(BuildMNGR.Instance.Rooms[data.typeAndSizeID], new Vector3(data.X, data.Y, data.Z));
         }
 
         foreach (CharSaveData data in save.Characters)
@@ -181,6 +182,11 @@ public class SceneMNGR : MonoBehaviour {
         SceneManager.sceneLoaded -= LoadGameEvent;
 
         TimeMNGR.Instance.Pause.isOn = true; //Debug.Log("SetOnPause");
+    }
+
+    public void ToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void Quit()

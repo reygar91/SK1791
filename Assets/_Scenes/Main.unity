@@ -2510,8 +2510,8 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1680181565}
-        m_MethodName: SelectRoom
+      - m_Target: {fileID: 1411274722}
+        m_MethodName: SelectType
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11674,8 +11674,8 @@ MonoBehaviour:
   Save: {fileID: 1748712687}
   Load: {fileID: 291924965}
   Options: {fileID: 0}
+  ToMainMenu: {fileID: 886018296}
   Quit: {fileID: 0}
-  buildPreview: {fileID: 1750033507}
 --- !u!224 &879861910
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11982,7 +11982,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1680181565}
+      - m_Target: {fileID: 1411274722}
         m_MethodName: SelectSize
         m_Mode: 3
         m_Arguments:
@@ -13307,8 +13307,8 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1680181565}
-        m_MethodName: SelectRoom
+      - m_Target: {fileID: 1411274722}
+        m_MethodName: SelectType
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14375,7 +14375,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1192127153}
   m_Layer: 5
-  m_Name: RoomGroup
+  m_Name: TypeGroup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15360,7 +15360,6 @@ MonoBehaviour:
   - {fileID: 727379383}
   - {fileID: 1142606645}
   - {fileID: 1485170222}
-  AvailableCandidatsN: 3
 --- !u!43 &1334252767
 Mesh:
   m_ObjectHideFlags: 0
@@ -16814,7 +16813,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18a081eef5d5c6c4592c9325f5cfc6be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Rooms:
+  - {fileID: 220469339}
+  - {fileID: 780331652}
+  - {fileID: 2067825906}
   roomsList: []
+  RoomContainer: {fileID: 1426048386}
+  Preview: {fileID: 1750033507}
+  TypeToggles:
+  - {fileID: 1604557362}
+  - {fileID: 109480195}
+  - {fileID: 1073262938}
+  SizeToggles:
+  - {fileID: 901802018}
+  - {fileID: 1636530411}
+  - {fileID: 1864039267}
+  SizeGroup: {fileID: 638111167}
 --- !u!114 &1411274723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16869,7 +16883,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f09641b88639c43be2157de352177e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Reputation: 4
+  Reputation: 7
   Panels:
   - {fileID: 1343450594}
   - {fileID: 1680181563}
@@ -18977,8 +18991,8 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1680181565}
-        m_MethodName: SelectRoom
+      - m_Target: {fileID: 1411274722}
+        m_MethodName: SelectType
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -19100,7 +19114,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1680181565}
+      - m_Target: {fileID: 1411274722}
         m_MethodName: SelectSize
         m_Mode: 3
         m_Arguments:
@@ -19539,16 +19553,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6f29ce28bb997344acedb8552937c20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RoomToggles:
-  - {fileID: 1604557362}
-  - {fileID: 109480195}
-  - {fileID: 1073262938}
-  SizeToggles:
-  - {fileID: 901802018}
-  - {fileID: 1636530411}
-  - {fileID: 1864039267}
-  SizeGroup: {fileID: 638111167}
-  Preview: {fileID: 1750033507}
 --- !u!114 &1680181566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20447,11 +20451,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d354ad67c293e34296ef99fce4e3db3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Rooms:
-  - {fileID: 220469339}
-  - {fileID: 780331652}
-  - {fileID: 2067825906}
-  RoomContainer: {fileID: 1426048386}
 --- !u!1 &1788164490
 GameObject:
   m_ObjectHideFlags: 0
@@ -21631,7 +21630,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1680181565}
+      - m_Target: {fileID: 1411274722}
         m_MethodName: SelectSize
         m_Mode: 3
         m_Arguments:

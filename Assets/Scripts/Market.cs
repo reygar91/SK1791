@@ -9,14 +9,14 @@ public class Market : MonoBehaviour {
     //public Personel[] AvailableCandidat;
     private Personnel SelectedCandidat;
     private Personnel[] Candidat;
-    public int AvailableCandidatsN;
+    //public int AvailableCandidatsN;
 
     private void OnEnable()
     {
         if (Candidat == null)
         {
-            Candidat = new Personnel[AvailableCandidatsN];
-            for (int i = 0; i < AvailableCandidatsN; i++)
+            Candidat = new Personnel[Option.Length];
+            for (int i = 0; i < Option.Length; i++)
             {
                 Candidat[i] = new Personnel();
             }
