@@ -14,6 +14,7 @@ public class Reception : Room {
     {
         Instance = this;
         MiddleOfTheRoom = EntrancePoint;
+        AvailablePersonel = new MonoCharacter[1];
     }
 
 }

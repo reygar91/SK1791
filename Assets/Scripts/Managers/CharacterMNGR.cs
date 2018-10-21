@@ -83,7 +83,7 @@ public class CharacterMNGR : MonoBehaviour {
         switch (CharacterType)
         {
             case "MainCharacter":
-                character = new Character();
+                character = new MainCharacter();
                 break;
             case "Customer":
                 character = new Customer();

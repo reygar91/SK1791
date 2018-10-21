@@ -14,8 +14,9 @@ public class InputMNGR : MonoBehaviour {
     public CanvasGroup GameUI, DialogUI;
 
     private Text CustPanelText;
+    public Button Serve;
     private MonoCharacter MC;
-    public Vector3 CustPanelOffset;
+    public Vector3 CustPanelOffset;    
 
 
     protected InputMNGR() { }
@@ -23,6 +24,7 @@ public class InputMNGR : MonoBehaviour {
     void Awake () {
         Instance = this; //Debug.Log("InputMNGR" + Instance);
         CustPanelText = Panels[3].GetComponentInChildren<Text>();
+        Serve = Panels[3].GetComponentInChildren<Button>();
         CancelButton = new DisablePanel(Panels);
         JumpButton = new Pause();
     }
@@ -60,14 +62,30 @@ public class InputMNGR : MonoBehaviour {
 
     public void CustomerClicked(MonoCharacter monoCharacter)
     {
-        if (!Panels[3].activeSelf)
-        {            
-            Panels[3].SetActive(true);
-            MC = monoCharacter; //needed for couritine, to avoid null reference
-            StartCoroutine("DetailedInfo");
-            StartCoroutine("CustPanelPosition");
-        } else if (MC == monoCharacter)
-            Panels[3].SetActive(false);
+        string charType = monoCharacter.character.GetType().ToString();
+        switch (charType)
+        {
+            case "Customer":
+                if (!Panels[3].activeSelf)
+                {
+                    Panels[3].SetActive(true);
+                    MC = monoCharacter; //needed for couritine, to avoid null reference
+                    StartCoroutine("DetailedInfo");
+                    StartCoroutine("CustPanelPosition");
+                }
+                else if (MC == monoCharacter)
+                    Panels[3].SetActive(false);
+                Customer customer = monoCharacter.character as Customer;
+                if (customer.HasBeenServed)
+                    Serve.gameObject.SetActive(false);
+                else
+                {
+                    Serve.gameObject.SetActive(true);
+                    Serve.onClick.RemoveAllListeners();
+                    Serve.onClick.AddListener(customer.GetServed);
+                }
+                break;
+        }        
         MC = monoCharacter;
     }
 

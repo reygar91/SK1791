@@ -50,6 +50,7 @@ public class SceneMNGR : MonoBehaviour {
     private void NewGameLoaded(Scene scene, LoadSceneMode mode)
     {
         myEventMNGR.Instance.ActiveEvents.Add(new StartGameTutorial());
+        CharacterMNGR.Instance.SpawnCharacter("MainCharacter");
         SceneManager.sceneLoaded -= NewGameLoaded;
     }
 

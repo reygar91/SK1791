@@ -10,6 +10,11 @@ public class Room : MonoBehaviour {
     public GameObject Doors, MiddleOfTheRoom;
     public RoomSaveData saveData = new RoomSaveData();
 
+    public MonoCharacter[] AvailablePersonel;
+    public List<MonoCharacter> AvailableCustomers;
+
+    public int BuildPrice;
+
     private void OnMouseDown()
     {
         if (!UI_helper.isPointerOverUI())
@@ -42,6 +47,35 @@ public class Room : MonoBehaviour {
         saveData.X = transform.position.x;
         saveData.Y = transform.position.y;
         saveData.Z = transform.position.z;
+    }
+
+    public bool RegisterPersonel(MonoCharacter monoCharacter)
+    {
+        bool result = false;
+        for (int i = 0; i < AvailablePersonel.Length; i++)
+        {
+            if (AvailablePersonel[i] == null)
+            {
+                AvailablePersonel[i] = monoCharacter;
+                result = true;
+                break;
+            }                
+        }
+        return result;
+    }
+
+    public MonoCharacter GetPersonel()
+    {
+        MonoCharacter result = null;
+        for (int i=0; i< AvailablePersonel.Length; i++)
+        {
+            if (AvailablePersonel[i].character.state == Character.State.Idle)
+            {
+                result = AvailablePersonel[i];
+                break;
+            }                
+        }   
+        return result;
     }
 
 }

@@ -6,6 +6,11 @@ using UnityEngine;
 
 public class Customer : Character {
 
+    //public delegate void Serve();
+    //public Serve GetServedDelegate;
+    public bool HasBeenServed;
+    public string DesiredAction = "RandomAction";
+
     public Customer()
     {
         TargetRoom = Reception.Instance;
@@ -55,6 +60,21 @@ public class Customer : Character {
                 break;
         }
     }
+
+    public void GetServed()
+    {
+        InputMNGR.Instance.Panels[3].SetActive(false);
+        Personnel personnel = CurrentRoom.GetPersonel().character as Personnel;
+        //MonoCharacter PersMC = CurrentRoom.GetPersonel();
+        personnel.Focus.MC = MC;
+        personnel.SetCustomersDesiredAction(DesiredAction);
+        personnel.RoomBehaviour = personnel.ReachFocusMC;        
+        personnel.state = State.Move;//to come out from Idle state
+
+        if (CurrentRoom.GetPersonel() == null)
+            InputMNGR.Instance.Serve.interactable = false;
+    }
+
 
     protected override void AtReception()
     {

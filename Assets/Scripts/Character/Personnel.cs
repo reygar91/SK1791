@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Personnel : Character
 {
+    /// <summary>
+    /// Beauty, Stamina, Sensitivity, Temper, Intelect, Will(Character), Pride() - 
+    /// 
+    /// </summary>
 
     public Personnel()
     {
@@ -57,11 +61,13 @@ public class Personnel : Character
         switch (BehaviourStatusID)
         {
             case 10:
-                state = State.Animation;
-                AnimationWaitTime = 5.0f;
+                state = State.Idle;
+                InputMNGR.Instance.Serve.interactable = true;
+                //AnimationWaitTime = 5.0f;
                 break;
             default:
-                Target = new Vector3(room.Doors.transform.position.x, MC.transform.position.y, MC.transform.position.z);
+                Target.x = room.Doors.transform.position.x;
+                Target.z = room.MiddleOfTheRoom.transform.position.z;
                 BehaviourStatusID = 10;
                 break;
         }
@@ -108,6 +114,33 @@ public class Personnel : Character
                 BehaviourStatusID = 11;
                 break;
         }
+    }
+
+    public void SetCustomersDesiredAction(string desiredAction)
+    {
+        switch (desiredAction)
+        {
+            case "RandomAction":
+                DoAction = RandomAction;
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void RandomAction()
+    {
+        state = State.Animation;
+        Customer customer = Focus.MC.character as Customer;
+        customer.state = State.Animation;
+        AnimationWaitTime = 5.0f;
+        customer.AnimationWaitTime = 5.0f;
+        CountDownMultiplier = 2;
+        customer.CountDownMultiplier = 2;
+        int BaseCostValue = 50;
+        GoldMNGR.Instance.AddGold(BaseCostValue);
+        customer.HasBeenServed = true;
+        Debug.Log("RandomAction between " + Name + " and " + Focus.MC.name);
     }
 
 }

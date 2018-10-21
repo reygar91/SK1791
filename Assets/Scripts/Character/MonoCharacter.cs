@@ -104,6 +104,9 @@ public class MonoCharacter : MonoBehaviour {
             character.SetFocus();
             character.Focus.NotSet = false;
         }
+        string charType = character.GetType().ToString();
+        if (charType == "MainCharacter" || charType == "Personnel")
+            character.CurrentRoom.RegisterPersonel(this);
     }
 
 
@@ -116,7 +119,10 @@ public class MonoCharacter : MonoBehaviour {
             case (Character.State.Animation):
                 //Debug.Log(character.AnimationWaitTime);
                 if (character.AnimationWaitTime < 0)
+                {
                     character.state = Character.State.Move;
+                    character.CountDownMultiplier = 1;
+                }                    
                 else character.AnimationWaitTime -= Time.deltaTime;
                 break;
             case (Character.State.Move):
@@ -145,4 +151,5 @@ public class MonoCharacter : MonoBehaviour {
         Debug.Log("Current&TargetRoom => " + character.CurrentRoom + " => " + character.TargetRoom);
         Debug.Log("State => " + character.state);
     }
+
 }

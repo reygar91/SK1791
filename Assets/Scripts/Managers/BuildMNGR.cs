@@ -42,6 +42,7 @@ public class BuildMNGR : MonoBehaviour {
             if (Input.GetMouseButtonDown(0) && !UI_helper.isPointerOverUI2())
             {
                 Room newRoom = InstantiateRoom(room, newPosition);
+                GoldMNGR.Instance.SubtractGold(newRoom.BuildPrice);
                 newRoom.boxCollider.gameObject.layer = 0;
                 ResetPreview();
             }
@@ -79,7 +80,7 @@ public class BuildMNGR : MonoBehaviour {
             room.gameObject.SetActive(true);
             Preview.gameObject.SetActive(true);
             SizeToggles[i].isOn = false; // Disabling Toggle, so dont have to click twice when building similar constructions
-            TypeToggles[RoomIndex].isOn = false;
+            //TypeToggles[RoomIndex].isOn = false;
             SizeGroup.gameObject.SetActive(false);
         }
     }
@@ -89,7 +90,23 @@ public class BuildMNGR : MonoBehaviour {
         if (TypeToggles[i].isOn)
         {
             RoomIndex = i;
+            CheckBuildPrices("");
             SizeGroup.gameObject.SetActive(true);
+            TypeToggles[i].isOn = false;
+        }
+    }
+
+    public void CheckBuildPrices(string input)
+    {
+        int Gold = GoldMNGR.Instance.Gold;
+        for (int i = 0; i < SizeToggles.Length; i++)
+        {           
+            SizeToggles[i].interactable = false;
+            if (Rooms[3 * RoomIndex + i].BuildPrice > Gold)
+            {
+                SizeToggles[i].interactable = false;
+            }                
+            else SizeToggles[i].interactable = true;
         }
     }
 

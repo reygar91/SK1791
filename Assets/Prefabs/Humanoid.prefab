@@ -70,7 +70,7 @@ GameObject:
   - component: {fileID: 212212870219101562}
   - component: {fileID: 95018963039189402}
   m_Layer: 0
-  m_Name: CustomerModel
+  m_Name: AnimationModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

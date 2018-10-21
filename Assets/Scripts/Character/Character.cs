@@ -17,7 +17,7 @@ public class Character {
     //public GameObject FocusGO;
 
     public delegate void BehaviourDelegate();
-    public BehaviourDelegate RoomBehaviour, ResetFocus, GetFocus;
+    public BehaviourDelegate RoomBehaviour, ResetFocus, GetFocus, DoAction;
 
     public FocusData Focus = new FocusData();
 
@@ -27,7 +27,7 @@ public class Character {
 
     public enum State
     {
-        Animation, Move, Pause
+        Animation, Move, Pause, Idle
     }
 
     public State state, prevState;
@@ -116,6 +116,40 @@ public class Character {
                 break;
         }
     }
+
+    public void ReachFocusMC()
+    {
+        Transform Middle, FocusTR;
+        Middle = CurrentRoom.MiddleOfTheRoom.transform; //Debug.Log(Focus.MC);
+        FocusTR = Focus.MC.transform;
+        switch (BehaviourStatusID)
+        {
+            case 5://align with Focus target
+                Target.x = FocusTR.position.x;
+                BehaviourStatusID = 6;
+                break;
+            case 6://move to the Focus
+                Target.z = FocusTR.position.z;
+                BehaviourStatusID = 7;
+                break;
+            case 7:
+                DoAction();
+                BehaviourStatusID = 8;                
+                break;
+            case 8:
+                GetBehaviour();
+                break;
+            default://move to the center of the room
+                Target.z = Middle.position.z;
+                BehaviourStatusID = 5;
+                break;
+        }
+    }
+
+    //public virtual void DoAction()
+    //{
+
+    //}
 
     public virtual void SetFocus()
     {

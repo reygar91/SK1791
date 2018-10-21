@@ -7,7 +7,7 @@ public class GoldMNGR : MonoBehaviour {
 
     public static GoldMNGR Instance;
 
-    private Text TextComponent;
+    public InputField inputField;
     public int Gold
     {
         get;    private set;        
@@ -18,13 +18,13 @@ public class GoldMNGR : MonoBehaviour {
 private void Awake()
     {
         Instance = this;
-        TextComponent = GetComponent<Text>();
+        inputField = GetComponentInChildren<InputField>();
         //Gold = 0;
     }
 	
 	// Update is called once per frame
 	void Update () {
-        TextComponent.text = "Gold: " + Gold;
+        inputField.text = "Gold: " + Gold;
     }
 
     public void AddGold(int AddedValue)
