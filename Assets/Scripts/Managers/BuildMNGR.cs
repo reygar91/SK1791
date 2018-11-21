@@ -59,15 +59,19 @@ public class BuildMNGR : MonoBehaviour {
         newRoom.SaveRoomPosition();
         Grid.SetGridValuesAroundNewRoom(newRoom);
         roomsList.Add(newRoom);
+        newRoom.DefineRoomTypes();
         return newRoom;
     }
 
     public void ResetPreview()
     {
-        Preview.transform.position = new Vector3(-12, 4, 0);
-        room.transform.SetParent(transform.parent);
-        room.gameObject.SetActive(false);
-        Preview.gameObject.SetActive(false);
+        if (room)
+        {
+            Preview.transform.position = new Vector3(-12, 4, 0);
+            room.transform.SetParent(Preview.transform.parent);
+            room.gameObject.SetActive(false);
+            Preview.gameObject.SetActive(false);
+        }        
     }
 
 

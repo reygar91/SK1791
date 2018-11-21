@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Reception : Room {
+public class Reception : Activity {
 
     public static Reception Instance;
 
@@ -10,11 +10,12 @@ public class Reception : Room {
     public GameObject[] WaitInLinePoints;
     public bool[] OccupiedSpot;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         Instance = this;
-        MiddleOfTheRoom = EntrancePoint;
-        AvailablePersonel = new MonoCharacter[1];
+        Room.MiddleOfTheRoom = EntrancePoint;
+        //AvailablePersonel = new BehaviourController[1];
     }
 
 }

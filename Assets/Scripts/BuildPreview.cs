@@ -10,7 +10,6 @@ public class BuildPreview : MonoBehaviour {
             BuildMNGR.Instance.ResetPreview();
         }
     }
-    
 }
 
 

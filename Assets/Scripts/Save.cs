@@ -24,33 +24,6 @@ public class CharSaveData
 }
 
 [System.Serializable]
-public class FocusData
-{
-    public int Index;
-    public bool NotSet = false;
-    [System.NonSerialized]
-    public MonoCharacter MC;
-    [System.NonSerialized]
-    public GameObject Object;
-
-    public FocusData SaveFocusData()
-    {
-        if (Object)
-        {
-            NotSet = true;
-        }
-        if (MC)
-        {
-            NotSet = true;
-            Index = CharacterMNGR.Instance.ActiveMC.IndexOf(MC);
-            Debug.Log(MC.name + " with index " + Index + " saved");
-        }
-        return this;
-    }
-    //public GameObject ObjectOfInterest; // GO can not be serialized, need to change bar to look like reception, 2 arrays 1 with GO another with availability index
-}
-
-[System.Serializable]
 public class RoomSaveData
 {
     public int typeAndSizeID;

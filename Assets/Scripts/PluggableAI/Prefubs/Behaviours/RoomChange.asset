@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dfa349dade566049b0accb015e97d2f, type: 3}
+  m_Name: RoomChange
+  m_EditorClassIdentifier: 
+  actions:
+  - {fileID: 11400000, guid: cb8e7a8d2cf8c9d42828c8fe54f84b39, type: 2}
+  - {fileID: 11400000, guid: 9823d01ad86160c48a4ec4118ce1c61f, type: 2}
+  - {fileID: 11400000, guid: 6378e809afee2514a833b16c05c8fc37, type: 2}
+  - {fileID: 11400000, guid: f241776b9bc2d80468c367e80d437743, type: 2}
+  ResetFocus: {fileID: 11400000, guid: 9ec01d539831db74e8a9444eaf9a025e, type: 2}

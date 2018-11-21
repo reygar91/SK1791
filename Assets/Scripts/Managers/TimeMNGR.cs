@@ -62,19 +62,19 @@ public class TimeMNGR : MonoBehaviour {
     {
         if (GamePaused)
         {
-            foreach (MonoCharacter MC in CharacterMNGR.Instance.ActiveMC.ToArray())
+            foreach (BehaviourController BC in CharacterMNGR.Instance.ActiveCharacters.ToArray())
             {
-                MC.character.prevState = MC.character.state;
-                MC.character.state = Character.State.Pause;
-                MC.AnimatorComponent.enabled = false;
+                BC.character.prevState = BC.character.state;
+                BC.character.state = Character.State.Pause;
+                BC.AnimatorComponent.enabled = false;
             }
         }
         else
         {
-            foreach (MonoCharacter MC in CharacterMNGR.Instance.ActiveMC.ToArray())
+            foreach (BehaviourController BC in CharacterMNGR.Instance.ActiveCharacters.ToArray())
             {
-                MC.character.state = MC.character.prevState;
-                MC.AnimatorComponent.enabled = true;
+                BC.character.state = BC.character.prevState;
+                BC.AnimatorComponent.enabled = true;
             }
         }
     }

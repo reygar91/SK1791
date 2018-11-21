@@ -50,7 +50,7 @@ public class SceneMNGR : MonoBehaviour {
     private void NewGameLoaded(Scene scene, LoadSceneMode mode)
     {
         myEventMNGR.Instance.ActiveEvents.Add(new StartGameTutorial());
-        CharacterMNGR.Instance.SpawnCharacter("MainCharacter");
+        //CharacterMNGR.Instance.SpawnCharacter("MainCharacter");
         SceneManager.sceneLoaded -= NewGameLoaded;
     }
 
@@ -88,12 +88,12 @@ public class SceneMNGR : MonoBehaviour {
 
 
         
-        MonoCharacter[] ActiveMC = CharacterMNGR.Instance.ActiveMC.ToArray();
-        save.Characters = new CharSaveData[ActiveMC.Length];
+        BehaviourController[] ActiveBC = CharacterMNGR.Instance.ActiveCharacters.ToArray();
+        save.Characters = new CharSaveData[ActiveBC.Length];
         for (int i = 0; i < save.Characters.Length; i++)
         {
-            MonoCharacter MC = ActiveMC[i];
-            CharSaveData data = GatherCharacterSaveData(MC);
+            BehaviourController BC = ActiveBC[i];
+            CharSaveData data = GatherCharacterSaveData(BC);
             save.Characters[i] = data;
         }
         
@@ -106,21 +106,21 @@ public class SceneMNGR : MonoBehaviour {
         return save;
     }
 
-    private CharSaveData GatherCharacterSaveData(MonoCharacter MC)
+    private CharSaveData GatherCharacterSaveData(BehaviourController BC)
     {
         CharSaveData data = new CharSaveData
         {
-            state = MC.character.state,
-            prevState = MC.character.prevState,
-            X = MC.transform.position.x,
-            Y = MC.transform.position.y,
-            Z = MC.transform.position.z,
-            AnimationWaitTime = MC.character.AnimationWaitTime,
-            CountDown = MC.character.CountDown,
-            TargetRoomIndex = BuildMNGR.Instance.roomsList.IndexOf(MC.character.TargetRoom),
-            CharacterType = MC.character.GetType().ToString(),
-            BehaviourStatusID = MC.character.BehaviourStatusID,
-            Focus = MC.character.Focus.SaveFocusData()
+            state = BC.character.state,
+            prevState = BC.character.prevState,
+            X = BC.transform.position.x,
+            Y = BC.transform.position.y,
+            Z = BC.transform.position.z,
+            AnimationWaitTime = BC.character.AnimationWaitTime,
+            CountDown = BC.character.CountDown,
+            //TargetRoomIndex = BuildMNGR.Instance.roomsList.IndexOf(BC.character.TargetRoom),
+            CharacterType = BC.character.GetType().ToString(),
+            BehaviourStatusID = BC.ActionID,
+            Focus = BC.Focus.SaveFocusData()
         };                   
         return data;
     }
@@ -157,19 +157,15 @@ public class SceneMNGR : MonoBehaviour {
 
         foreach (CharSaveData data in save.Characters)
         {
-            MonoCharacter MC = CharacterMNGR.Instance.SpawnCharacter(data.CharacterType);//number corresponds to CharacterID
-            MC.character.state = data.state;
-            MC.character.prevState = data.prevState;
-            MC.transform.position = new Vector3(data.X, data.Y, data.Z);
-            MC.character.AnimationWaitTime = data.AnimationWaitTime;
-            MC.character.CountDown = data.CountDown;
-            MC.character.BehaviourStatusID = data.BehaviourStatusID;
-            if (data.TargetRoomIndex == -1)
-                MC.character.TargetRoom = Reception.Instance;
-            else
-                MC.character.TargetRoom = BuildMNGR.Instance.roomsList[data.TargetRoomIndex];
-            if (data.Focus.NotSet)
-                MC.character.Focus = data.Focus;
+            //BehaviourController BC = CharacterMNGR.Instance.SpawnCharacter(data.CharacterType);//number corresponds to CharacterID
+            //BC.character.state = data.state;
+            //BC.character.prevState = data.prevState;
+            //BC.transform.position = new Vector3(data.X, data.Y, data.Z);
+            //BC.character.AnimationWaitTime = data.AnimationWaitTime;
+            //BC.character.CountDown = data.CountDown;
+            //BC.ActionID = data.BehaviourStatusID;
+            //if (data.Focus.NotSet)
+            //    BC.character.Focus = data.Focus;
         }
 
         myEventMNGR.Instance.LoadEventsFromSignatures(save.ActiveEvents);

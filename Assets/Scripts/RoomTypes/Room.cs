@@ -10,8 +10,13 @@ public class Room : MonoBehaviour {
     public GameObject Doors, MiddleOfTheRoom;
     public RoomSaveData saveData = new RoomSaveData();
 
-    public MonoCharacter[] AvailablePersonel;
-    public List<MonoCharacter> AvailableCustomers;
+    //public BehaviourController[] AvailablePersonel;
+
+    public List<Activity> Activities;
+
+    public static Room selectedRoom;
+
+    //public BehaviourPattern PersonnelBehaviour;
 
     public int BuildPrice;
 
@@ -26,20 +31,13 @@ public class Room : MonoBehaviour {
     private void OnMouseEnter()
     {
         spriteRenderer.gameObject.SetActive(true);
-
-        if (CharDragSelect.DraggedMC != null)
-        {
-            CharDragSelect.DraggedMC.character.TargetRoom = this; //Debug.Log(this);
-        }
+        selectedRoom = this; //Debug.Log(selectedRoom.name);
     }
 
     private void OnMouseExit()
     {
         spriteRenderer.gameObject.SetActive(false);
-        if (CharDragSelect.DraggedMC != null)
-        {
-            CharDragSelect.DraggedMC.character.TargetRoom = CharDragSelect.DraggedMC.character.CurrentRoom;
-        }
+        selectedRoom = null; //Debug.Log(selectedRoom);
     }
 
     public void SaveRoomPosition()
@@ -49,33 +47,50 @@ public class Room : MonoBehaviour {
         saveData.Z = transform.position.z;
     }
 
-    public bool RegisterPersonel(MonoCharacter monoCharacter)
+    //public bool RegisterPersonel(BehaviourController controller)
+    //{
+    //    bool result = false;
+    //    for (int i = 0; i < AvailablePersonel.Length; i++)
+    //    {
+    //        if (AvailablePersonel[i] == null)
+    //        {
+    //            AvailablePersonel[i] = controller;
+    //            result = true;
+    //            break;
+    //        }                
+    //    }
+    //    return result;
+    //}
+
+    //public BehaviourController GetPersonel()
+    //{
+    //    BehaviourController result = null;
+    //    for (int i=0; i< AvailablePersonel.Length; i++)
+    //    {
+    //        if (AvailablePersonel[i].character.state == Character.State.Idle)
+    //        {
+    //            result = AvailablePersonel[i];
+    //            break;
+    //        }                
+    //    }   
+    //    return result;
+    //}
+    public void DefineRoomTypes()
     {
-        bool result = false;
-        for (int i = 0; i < AvailablePersonel.Length; i++)
+        foreach (Activity type in GetComponents<Activity>())
         {
-            if (AvailablePersonel[i] == null)
-            {
-                AvailablePersonel[i] = monoCharacter;
-                result = true;
-                break;
-            }                
+            Activities.Add(type);
+            type.RegisterInteractionObjects();
         }
-        return result;
     }
 
-    public MonoCharacter GetPersonel()
-    {
-        MonoCharacter result = null;
-        for (int i=0; i< AvailablePersonel.Length; i++)
-        {
-            if (AvailablePersonel[i].character.state == Character.State.Idle)
-            {
-                result = AvailablePersonel[i];
-                break;
-            }                
-        }   
-        return result;
-    }
+
+    //public void RegisterInteractionObjects()
+    //{
+    //    foreach (RoomType type in types)
+    //    {
+            
+    //    }
+    //}
 
 }

@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainCharacter : Personnel {
+public class MainCharacter : Personnel
+{
 
-	
+
 }

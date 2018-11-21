@@ -2,30 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bar : Room {
-
-    [SerializeField]
-    private GameObject[] Seats;
-    public List<GameObject> AvailableSeats;
+public class Bar : Activity {
     
-    public List<MonoCharacter> custAtBar = new List<MonoCharacter>();
-
-    private void Awake()
-    {
-        AvailableSeats.Clear();
-        foreach(GameObject seat in Seats)
-        {
-            AvailableSeats.Add(seat);
-        }
-    }
 
     public int SeatIndex(GameObject seat)
     {
-        return System.Array.IndexOf(Seats, seat);
+        return System.Array.IndexOf(CustomerInteractionObjects, seat);
     }
 
-    public GameObject FindSeat(int seatIndex)
+    public Transform FindSeat(int seatIndex)
     {
-        return Seats[seatIndex];
+        return CustomerInteractionObjects[seatIndex];
+    }
+
+    private void RegisterSeats()
+    {
+        foreach (Transform seat in CustomerInteractionObjects)
+        {
+            BarMNGR.Instance.AvailableSeats.Add(seat);
+        }
+    }
+
+    public override void RegisterInteractionObjects()
+    {
+        RegisterSeats();
     }
 }

@@ -1,152 +1,196 @@
-﻿////using System;
-//using System.Collections;
+﻿//using System.Collections;
 //using System.Collections.Generic;
 //using UnityEngine;
 
-//[System.Serializable]
+
+
 //public class Customer : Character {
 
-//    public int Patience
+//    //public delegate void Serve();
+//    //public Serve GetServedDelegate;
+//    public bool HasBeenServed;
+//    public string DesiredAction = "RandomAction";
+
+//    public Customer()
 //    {
-//        get;    private set;        
+//        TargetRoom = Reception.Instance;
+//        CountDown = 25;
+//        WalkSpeed = 3;
+//        SetCharacteristics();
+//        SetAppearance();
 //    }
-//    public Vector3 TargetVector
+    
+//    protected override void SetCharacteristics()
 //    {
-//        get;    private set;
-//    }
-//    public Reception reception
-//    {
-//        get;    private set;
-//    }
-//    //public Animator AnimatorComponent
-//    //{
-//    //    get;    private set;
-//    //}
-
-
-//    public bool Wait;
-//    public float AnimationTime;
-//    public int prototypeID;
-//    public Outfit outfit;
-//    //delegate bool TaskFuncDelegate(Vector3 target);
-//    //TaskFuncDelegate TaskCompleted;
-
-//    private ICustBehaviour Behaviour;
-
-//    private void Awake()
-//    {
-//        AnimatorComponent = GetComponentInChildren<Animator>();
-//        reception = FindObjectOfType<Reception>();
-//        //GameController.Instance.CharList.Add(this);
-//        outfit = GetComponentInChildren<Outfit>();
+//        int RandomNumber = Random.Range(0, 1000);
+//        Name = "Customer_" + RandomNumber;
 //    }
 
-//    private void OnEnable()
+//    public override void ApplyCharacteristics()
 //    {
-//        Prototype(prototypeID);
-//    }
-//    private void OnDisable()
-//    {
-//        prototypeID = 0; //Debug.Log("CustDisabled");
-//        AnimatorComponent.enabled = false;
+//        MC.name = Name;
 //    }
 
-
-//    private void Update()
+//    protected override void SetAppearance()
 //    {
-//        if (!TimeFlow.Instance.isPause)
+//        Appearance = new CharacterAppearance();
+//        int Index = Random.Range(0, StreamingAssetsMNGR.Instance.Hat.Count);
+//        Appearance.Outfit.Head = StreamingAssetsMNGR.Instance.Hat[Index];
+//    }
+
+//    public override void ApplyAppearance()
+//    {
+//        MC.Renderer.Outfit.Head.sprite = Appearance.Outfit.Head;
+//        MC.Renderer.Outfit.Head.color = Random.ColorHSV();        
+//    }
+
+//    public override void SetFocus()
+//    {
+//        string RoomType = CurrentRoom.GetType().ToString();
+//        switch (RoomType)
 //        {
-//            MoveTo(TargetVector);
-//        }           
-//    }
-
-//    private IEnumerator Relax()
-//    {
-//        while (true)
-//        {
-//            if (Wait)
-//            {
-//                Wait = false;
-//                yield return new WaitForSeconds(AnimationTime);
-//            } else
-//            {
-//                AnimatorComponent.SetInteger("AnimationID", 0);
-//                if (Patience <= 0)
-//                {
-//                    TargetVector = Behaviour.LeaveRoom();
-//                }
-//                else if (Behaviour != null)
-//                {
-//                    TargetVector = Behaviour.RoomBehaviour();
-//                }
-//                yield return new WaitUntil(() => hasReachedTarget(TargetVector));
-//            }  
-//        }
-//    }
-//    private IEnumerator CountDown()
-//    {
-//        while (true)
-//        {
-//            if (TimeFlow.Instance.isPause)
-//            {
-//                yield return new WaitWhile(() => TimeFlow.Instance.isPause);
-//            }
-//            else
-//            {
-//                Patience--;
-//                if (Patience <= 0 && Wait)
-//                {
-//                    Wait = false;
-//                }
-//                yield return new WaitForSeconds(1);
-//            }
+//            case "Reception":
+//                Focus.Object = Reception.Instance.WaitInLinePoints[Focus.Index];
+//                Reception.Instance.OccupiedSpot[Focus.Index] = true;
+//                break;
+//            case "Bar":
+//                Bar room = CurrentRoom as Bar;
+//                Focus.Object = room.FindSeat(Focus.Index);
+//                room.AvailableSeats.Remove(Focus.Object);
+//                break;
 //        }
 //    }
 
-//    private void OnTriggerEnter(Collider other)
+//    public void GetServed()
 //    {
-//        GameObject another = other.transform.parent.gameObject;
-//        if (other.tag == "Room")
-//        {
-//            if (another.name.Contains("Reception"))
-//            {
-//                if (Behaviour != null)
-//                {
-//                    Behaviour.SwitchRoom(); //Debug.Log("leave room onTirggerEnter switch");
-//                }
-//                Behaviour = new CustReception(this, reception);
-//                TargetVector = transform.position; //make itself a target so hasReachedTarged evaluates to true
-//            }
-//            if (another.name.Contains("Bar"))
-//            {
-//                Behaviour.SwitchRoom();
-//                Bar RoomType = another.GetComponent<Bar>();
-//                Behaviour = new CustBar(this, RoomType);
-//                TargetVector = transform.position; //make itself a target so hasReachedTarged evaluates to true
+//        CustomerPanel.Instance.gameObject.SetActive(false);
+//        Personnel personnel = CurrentRoom.GetPersonel().character as Personnel;
+//        //MonoCharacter PersMC = CurrentRoom.GetPersonel();
+//        personnel.Focus.MC = MC;
+//        personnel.SetCustomersDesiredAction(DesiredAction);
+//        personnel.RoomBehaviour = personnel.ReachFocusMC;        
+//        personnel.state = State.Move;//to come out from Idle state
 
+//        if (CurrentRoom.GetPersonel() == null)
+//            CustomerPanel.Instance.ServeBTN.interactable = false;
+//    }
+
+
+//    protected override void AtReception()
+//    {
+//        ResetFocus = LeaveReception;
+//        Reception room = Reception.Instance;
+//        if (CountDown < 0)
+//        {
+//            switch (BehaviourStatusID)
+//            {
+//                case 10:
+//                    Target = room.EntrancePoint.transform.position;
+//                    BehaviourStatusID = 11;
+//                    break;
+//                case 11:
+//                    Target = room.SpawnPoint.transform.position;
+//                    BehaviourStatusID = 12;
+//                    break;
+//                case 12:
+//                    MC.gameObject.SetActive(false);
+//                    break;
+//                default:
+//                    Target.z = room.EntrancePoint.transform.position.z;
+//                    BehaviourStatusID = 10;
+//                    LeaveReception();
+//                    break;
+//            }
+//        }
+//        else if (!Focus.Object)
+//        {
+//            for (int i = 0; i < 5; i++)
+//            {
+//                if (room.OccupiedSpot[i] == false)
+//                {
+//                    Focus.Object = room.WaitInLinePoints[i];
+//                    Target = Focus.Object.transform.position;
+//                    room.OccupiedSpot[i] = true;
+//                    Focus.Index = i;
+//                    i = 5;
+//                }
 //            }            
+//        }
+//        else if (Focus.Index != 0 && room.OccupiedSpot[Focus.Index - 1] == false)
+//        {
+//            Focus.Object = room.WaitInLinePoints[Focus.Index - 1];
+//            Target = Focus.Object.transform.position;
+//            room.OccupiedSpot[Focus.Index - 1] = true;
+//            room.OccupiedSpot[Focus.Index] = false;
+//            Focus.Index--;
+//        }
+//    }
+
+//    private void LeaveReception()
+//    {
+//        Reception room = Reception.Instance;
+//        if (Focus.Object)
+//        {
+//            room.OccupiedSpot[Focus.Index] = false;
+//            Focus.Object = null;
+//        }
+//    }
+
+//    protected override void AtBar()
+//    {
+//        ResetFocus = LeaveBar;
+//        Bar room = CurrentRoom as Bar;
+//        switch (BehaviourStatusID)
+//        {
+//            case 10: //find a seat and select it as new target
+//                if (room.AvailableSeats.Count != 0 && !Focus.Object)
+//                {
+//                    int RandomSeat = Random.Range(0, room.AvailableSeats.Count);
+//                    Focus.Object = room.AvailableSeats[RandomSeat];
+//                    room.AvailableSeats.Remove(Focus.Object);
+//                    Target = Focus.Object.transform.position;
+//                    Focus.Index = room.SeatIndex(Focus.Object);
+//                    BehaviourStatusID = 11;
+//                }
+//                break;
+//            case 11: //adding cust to custAtBar list + setting his orientation to correct side
+//                room.custAtBar.Add(MC); 
+//                int startIndex = Focus.Object.name.IndexOf("_");
+//                string orientation = Focus.Object.name.Substring(startIndex + 1);
+//                switch (orientation)
+//                {
+//                    case "Right":
+//                        MC.transform.rotation = new Quaternion(0, -1, 0, 0);//facing from right to left
+//                        break;
+//                    case "Left":
+//                        MC.transform.rotation = new Quaternion(0, 0, 0, 1);//facing from left to right
+//                        break;
+//                }
+//                BehaviourStatusID = 12;
+//                break;
+//            case 12://here we play animation for cust.AnimationTime duration
+//                AnimationWaitTime = 5f;
+//                state = State.Animation;
+//                BehaviourStatusID = 13;
+//                break;
+//            case 13://after main action finished playing idle animation till the rest of patience
+//                AnimationWaitTime = CountDown;
+//                break;
+//            default: // move to center of the room
+//                Target.z = room.MiddleOfTheRoom.transform.position.z;
+//                BehaviourStatusID = 10;                
+//                break;
 //        }        
 //    }
 
-//    public void Prototype(int prototypeID)
+//    private void LeaveBar()
 //    {
-//        switch (prototypeID)
+//        Bar room = CurrentRoom as Bar;
+//        if (Focus.Object) //which is seat
 //        {
-//            case 0:
-//                TargetVector = reception.EntrancePoint.transform.position;
-//                Behaviour = null;
-//                Patience = 25;
-//                Wait = false;
-//                int RandomNumber = UnityEngine.Random.Range(0, 1000);
-//                name = "Customer_" + RandomNumber;
-//                AnimatorComponent.enabled = true;
-//                StartCoroutine("CountDown");
-//                StartCoroutine("Relax");
-
-//                outfit.SetOutfit();
-//                break;
-//            case 1:
-//                break;
+//            room.AvailableSeats.Add(Focus.Object);
+//            room.custAtBar.Remove(MC);
+//            Focus.Object = null;
 //        }
 //    }
 

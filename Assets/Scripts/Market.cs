@@ -34,9 +34,7 @@ public class Market : MonoBehaviour {
 
     public void HireCandidat()
     {
-        MonoCharacter MC = CharacterMNGR.Instance.GetMonoCharacter();
-        MC.character = SelectedCandidat;
-        MC.gameObject.SetActive(true);
+        PersonnelFactory.Instance.SpawnPersonnel(SelectedCandidat);
     }
 
 }
