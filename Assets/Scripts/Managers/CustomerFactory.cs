@@ -5,9 +5,9 @@ using UnityEngine;
 public class CustomerFactory : MonoBehaviour {
 
     protected CustomerFactory() { }
-    [SerializeField] private BehaviourController CustomerPrefab;
+    [SerializeField] private myCharacterController CustomerPrefab;
     [SerializeField] private GameObject CustomersContainer;
-    public List<BehaviourController> CustomersPool = new List<BehaviourController>();
+    public List<myCharacterController> CustomersPool = new List<myCharacterController>();
 
     public static CustomerFactory Instance;
 
@@ -16,22 +16,22 @@ public class CustomerFactory : MonoBehaviour {
         Instance = this;
     }
 
-    public void SpawnCustomer(Customer customer)
+    public myCharacterController SpawnCustomer(Customer customer)
     {
-        BehaviourController BC = GetController();
-        BC.character = customer;
-        BC.gameObject.SetActive(true);
-        //return BC;
+        myCharacterController CC = GetController();
+        CC.Stats = customer;
+        CC.gameObject.SetActive(true);
+        return CC;
     }
 
-    private BehaviourController GetController()
+    private myCharacterController GetController()
     {
-        BehaviourController BC = null;
+        myCharacterController CC = null;
         if (CustomersPool.Count == 0)
-            BC = Instantiate(CustomerPrefab, CustomersContainer.transform);
+            CC = Instantiate(CustomerPrefab, CustomersContainer.transform);
         else
-            BC = CustomersPool[0];
-        return BC;
+            CC = CustomersPool[0];
+        return CC;
     }
 
 }

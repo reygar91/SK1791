@@ -12,7 +12,7 @@ public class CharacterMNGR : MonoBehaviour {
 
     //public List<BehaviourController> CustomersPool = new List<BehaviourController>();
     //public List<BehaviourController> PersonnelPool = new List<BehaviourController>();
-    public List<BehaviourController> ActiveCharacters = new List<BehaviourController>();
+    public List<myCharacterController> ActiveCharacters = new List<myCharacterController>();
 
     public static CharacterMNGR Instance;
 
@@ -30,7 +30,7 @@ public class CharacterMNGR : MonoBehaviour {
     private void Update()
     {
         //.ToArray returns Array copy of List
-        foreach (BehaviourController BC in ActiveCharacters.ToArray())
+        foreach (myCharacterController BC in ActiveCharacters.ToArray())
         {
             BC.Tick();
         }

@@ -5,9 +5,9 @@ using UnityEngine;
 public class Room : MonoBehaviour {
 
     //public static List<Room> roomsList = new List<Room>();
-    public BoxCollider boxCollider;
+    public BoxCollider2D boxCollider;
     public SpriteRenderer spriteRenderer;
-    public GameObject Doors, MiddleOfTheRoom;
+    public Transform Doors, MiddleOfTheRoom;
     public RoomSaveData saveData = new RoomSaveData();
 
     //public BehaviourController[] AvailablePersonel;
@@ -40,12 +40,7 @@ public class Room : MonoBehaviour {
         selectedRoom = null; //Debug.Log(selectedRoom);
     }
 
-    public void SaveRoomPosition()
-    {
-        saveData.X = transform.position.x;
-        saveData.Y = transform.position.y;
-        saveData.Z = transform.position.z;
-    }
+    
 
     //public bool RegisterPersonel(BehaviourController controller)
     //{
@@ -75,7 +70,21 @@ public class Room : MonoBehaviour {
     //    }   
     //    return result;
     //}
-    public void DefineRoomTypes()
+
+    public void CustomAwake()
+    {
+        SaveRoomPosition();
+        DefineRoomTypes();
+    }
+
+    private void SaveRoomPosition()
+    {
+        saveData.X = transform.position.x;
+        saveData.Y = transform.position.y;
+        saveData.Z = transform.position.z;
+    }
+
+    private void DefineRoomTypes()
     {
         foreach (Activity type in GetComponents<Activity>())
         {

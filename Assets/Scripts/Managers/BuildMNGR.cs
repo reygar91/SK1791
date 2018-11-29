@@ -55,11 +55,10 @@ public class BuildMNGR : MonoBehaviour {
     {
         Room newRoom = Instantiate(room, RoomContainer.transform);
         newRoom.transform.position = position;
-        newRoom.gameObject.SetActive(true);
-        newRoom.SaveRoomPosition();
+        newRoom.gameObject.SetActive(true); // without this rooms will be inactive after Loading game
         Grid.SetGridValuesAroundNewRoom(newRoom);
         roomsList.Add(newRoom);
-        newRoom.DefineRoomTypes();
+        newRoom.CustomAwake();
         return newRoom;
     }
 
@@ -86,6 +85,8 @@ public class BuildMNGR : MonoBehaviour {
             SizeToggles[i].isOn = false; // Disabling Toggle, so dont have to click twice when building similar constructions
             //TypeToggles[RoomIndex].isOn = false;
             SizeGroup.gameObject.SetActive(false);
+
+            room.saveData.typeAndSizeID = 3 * RoomIndex + i;
         }
     }
 

@@ -27,4 +27,9 @@ public class Bar : Activity {
     {
         RegisterSeats();
     }
+
+    public override void Load(int ObjectIndex, myCharacterController CC)
+    {
+        BarMNGR.Instance.AvailableSeats.Remove(CustomerInteractionObjects[ObjectIndex]);
+    }
 }

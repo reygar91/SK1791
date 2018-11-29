@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Activity : MonoBehaviour {
 
-    [SerializeField] protected Transform[] CustomerInteractionObjects;
-
     public Room Room;
 
-    public List<BehaviourController> Customers = new List<BehaviourController>();
+    [SerializeField] protected Transform[] CustomerInteractionObjects;
+
+    public BehaviourPattern behaviour;
+
+    public List<myCharacterController> Customers = new List<myCharacterController>();
 
     public virtual void RegisterInteractionObjects() { }
 
@@ -17,4 +19,15 @@ public class Activity : MonoBehaviour {
         Room = GetComponent<Room>();
     }
 
+    public int FindIndexOfInteractionObj(Transform TargetObj)
+    {        
+        return System.Array.IndexOf(CustomerInteractionObjects, TargetObj);
+    }
+
+    public Transform FindInteractionObjByIndex(int ObjectIndex)
+    {
+        return CustomerInteractionObjects[ObjectIndex];
+    }
+
+    public virtual void Load(int ObjectIndex, myCharacterController CC) { }
 }

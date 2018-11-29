@@ -88,12 +88,12 @@ public class SceneMNGR : MonoBehaviour {
 
 
         
-        BehaviourController[] ActiveBC = CharacterMNGR.Instance.ActiveCharacters.ToArray();
-        save.Characters = new CharSaveData[ActiveBC.Length];
+        myCharacterController[] ActiveCC = CharacterMNGR.Instance.ActiveCharacters.ToArray();
+        save.Characters = new CharSaveData[ActiveCC.Length];
         for (int i = 0; i < save.Characters.Length; i++)
         {
-            BehaviourController BC = ActiveBC[i];
-            CharSaveData data = GatherCharacterSaveData(BC);
+            myCharacterController CC = ActiveCC[i];
+            CharSaveData data = GatherCharacterSaveData(CC);
             save.Characters[i] = data;
         }
         
@@ -106,21 +106,22 @@ public class SceneMNGR : MonoBehaviour {
         return save;
     }
 
-    private CharSaveData GatherCharacterSaveData(BehaviourController BC)
+    private CharSaveData GatherCharacterSaveData(myCharacterController CC)
     {
         CharSaveData data = new CharSaveData
         {
-            state = BC.character.state,
-            prevState = BC.character.prevState,
-            X = BC.transform.position.x,
-            Y = BC.transform.position.y,
-            Z = BC.transform.position.z,
-            AnimationWaitTime = BC.character.AnimationWaitTime,
-            CountDown = BC.character.CountDown,
-            //TargetRoomIndex = BuildMNGR.Instance.roomsList.IndexOf(BC.character.TargetRoom),
-            CharacterType = BC.character.GetType().ToString(),
-            BehaviourStatusID = BC.ActionID,
-            Focus = BC.Focus.SaveFocusData()
+            //state = CC.Stats.state,
+            //prevState = CC.Stats.prevState,
+            X = CC.transform.position.x,
+            Y = CC.transform.position.y,
+            Z = CC.transform.position.z,
+            //AnimationWaitTime = CC.Stats.AnimationWaitTime,
+            //CountDown = CC.Stats.CountDown,
+            Stats = CC.Stats,            
+            behaviour = CC.behaviour.name,
+            ActionID = CC.ActionID,
+            Focus = CC.Focus.Save()
+            //FocusIndex = CC.Focus.ObjectIndex
         };                   
         return data;
     }
@@ -157,15 +158,19 @@ public class SceneMNGR : MonoBehaviour {
 
         foreach (CharSaveData data in save.Characters)
         {
-            //BehaviourController BC = CharacterMNGR.Instance.SpawnCharacter(data.CharacterType);//number corresponds to CharacterID
-            //BC.character.state = data.state;
-            //BC.character.prevState = data.prevState;
-            //BC.transform.position = new Vector3(data.X, data.Y, data.Z);
-            //BC.character.AnimationWaitTime = data.AnimationWaitTime;
-            //BC.character.CountDown = data.CountDown;
-            //BC.ActionID = data.BehaviourStatusID;
-            //if (data.Focus.NotSet)
-            //    BC.character.Focus = data.Focus;
+            myCharacterController CC = data.Stats.Spawn();
+                //CharacterMNGR.Instance.SpawnCharacter(data.CharacterType);//number corresponds to CharacterID
+            //CC.Stats.state = data.state;
+            //CC.Stats.prevState = data.prevState;
+            CC.transform.position = new Vector3(data.X, data.Y, data.Z);
+            //CC.Stats.AnimationWaitTime = data.AnimationWaitTime;
+            //CC.Stats.CountDown = data.CountDow
+            string path = "_PluggableAI/Behaviours/" + data.Stats.GetType().ToString() + "/" + data.behaviour;
+            CC.behaviour = Resources.Load<BehaviourPattern>(path);
+            CC.ActionID = data.ActionID;
+            CC.Focus.Load(data.Focus);
+            ////if (data.Focus.NotSet)
+            ////    CC.character.Focus = data.Focus;
         }
 
         myEventMNGR.Instance.LoadEventsFromSignatures(save.ActiveEvents);

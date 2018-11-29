@@ -6,16 +6,29 @@ public class Reception : Activity {
 
     public static Reception Instance;
 
-    public GameObject SpawnPoint, EntrancePoint;
-    public GameObject[] WaitInLinePoints;
-    public bool[] OccupiedSpot;
+    //public Transform SpawnPoint, EntrancePoint;
+    //public Transform[] Queue;
+    //public bool[] OccupiedQueue;
 
     protected override void Awake()
     {
         base.Awake();
         Instance = this;
-        Room.MiddleOfTheRoom = EntrancePoint;
-        //AvailablePersonel = new BehaviourController[1];
+        Room.CustomAwake();
+    }
+
+    public Transform TargetReceptionEntrance()
+    {
+        return CustomerInteractionObjects[0].transform;
+    }
+
+    public Transform TargetCustSpawnPoint()
+    {
+        return CustomerInteractionObjects[1].transform;
+    }
+
+    public override void Load(int ObjectIndex, myCharacterController CC)
+    {
     }
 
 }

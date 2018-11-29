@@ -5,9 +5,9 @@ using UnityEngine;
 public class PersonnelFactory : MonoBehaviour {
 
     protected PersonnelFactory() { }
-    [SerializeField] private BehaviourController PersonnelPrefab;
+    [SerializeField] private myCharacterController PersonnelPrefab;
     [SerializeField] private GameObject PersonnelContainer;
-    public List<BehaviourController> PersonnelPool = new List<BehaviourController>();
+    public List<myCharacterController> PersonnelPool = new List<myCharacterController>();
 
     public static PersonnelFactory Instance;
 
@@ -16,21 +16,21 @@ public class PersonnelFactory : MonoBehaviour {
         Instance = this;
     }
 
-    public void SpawnPersonnel(Personnel personnel)
+    public myCharacterController SpawnPersonnel(Personnel personnel)
     {
-        BehaviourController BC = GetController();
-        BC.character = personnel;
-        BC.gameObject.SetActive(true);
-        //return BC;
+        myCharacterController CC = GetController();
+        CC.Stats = personnel;
+        CC.gameObject.SetActive(true);
+        return CC;
     }
 
-    private BehaviourController GetController()
+    private myCharacterController GetController()
     {
-        BehaviourController BC = null;
+        myCharacterController CC = null;
         if (PersonnelPool.Count == 0)
-            BC = Instantiate(PersonnelPrefab, PersonnelContainer.transform);
+            CC = Instantiate(PersonnelPrefab, PersonnelContainer.transform);
         else
-            BC = PersonnelPool[0];
-        return BC;
+            CC = PersonnelPool[0];
+        return CC;
     }
 }

@@ -16,11 +16,13 @@ public class Save {
 [System.Serializable]
 public class CharSaveData
 {
-    public Character.State state, prevState;
-    public FocusData Focus;
+    public myCharacterStats.State state, prevState;
+    public FocusTarget Focus;
     public float X, Y, Z, AnimationWaitTime, CountDown;
-    public int TargetRoomIndex, BehaviourStatusID;
-    public string CharacterType;
+    public int ActionID;
+    public myCharacterStats Stats;
+    public string behaviour;
+    //public string CharacterType;
 }
 
 [System.Serializable]

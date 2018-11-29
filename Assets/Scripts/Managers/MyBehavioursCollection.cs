@@ -6,11 +6,24 @@ public class MyBehavioursCollection : MonoBehaviour {
 
     public static MyBehavioursCollection Instance;
 
-    public BehaviourPattern ChangeRoom, CustEnterReception, PersEnterReception, CustAtBar;
+    public CustomersBehaviours Customer; 
+    public PersonnelBehaviours Personnel;
+
+    public BehaviourPattern ChangeRoom;
 
     private void Awake()
     {
         Instance = this;
     }
 
+}
+[System.Serializable]
+public class CustomersBehaviours
+{
+    public BehaviourPattern CountDown_0, EnterReception, AtBar;
+}
+[System.Serializable]
+public class PersonnelBehaviours
+{
+    public BehaviourPattern CountDown_0, EnterReception, AtBar;
 }
