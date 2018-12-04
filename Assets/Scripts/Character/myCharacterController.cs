@@ -26,7 +26,7 @@ public class myCharacterController : MonoBehaviour {
 
     public int ActionID;
     public BehaviourPattern behaviour, NextBehaviour;
-    public Action[] possibleBehaviours;
+    public PossibleActivity[] possibleBehaviours;
 
     public myCharacterStats Stats; //must be defined in Awake, before OnEnable from CharacterReset    
 

@@ -790,12 +790,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5d2767366ec4f448d767ded6ea28df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CountDown_0: {fileID: 11400000, guid: 9cc16748a69f0da48947957599a1e9ab, type: 2}
+  ActionID: 0
   behaviour: {fileID: 11400000, guid: 6960abba22bb61a4b94cb3c8ac6552aa, type: 2}
   NextBehaviour: {fileID: 0}
   possibleBehaviours:
-  - {fileID: 11400000, guid: bb99e0f8b7ce37a4ab820914994b124b, type: 2}
-  ActionID: 0
+  - {fileID: 11400000, guid: f10e078f105541242b09ed991f5d2418, type: 2}
+  Stats:
+    WalkSpeed: 0
+    Name: 
+    X: 0
+    Y: 0
+    Z: 0
+    AnimationWaitTime: 0
+    CountDown: 0
+    CountDownMultiplier: 1
+    state: 0
+    prevState: 0
 --- !u!114 &114118377583474128
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -807,11 +817,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbc3123cf28b5904fbd0a259e9b1401c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Index: 0
-  NotSet: 0
-  BC: {fileID: 0}
-  Object: {fileID: 0}
+  Target:
+    ObjectIndex: 0
+    CharacterIndex: 0
+    ActivityRoomIndex: 0
+    Signature: 
+    ActivitySignature: 
+  CC: {fileID: 0}
+  TargetObj: {fileID: 0}
   Activity: {fileID: 0}
+  CurrentRoom: {fileID: 0}
 --- !u!114 &114392319137526558
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -835,7 +850,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MovementSpeed: 3
-  Room: {fileID: 0}
 --- !u!114 &114992705615278912
 MonoBehaviour:
   m_ObjectHideFlags: 1

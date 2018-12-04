@@ -6,4 +6,5 @@ public abstract class Action : ScriptableObject {
 
     public abstract bool Act(myCharacterController Character);
 
+    //public Action Move;
 }

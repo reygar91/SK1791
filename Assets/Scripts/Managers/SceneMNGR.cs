@@ -2,6 +2,7 @@
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEditor;
 using UnityEngine.UI;
 
 
@@ -117,12 +118,16 @@ public class SceneMNGR : MonoBehaviour {
             Z = CC.transform.position.z,
             //AnimationWaitTime = CC.Stats.AnimationWaitTime,
             //CountDown = CC.Stats.CountDown,
-            Stats = CC.Stats,            
-            behaviour = CC.behaviour.name,
+            Stats = CC.Stats,
+            behaviour = CC.behaviour.Save(),
+            //behaviour = AssetDatabase.GetAssetPath(CC.behaviour).TrimStart("Assets/Resources/".ToCharArray()).TrimEnd(".asset".ToCharArray()),
             ActionID = CC.ActionID,
             Focus = CC.Focus.Save()
             //FocusIndex = CC.Focus.ObjectIndex
-        };                   
+        };
+        if (CC.NextBehaviour != null)
+            data.nextBehaviour = CC.NextBehaviour.Save();
+        //Debug.Log(data.nextBehaviour);
         return data;
     }
     
@@ -165,10 +170,17 @@ public class SceneMNGR : MonoBehaviour {
             CC.transform.position = new Vector3(data.X, data.Y, data.Z);
             //CC.Stats.AnimationWaitTime = data.AnimationWaitTime;
             //CC.Stats.CountDown = data.CountDow
-            string path = "_PluggableAI/Behaviours/" + data.Stats.GetType().ToString() + "/" + data.behaviour;
-            CC.behaviour = Resources.Load<BehaviourPattern>(path);
-            CC.ActionID = data.ActionID;
             CC.Focus.Load(data.Focus);
+            Debug.Log(data.behaviour);
+            //string path = "_PluggableAI/Behaviours/" + data.Stats.GetType().ToString() + "/" + data.behaviour;
+            CC.behaviour = Resources.Load<BehaviourPattern>(data.behaviour);
+            CC.ActionID = data.ActionID;            
+            if (CC.Stats.state == myCharacterStats.State.Move)
+            {
+                CC.behaviour.actions[CC.ActionID - 1].Act(CC); // this Act should always be a movement
+            }
+            if (data.nextBehaviour != "")
+                CC.NextBehaviour = Resources.Load<BehaviourPattern>(data.nextBehaviour);
             ////if (data.Focus.NotSet)
             ////    CC.character.Focus = data.Focus;
         }

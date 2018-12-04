@@ -78,7 +78,7 @@ public class SelectorForPersonnel : MonoBehaviour {
             }
 
             CC.Focus.Activity = Room.selectedRoom.Activities[0];//later should add Activity selector
-            CC.NextBehaviour = CC.Focus.Activity.behaviour;
+            CC.NextBehaviour = CC.Focus.Activity.PesrBehaviour;
             CC.behaviour = MyBehavioursCollection.Instance.ChangeRoom;
             CC.ActionID = 0;
         }

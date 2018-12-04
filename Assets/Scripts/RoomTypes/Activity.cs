@@ -8,7 +8,7 @@ public class Activity : MonoBehaviour {
 
     [SerializeField] protected Transform[] CustomerInteractionObjects;
 
-    public BehaviourPattern behaviour;
+    public BehaviourPattern PesrBehaviour, CustBehaviour;
 
     public List<myCharacterController> Customers = new List<myCharacterController>();
 
@@ -30,4 +30,19 @@ public class Activity : MonoBehaviour {
     }
 
     public virtual void Load(int ObjectIndex, myCharacterController CC) { }
+
+    public virtual Transform CheckActivityWithinRoom()
+    {
+        //System.Predicate<Transform> IsWithinRoom = delegate (Transform item)
+        //{ return item.GetComponentInParent<Room>().transform == Character.Focus.CurrentRoom.transform; };
+        return null;
+    }
+
+}
+
+[System.Serializable]
+public struct InteractionObj
+{
+    public string Key;
+    public Transform Object;
 }

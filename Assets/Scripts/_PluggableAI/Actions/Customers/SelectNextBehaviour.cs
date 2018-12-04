@@ -11,7 +11,7 @@ public class SelectNextBehaviour : Action {
         if (Character.possibleBehaviours.Length != 0)
         {
             int index = Random.Range(0, Character.possibleBehaviours.Length);
-            result = Character.possibleBehaviours[index].Act(Character);
+            result = Character.possibleBehaviours[index].CheckAvailabilityOverAll(Character);
         }
         else
         {

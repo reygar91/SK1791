@@ -9,7 +9,7 @@ public class myMover : MonoBehaviour {
     private myCharacterController Character;
 
     private Animator AnimatorComponent;
-    private Room Room;
+    //private Room Room;
 
     private void Awake()
     {        
@@ -19,7 +19,7 @@ public class myMover : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Room = collision.GetComponentInParent<Room>();
+        Character.Focus.CurrentRoom = collision.GetComponentInParent<Room>(); //Debug.Log(Room.name);
     }
 
     public void StartMovement(Vector3 target, string MovemetTypeParameter)
@@ -35,11 +35,11 @@ public class myMover : MonoBehaviour {
                 StartCoroutine(StraightMovement());
                 break;
             case "Exit":
-                FinalTarget = Room.Doors.position;
-                StartCoroutine(BracketsMovement(Room.MiddleOfTheRoom.position.z));
+                FinalTarget = Character.Focus.CurrentRoom.Doors.position;
+                StartCoroutine(BracketsMovement(Character.Focus.CurrentRoom.MiddleOfTheRoom.position.z));
                 break;
             default:
-                StartCoroutine(BracketsMovement(Room.MiddleOfTheRoom.position.z));
+                StartCoroutine(BracketsMovement(Character.Focus.CurrentRoom.MiddleOfTheRoom.position.z));
                 break;
         }
 
@@ -49,7 +49,8 @@ public class myMover : MonoBehaviour {
     private void MovementAnimation(int value) //1 to start animation, 0 - to stop
     {
         AnimatorComponent.SetInteger("AnimationID", value);
-        MovingDirection();
+        if (value == 1)
+            MovingDirection();
     }
 
     private void MovingDirection()
@@ -67,10 +68,11 @@ public class myMover : MonoBehaviour {
     private IEnumerator StraightMovement()
     {
         Target =  new Vector3(FinalTarget.x, transform.position.y, FinalTarget.z);  
-        while (true)
+        while (!HasReachedTarget())
         {
-            yield return StartCoroutine(Movement());
-            break;
+            //yield return new WaitUntil(() => HasReachedTarget());
+            yield return null;
+            //break;
         }
         StopMovement();
     }
@@ -95,42 +97,47 @@ public class myMover : MonoBehaviour {
         Character.Stats.state = myCharacterStats.State.BehaviourUpdate;
     }
 
-    private IEnumerator Movement()
+    public void Move()
     {
-        while (!HasReachedTarget())
-        {
-            transform.position = Vector3.MoveTowards(transform.position, Target, MovementSpeed * Time.deltaTime);
-            yield return null;
-        }
-    }    
+        transform.position = Vector3.MoveTowards(transform.position, Target, MovementSpeed * Time.deltaTime);
+    }
+
+    //private IEnumerator Movement()
+    //{
+    //    while (!HasReachedTarget())
+    //    {
+    //        transform.position = Vector3.MoveTowards(transform.position, Target, MovementSpeed * Time.deltaTime);
+    //        yield return null;
+    //    }
+    //}    
 
     private IEnumerator Midwards(float movementLineZ)
     {
         Target.z = movementLineZ;
-        while (true)
+        while (!HasReachedTarget())
         {
-            yield return StartCoroutine(Movement());
-            break;
+            yield return null;
+            //break;
         }
     }
 
     private IEnumerator AlongX()
     {
         Target.x = FinalTarget.x;
-        while (true)
+        while (!HasReachedTarget())
         {
-            yield return StartCoroutine(Movement());
-            break;
+            yield return null;
+            //break;
         }
     }
 
     private IEnumerator OutMid()
     {
         Target.z = FinalTarget.z;
-        while (true)
+        while (!HasReachedTarget())
         {            
-            yield return StartCoroutine(Movement());
-            break; 
+            yield return null;
+            //break; 
         }
     }
 
@@ -144,7 +151,7 @@ public class myMover : MonoBehaviour {
 
     public bool IsInActivityRoom()
     {
-        return (Character.Focus.Activity.Room == Room);
+        return (Character.Focus.Activity.Room == Character.Focus.CurrentRoom);
     }
 
 }

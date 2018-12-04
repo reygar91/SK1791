@@ -32,4 +32,23 @@ public class Bar : Activity {
     {
         BarMNGR.Instance.AvailableSeats.Remove(CustomerInteractionObjects[ObjectIndex]);
     }
+
+    public override Transform CheckActivityWithinRoom()
+    {
+        Transform result = null;
+        List<Transform> Seats = new List<Transform>();
+        foreach (Transform seat in CustomerInteractionObjects)
+        {
+            if (BarMNGR.Instance.AvailableSeats.Contains(seat))
+                Seats.Add(seat);
+        }
+        if (Seats.Count != 0)
+        {
+            int index = Random.Range(0, Seats.Count);
+            result = Seats[index];
+        }
+        
+
+        return result;
+    }
 }

@@ -52,6 +52,7 @@ public class myCharacterStats
                 else AnimationWaitTime -= Time.deltaTime;
                 break;
             case (State.Move):
+                controller.Mover.Move();
                 break;
             case (State.BehaviourUpdate):
                 behaviour.UpdateBehaviour(controller);

@@ -21,7 +21,7 @@ public class CharSaveData
     public float X, Y, Z, AnimationWaitTime, CountDown;
     public int ActionID;
     public myCharacterStats Stats;
-    public string behaviour;
+    public string behaviour, nextBehaviour;
     //public string CharacterType;
 }
 

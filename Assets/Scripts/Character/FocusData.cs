@@ -7,7 +7,8 @@ public class FocusData : MonoBehaviour
     public FocusTarget Target = new FocusTarget();
     public myCharacterController CC;
     public Transform TargetObj;
-    public Activity Activity;
+    public Activity Activity;//TargetRoom
+    public Room CurrentRoom;
 
     public FocusTarget Save()
     {
@@ -26,6 +27,7 @@ public class FocusData : MonoBehaviour
             Debug.Log("Both TargetObj & CC are Focused.");
         }
 
+        Target.CurrentRoomIndex = BuildMNGR.Instance.roomsList.IndexOf(CurrentRoom);
         Target.ActivityRoomIndex = BuildMNGR.Instance.roomsList.IndexOf(Activity.Room);
         Target.ActivitySignature = Activity.GetType().ToString();
         return Target;
@@ -35,7 +37,12 @@ public class FocusData : MonoBehaviour
     {
         Target = data;
         Activity = Target.LoadActivity(data.ActivitySignature);
-        
+
+        if (Target.CurrentRoomIndex == -1)
+            CurrentRoom = Reception.Instance.Room;
+        else
+            CurrentRoom = BuildMNGR.Instance.roomsList[Target.CurrentRoomIndex];
+
         if (Target.Signature.Contains("Object"))
         {
             TargetObj = Activity.FindInteractionObjByIndex(Target.ObjectIndex);
@@ -58,7 +65,7 @@ public class FocusData : MonoBehaviour
 [System.Serializable]
 public class FocusTarget
 {
-    public int ObjectIndex, CharacterIndex, ActivityRoomIndex;
+    public int ObjectIndex, CharacterIndex, ActivityRoomIndex, CurrentRoomIndex;
     public string Signature, ActivitySignature;
 
     public Activity LoadActivity(string signature)

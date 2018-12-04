@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Personnel : myCharacterStats
 {
     /// <summary>
@@ -39,9 +40,9 @@ public class Personnel : myCharacterStats
 
     public override void OnEnable(myCharacterController MC)
     {
+        Register(MC);//keep this first, if error ocured on loading appearance
         ApplyCharacteristics(MC);
-        ApplyAppearance(MC);
-        Register(MC);
+        ApplyAppearance(MC);        
     }
     public override void OnDisable(myCharacterController MC)
     {

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 [CreateAssetMenu(menuName = "PluggableAI/Behaviour")]
 public class BehaviourPattern : ScriptableObject {
@@ -27,6 +28,16 @@ public class BehaviourPattern : ScriptableObject {
         bool Succeed = actions[controller.ActionID].Act(controller);
         if (Succeed)
             controller.ActionID++;
+    }
+
+    public string Save()
+    {
+        string PathToBehaviour = AssetDatabase.GetAssetPath(this);
+        int startIndex = PathToBehaviour.IndexOf("_"); //Debug.Log(PathToBehaviour);
+        PathToBehaviour = PathToBehaviour.Substring(startIndex);
+        startIndex = PathToBehaviour.LastIndexOf(".");
+        PathToBehaviour = PathToBehaviour.Remove(startIndex);
+        return PathToBehaviour;
     }
 
 }
