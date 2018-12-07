@@ -22,9 +22,9 @@ public class CharacterMNGR : MonoBehaviour {
         customerFactory = GetComponent<CustomerFactory>();
     }
 
-    private void Start()
+    public void StartSpawningCustomers()
     {
-        StartCoroutine("SpawnCustomer"); //later this should start after some dialogue
+        StartCoroutine("SpawnCustomer");
     }
 
     private void Update()

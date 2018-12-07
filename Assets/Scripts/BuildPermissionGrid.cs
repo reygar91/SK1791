@@ -20,23 +20,11 @@ public class BuildPermissionGrid
         {
             for (int col = 0; col < GridXLenght; col++)
             {
-                if (row == 0 && col == 3)
-                {
-                    PermissionUpper[row, col] = 2;
-                }
-                else if (row == 1 && col < 3)
-                {
-                    PermissionUpper[row, col] = 2;
-                    PermissionUpper[row - 1, col] = 0;
-                    PermissionLower[row, col] = 2;
-                }
-                else
-                {
-                    PermissionUpper[row, col] = 1;
-                    PermissionLower[row, col] = 1;
-                }
+                PermissionUpper[row, col] = 1;
+                PermissionLower[row, col] = 1;
             }
         }
+        PermissionUpper[0, 0] = 0;
     }
 
     public bool AllowedToBuild(Vector3 BuildPosition, Room room)
@@ -61,9 +49,9 @@ public class BuildPermissionGrid
 
     public void SetGridValuesAroundNewRoom(Room newRoom)
     {
-        SelectPermisionGrid(newRoom.saveData.Y);
-        int X = Mathf.RoundToInt(newRoom.saveData.X / 3);
-        int Y = Mathf.RoundToInt(newRoom.saveData.Y / 4);
+        SelectPermisionGrid(newRoom.transform.position.y);//saveData.Y
+        int X = Mathf.RoundToInt(newRoom.transform.position.x / 3);
+        int Y = Mathf.RoundToInt(newRoom.transform.position.y / 4);
         Y = Mathf.Abs(Y); //
         int roomSizeKoef = GetRoomSizeKoef(newRoom);
         for (int col = X + roomSizeKoef; col >= X; col--)

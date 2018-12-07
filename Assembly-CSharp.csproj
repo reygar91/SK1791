@@ -61,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\MouseUpActivitySelector.cs" />
     <Compile Include="Assets\Scripts\_NotInUse\Observer\IObserver.cs" />
     <Compile Include="Assets\Scripts\_NotInUse\Observer\IObserverSubject.cs" />
     <Compile Include="Assets\Scripts\_NotInUse\old_Character.cs" />

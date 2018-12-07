@@ -89,9 +89,9 @@ public class FocusTarget
         }
         Room room;
 
-        if (ActivityRoomIndex == -1)
-            room = Reception.Instance.Room;
-        else
+        //if (ActivityRoomIndex == -1)
+        //    room = Reception.Instance.Room;
+        //else
             room = BuildMNGR.Instance.roomsList[ActivityRoomIndex];
 
         activity = room.Activities.Find(predicate);

@@ -14,6 +14,8 @@ public class SelectorForPersonnel : MonoBehaviour {
     public static PanelOfPersonnel personnelPanel;
     private static myCharacterController previousBC;
 
+    public static MouseUpActivitySelector mouseUpActivitySelector;
+
     private void Awake()
     {
         CC = GetComponent<myCharacterController>();
@@ -77,15 +79,14 @@ public class SelectorForPersonnel : MonoBehaviour {
                 item.boxCollider.gameObject.layer = 2;
             }
 
-            CC.Focus.Activity = Room.selectedRoom.Activities[0];//later should add Activity selector
-            CC.NextBehaviour = CC.Focus.Activity.PesrBehaviour;
-            CC.behaviour = MyBehavioursCollection.Instance.ChangeRoom;
-            CC.ActionID = 0;
+            mouseUpActivitySelector.gameObject.SetActive(true);
+            //CC.Focus.Activity = Room.selectedRoom.Activities[0];//later should add Activity selector
+            
         }
         else
             PersonnelClicked();
 
-        SelectedPersonnel = null;
+        //SelectedPersonnel = null;
 
         StopCoroutine("CountDown");
     }

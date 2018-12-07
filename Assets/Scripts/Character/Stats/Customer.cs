@@ -55,6 +55,7 @@ public class Customer : myCharacterStats
         base.CountDownReached_0(MC);
         MC.Focus.Activity = Reception.Instance;
         MC.Focus.TargetObj = Reception.Instance.TargetReceptionEntrance();
+        MC.Focus.Target.ObjectIndex = Reception.Instance.FindIndexOfInteractionObj(MC.Focus.TargetObj);
         MC.NextBehaviour = MyBehavioursCollection.Instance.Customer.CountDown_0;
     }
 

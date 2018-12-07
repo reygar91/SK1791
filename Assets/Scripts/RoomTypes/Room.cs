@@ -8,7 +8,8 @@ public class Room : MonoBehaviour {
     public BoxCollider2D boxCollider;
     public SpriteRenderer spriteRenderer;
     public Transform Doors, MiddleOfTheRoom;
-    public RoomSaveData saveData = new RoomSaveData();
+    public int typeAndSizeID;
+    //public RoomSaveData saveData = new RoomSaveData();
 
     //public BehaviourController[] AvailablePersonel;
 
@@ -73,16 +74,16 @@ public class Room : MonoBehaviour {
 
     public void CustomAwake()
     {
-        SaveRoomPosition();
+        //SaveRoomPosition();
         DefineRoomTypes();
     }
 
-    private void SaveRoomPosition()
-    {
-        saveData.X = transform.position.x;
-        saveData.Y = transform.position.y;
-        saveData.Z = transform.position.z;
-    }
+    //private void SaveRoomPosition()
+    //{
+    //    saveData.X = transform.position.x;
+    //    saveData.Y = transform.position.y;
+    //    saveData.Z = transform.position.z;
+    //}
 
     private void DefineRoomTypes()
     {

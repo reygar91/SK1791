@@ -9,11 +9,13 @@ public class UIMNGR : MonoBehaviour {
 
     public PanelOfPersonnel personnelPanel;
     public PanelOfCustomer customerPanel;
+    public MouseUpActivitySelector mouseUp;
 
     private void Awake()
     {
         //Instance = this;
         SelectorForCustomer.customerPanel = customerPanel;
         SelectorForPersonnel.personnelPanel = personnelPanel;
+        SelectorForPersonnel.mouseUpActivitySelector = mouseUp;
     }
 }

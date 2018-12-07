@@ -50,8 +50,11 @@ public class SceneMNGR : MonoBehaviour {
 
     private void NewGameLoaded(Scene scene, LoadSceneMode mode)
     {
+        BuildMNGR.Instance.InstantiateRoom(BuildMNGR.Instance.reception, new Vector3(3, 0, 0));
         myEventMNGR.Instance.ActiveEvents.Add(new StartGameTutorial());
-        //CharacterMNGR.Instance.SpawnCharacter("MainCharacter");
+        PersonnelFactory.Instance.SpawnPersonnel(new MainCharacter());
+        
+        //CharacterMNGR.Instance.SpawnCharacter(new MainCharacter());
         SceneManager.sceneLoaded -= NewGameLoaded;
     }
 
@@ -79,10 +82,10 @@ public class SceneMNGR : MonoBehaviour {
             Room room = rooms[i];
             RoomSaveData data = new RoomSaveData
             {
-                typeAndSizeID = room.saveData.typeAndSizeID,
-                X = room.saveData.X,
-                Y = room.saveData.Y,
-                Z = room.saveData.Z
+                typeAndSizeID = room.typeAndSizeID,
+                X = room.transform.position.x,
+                Y = room.transform.position.y,
+                Z = room.transform.position.z
             };
             save.Rooms[i] = data;
         }
@@ -158,7 +161,10 @@ public class SceneMNGR : MonoBehaviour {
 
         foreach (RoomSaveData data in save.Rooms)
         {
-            BuildMNGR.Instance.InstantiateRoom(BuildMNGR.Instance.Rooms[data.typeAndSizeID], new Vector3(data.X, data.Y, data.Z));
+            if (data.typeAndSizeID == -1)
+                BuildMNGR.Instance.InstantiateRoom(BuildMNGR.Instance.reception, new Vector3(data.X, data.Y, data.Z));
+            else
+                BuildMNGR.Instance.InstantiateRoom(BuildMNGR.Instance.Rooms[data.typeAndSizeID], new Vector3(data.X, data.Y, data.Z));
         }
 
         foreach (CharSaveData data in save.Characters)

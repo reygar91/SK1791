@@ -53,5 +53,10 @@ public class InputMNGR : MonoBehaviour {
         GameUI.alpha = 1;//GameUI.interactable = true;
     }
 
+    public void Pause()
+    {
+        JumpButton.Execute();
+    }
+
 
 }

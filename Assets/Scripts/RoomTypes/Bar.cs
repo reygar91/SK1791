@@ -51,4 +51,12 @@ public class Bar : Activity {
 
         return result;
     }
-}
+
+    //public override void SetActivityToSelectedPersonnel()
+    //{
+    //    //Debug.Log(SelectorForPersonnel.SelectedPersonnel.name);
+    //    SelectorForPersonnel.SelectedPersonnel.Focus.Activity = this;
+    //    base.SetActivityToSelectedPersonnel();
+    //}
+
+    }

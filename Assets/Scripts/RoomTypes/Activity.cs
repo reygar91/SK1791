@@ -8,7 +8,7 @@ public class Activity : MonoBehaviour {
 
     [SerializeField] protected Transform[] CustomerInteractionObjects;
 
-    public BehaviourPattern PesrBehaviour, CustBehaviour;
+    public BehaviourPattern PersBehaviour, CustBehaviour;
 
     public List<myCharacterController> Customers = new List<myCharacterController>();
 
@@ -36,6 +36,16 @@ public class Activity : MonoBehaviour {
         //System.Predicate<Transform> IsWithinRoom = delegate (Transform item)
         //{ return item.GetComponentInParent<Room>().transform == Character.Focus.CurrentRoom.transform; };
         return null;
+    }
+
+    public virtual void SetActivityToSelectedPersonnel()
+    {
+        myCharacterController CC = SelectorForPersonnel.SelectedPersonnel;
+        CC.Focus.Activity = this;
+        CC.NextBehaviour = CC.Focus.Activity.PersBehaviour;
+        CC.behaviour = MyBehavioursCollection.Instance.ChangeRoom;
+        CC.ActionID = 0;
+        SelectorForPersonnel.SelectedPersonnel = null;
     }
 
 }

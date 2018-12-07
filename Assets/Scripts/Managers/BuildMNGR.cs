@@ -7,6 +7,7 @@ public class BuildMNGR : MonoBehaviour {
 
     public static BuildMNGR Instance;
 
+    public Room reception;
     public Room[] Rooms;
     /*
      * 0 - Bar;
@@ -16,6 +17,7 @@ public class BuildMNGR : MonoBehaviour {
     public BuildPreview Preview;
     private Room room;
     private BuildPermissionGrid Grid;
+
 
 
     public Toggle[] TypeToggles, SizeToggles;
@@ -74,7 +76,7 @@ public class BuildMNGR : MonoBehaviour {
     }
 
 
-    public void SelectSize(int i)
+    public void SelectSize(int i)// assingned in inspector
     {
         if (SizeToggles[i].isOn)
         {
@@ -86,11 +88,11 @@ public class BuildMNGR : MonoBehaviour {
             //TypeToggles[RoomIndex].isOn = false;
             SizeGroup.gameObject.SetActive(false);
 
-            room.saveData.typeAndSizeID = 3 * RoomIndex + i;
+            room.typeAndSizeID = 3 * RoomIndex + i;
         }
     }
 
-    public void SelectType(int i)
+    public void SelectType(int i) // assingned in inspector
     {
         if (TypeToggles[i].isOn)
         {

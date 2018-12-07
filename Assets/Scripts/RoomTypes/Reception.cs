@@ -14,7 +14,7 @@ public class Reception : Activity {
     {
         base.Awake();
         Instance = this;
-        Room.CustomAwake();
+        //Room.CustomAwake();
     }
 
     public Transform TargetReceptionEntrance()

@@ -10,8 +10,8 @@ public class QueueEnter : Action {
         bool result = false;
         System.Predicate<Activity> predicate = FindType;
         Character.Focus.Activity = Character.Focus.Activity.Room.Activities.Find(predicate) as Queue;
-        if (!Character.Focus.TargetObj) //possibly not neccesary any more
-        {
+        //if (!Character.Focus.TargetObj) //possibly not neccesary any more
+        //{
             Queue queue = Character.Focus.Activity as Queue;
             for (int i = 0; i < 5; i++)
             {
@@ -27,7 +27,7 @@ public class QueueEnter : Action {
                     //Character.Mover.StartMovement(Target, "Direct");
                 }
             }
-        }
+        //}
         //Debug.Log("EnterReceptionQueue Executed");
         return result;
     }

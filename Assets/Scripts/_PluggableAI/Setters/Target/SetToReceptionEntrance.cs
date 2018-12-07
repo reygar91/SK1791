@@ -6,6 +6,8 @@ public class SetToReceptionEntrance : TargetSetter {
     public override Vector3 Set(myCharacterController Character)
     {
         Character.Focus.Activity = Reception.Instance;
-        return Reception.Instance.TargetReceptionEntrance().position;
+        Character.Focus.TargetObj = Reception.Instance.TargetReceptionEntrance();
+        Character.Focus.Target.ObjectIndex = Reception.Instance.FindIndexOfInteractionObj(Character.Focus.TargetObj);
+        return Character.Focus.TargetObj.position;
     }
 }
